@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "UET_CODERANK (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "UET_CODERANK (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
