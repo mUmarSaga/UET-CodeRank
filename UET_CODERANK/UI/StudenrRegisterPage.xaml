@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="UET_CODERANK.UI.StudenrRegisterPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:UET_CODERANK.UI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="#0F0F0F">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Width="420"
+            Spacing="14"
+            Padding="0,40,0,40">
+
+            <!-- Title -->
+            <TextBlock
+                Text="UET CodeRank"
+                FontSize="32"
+                FontWeight="Bold"
+                Foreground="White"
+                HorizontalAlignment="Center"/>
+
+            <TextBlock
+                Text="Create your account"
+                FontSize="14"
+                Foreground="#B4B4B4"
+                HorizontalAlignment="Center"
+                Margin="0,0,0,10"/>
+
+            <!-- Name -->
+            <TextBox
+                x:Name="txtName"
+                Header="Full Name"
+                PlaceholderText="Muhammad Umar Shahid"
+                Background="#1A1A1A"
+                Foreground="White"
+                BorderBrush="#2A2A2A"/>
+
+            <!-- Reg No -->
+            <TextBox
+                x:Name="txtRegNo"
+                Header="Registration Number"
+                PlaceholderText="2025-CS-27"
+                Background="#1A1A1A"
+                Foreground="White"
+                BorderBrush="#2A2A2A"/>
+
+            <!-- Email -->
+            <TextBox
+                x:Name="txtEmail"
+                Header="Email"
+                PlaceholderText="example@gmail.com"
+                Background="#1A1A1A"
+                Foreground="White"
+                BorderBrush="#2A2A2A"/>
+
+            <!-- Password -->
+            <PasswordBox
+                x:Name="txtPassword"
+                Header="Password"
+                PlaceholderText="Enter password"
+                Background="#1A1A1A"
+                Foreground="White"
+                BorderBrush="#2A2A2A"
+                PasswordRevealMode="Peek"/>
+
+            <!-- Confirm Password -->
+            <PasswordBox
+                x:Name="txtConfirmPassword"
+                Header="Confirm Password"
+                PlaceholderText="Re-enter password"
+                Background="#1A1A1A"
+                Foreground="White"
+                BorderBrush="#2A2A2A"
+                PasswordRevealMode="Peek"/>
+
+            <!-- LeetCode Username -->
+            <TextBlock
+                Text="LeetCode Username (Optional)"
+                Foreground="#B4B4B4"
+                FontSize="12"
+                Margin="0,4,0,0"/>
+
+            <Grid ColumnSpacing="8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox
+                    x:Name="txtLeetcode"
+                    Grid.Column="0"
+                    PlaceholderText="your-leetcode-username"
+                    Background="#1A1A1A"
+                    Foreground="White"
+                    BorderBrush="#2A2A2A"/>
+
+                <Button
+                    x:Name="btnVerify"
+                    Grid.Column="1"
+                    Content="Verify"
+                    Background="#1A1A1A"
+                    Foreground="#107C10"
+                    BorderBrush="#107C10"
+                    Click="btnVerify_Click"/>
+            </Grid>
+
+            <!-- Verify Status -->
+            <TextBlock
+                x:Name="txtVerifyStatus"
+                FontSize="12"
+                Foreground="#B4B4B4"
+                Text=""/>
+
+            <!-- Register Button -->
+            <Button
+                x:Name="btnRegister"
+                Content="Create Account"
+                HorizontalAlignment="Stretch"
+                Background="#107C10"
+                Foreground="White"
+                FontSize="16"
+                Height="45"
+                Margin="0,8,0,0"
+                Click="btnRegister_Click"/>
+
+            <!-- Back to Login -->
+            <HyperlinkButton
+                Content="Already have an account? Login"
+                HorizontalAlignment="Center"
+                Foreground="#107C10"
+                Click="btnLogin_Click"/>
+
+        </StackPanel>
+    </ScrollViewer>
+</Page>

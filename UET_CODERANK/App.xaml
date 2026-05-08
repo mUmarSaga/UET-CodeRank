@@ -17,8 +17,17 @@
             <Color x:Key ="ButtonClicked">#67696c</Color>
             <Color x:Key ="ButtonBackground">#25282c</Color>
             <Color x:Key ="MainBackground">#1a1b1e</Color>
+            <Color x:Key="SystemAccentColor">#107C10</Color>
+            <Color x:Key="SystemAccentColorLight1">#2BB72B</Color>
+            <Color x:Key="SystemAccentColorLight2">#66CD66</Color>
+            <Color x:Key="SystemAccentColorLight3">#A1E1A1</Color>
+            <Color x:Key="SystemAccentColorDark1">#0E6A0E</Color>
+            <Color x:Key="SystemAccentColorDark2">#0B590B</Color>
+            <Color x:Key="SystemAccentColorDark3">#084808</Color>
 
-           
+            <SolidColorBrush x:Key="SystemAccentColorBrush" Color="{StaticResource SystemAccentColor}" />
+
+
             <SolidColorBrush x:Key ="XboxGreenColor" Color="{StaticResource XboxGreen}"/>
             <SolidColorBrush x:Key ="SideBoxBrush" Color="{StaticResource SideBoxColor}"/>
             <SolidColorBrush x:Key ="ButtonClickedBrush" Color="{StaticResource ButtonClicked}"/>

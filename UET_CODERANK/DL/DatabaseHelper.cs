@@ -9,7 +9,7 @@ namespace UET_CODERANK.DL
 
         
         private static readonly string ConnectionString =
-            "Server=localhost;Database=ds_final;Uid=root;Pwd=pakistan1947;";
+            "Server=localhost;Database=db_final;Uid=root;Pwd=pakistan1947;";
 
         public static MySqlConnection GetConnection()
         {

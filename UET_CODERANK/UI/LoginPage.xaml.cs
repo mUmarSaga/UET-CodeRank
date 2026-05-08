@@ -27,21 +27,35 @@ namespace UET_CODERANK.UI
         public BlankPage1()
         {
             InitializeComponent();
-           
-
         }
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             string email = txtEmail.Text;
             string password = txtPassword.Password;
-            // call BL here
+            if (string.IsNullOrEmpty(email)) { 
+                
+                txtEmail.Header = "Email Cannot be empty";
+                return;
+            }
+            if (string.IsNullOrEmpty(password)) { 
+                txtPassword.Header = "Password Cannot be empty";
+                return;
+            }
+            if(BL.StudentBL.IsValidEmailFormat(email))
+            {
+                
+            }
+            else
+            {
+                
+            }
         }
 
         private void btnRegister_Click(object sender, RoutedEventArgs e)
         {
             // navigate to register page
-            Frame.Navigate(typeof(BlankPage1));
+            Frame.Navigate(typeof(StudenrRegisterPage));
         }
        
     }
