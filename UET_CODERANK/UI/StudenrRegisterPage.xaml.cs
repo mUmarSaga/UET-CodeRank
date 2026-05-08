@@ -1,17 +1,19 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.UI.Xaml.Navigation;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
+using Windows.Foundation;
+using Windows.Foundation.Collections;
 using Windows.UI.Popups;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -28,10 +30,7 @@ public sealed partial class StudenrRegisterPage : Page
     {
         InitializeComponent();
     }
-    private void btnVerify_Click(object sender, RoutedEventArgs e)
-    {
-        // call LeetCode API and update txtVerifyStatus
-    }
+    
 
     private void btnRegister_Click(object sender, RoutedEventArgs e)
     {
@@ -39,58 +38,59 @@ public sealed partial class StudenrRegisterPage : Page
         string Reg_No = txtRegNo.Text;
         string Email = txtEmail.Text;
         string Password;
-        string Leetcode_Username = txtLeetcode.Text;
+        string Leetcode_Username = null;
+        if (isLeetcodeVerified)
+        {
+            Leetcode_Username = username;
+        }
+        
         if (string.IsNullOrEmpty(username))
         {
-            txtName.Header = "Name cannot be empty";
+            ShowError(NameErrorMessage, "Name is required");
             return;
         }
         if (string.IsNullOrEmpty(Reg_No))
         {
-            txtRegNo.Header = "Registration Number cannot be empty";
+            ShowError(RegNoErrorMessage, "Registration Number is required");
             return;
         }
         if (string.IsNullOrEmpty(Email))
         {
-            txtEmail.Header = "Email cannot be empty";
+            ShowError(EmailErrorMessage, "Email is required");
             return;
         }
         if (string.IsNullOrEmpty(txtPassword.Password))
         {
-            txtPassword.Header = "Password cannot be empty";
+            ShowError(PasswordErrorMessage, "Please set a password");
             return;
         }
-        if (string.IsNullOrEmpty(txtConfirmPassword.Password))
-        {
-            txtConfirmPassword.Header = "Please Confirm Password";
-            return;
-        }
+        
         if(txtConfirmPassword.Password != txtPassword.Password)
         {
-            txtConfirmPassword.Header = "Passwords do not match";
+            ShowError(ConfirmPasswordErrorMessage, "Password Mismatch");
             return;
         }
         if(BL.StudentBL.IsValidEmailFormat(Email) == false) 
         {
-            txtEmail.Header = "Invalid Email Format";
+            ShowError(EmailErrorMessage, "Invalid Email Format");
             return;
         }
         if(BL.StudentBL.IsRegNoFormatValid(Reg_No))
         {
             if(BL.StudentBL.IsRegNoExist(Reg_No))
             {
-                txtRegNo.Header = "Registration Number already exists";
+                ShowError(RegNoErrorMessage, "Registration Number already exists");
                 return;
             }
         }
         else
         {
-            txtRegNo.Header = "Invalid Registration Number Format";
+            ShowError(RegNoErrorMessage, "Invalid Registration Number Format");
             return;
         }
         if(BL.StudentBL.IsEmailAlreadyExist(Email))
         {
-            txtEmail.Header = "Email already exists";
+            ShowError(EmailErrorMessage, "Email already exists");
             return;
         }
         if(BL.StudentBL.RegisterStudent(Reg_No, username, Email, txtPassword.Password, Leetcode_Username))
@@ -108,6 +108,82 @@ public sealed partial class StudenrRegisterPage : Page
     {
         Frame.Navigate(typeof(BlankPage1));
     }
+    public void ShowError(TextBlock errorLabel, string message)
+    {
+        errorLabel.Text = message;
+        errorLabel.Visibility = Visibility.Visible;
+    }
+    public void HideError(TextBlock errorLabel)
+    {
+        errorLabel.Visibility = Visibility.Collapsed;
+    }
 
+    private void txtRegNo_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        HideError(RegNoErrorMessage);
+    }
 
+    private void txtName_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        HideError(NameErrorMessage);
+    }
+
+    private void txtEmail_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        HideError(EmailErrorMessage);
+    }
+
+    private void txtPassword_PasswordChanged(object sender, RoutedEventArgs e)
+    {
+        HideError(PasswordErrorMessage);
+    }
+
+    private void txtConfirmPassword_PasswordChanged(object sender, RoutedEventArgs e)
+    {
+        HideError(ConfirmPasswordErrorMessage);
+    }
+    private bool isLeetcodeVerified = false;
+    private string username;
+
+    private async void btnVerify_Click(object sender, RoutedEventArgs e)
+    {
+        username = txtLeetcode.Text.Trim();
+        if (string.IsNullOrEmpty(username)) return;
+
+        btnVerify.IsEnabled = false;
+        txtVerifyStatus.Text = "Checking...";
+        
+        var profile = await Task.Run(() => DL.LeetCodeAPI.GetProfile(username));
+
+        if (profile == null)
+        {
+            txtVerifyStatus.Text = "❌ Username not found";
+            txtVerifyStatus.Foreground = new SolidColorBrush(Microsoft.UI.Colors.Red);
+            btnVerify.IsEnabled = true;
+            return;
+        }
+
+        // show profile card
+        profileCard.Visibility = Visibility.Visible;
+        txtProfileName.Text = profile.Name;
+        profilePic.ProfilePicture = new BitmapImage(new Uri(profile.Avatar));
+        txtVerifyStatus.Text = "";
+        btnVerify.IsEnabled = true;
+    }
+
+    private void btnYes_Click(object sender, RoutedEventArgs e)
+    {
+        isLeetcodeVerified = true;
+        profileCard.Visibility = Visibility.Collapsed;
+        txtVerifyStatus.Text = "✅ LeetCode verified!";
+        txtVerifyStatus.Foreground = new SolidColorBrush(Microsoft.UI.Colors.Green);
+    }
+
+    private void btnNo_Click(object sender, RoutedEventArgs e)
+    {
+        isLeetcodeVerified = false;
+        profileCard.Visibility = Visibility.Collapsed;
+        txtLeetcode.Text = "";
+        txtVerifyStatus.Text = "";
+    }
 }

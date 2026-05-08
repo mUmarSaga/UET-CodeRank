@@ -8,7 +8,7 @@ namespace UET_CODERANK.DL
     {
         public static void AddStudent(Student student)
         {
-            string querry = "INSERT INTO student(reg_no,name,email,password,leetcode_username,profile_pic_path,is_approved,created_at,section_id) Values(@reg_no,@email,@password,@leetcode_username,@profile_pic_path,@is_approved,@created_at,@section_id)";
+            string querry = "INSERT INTO student(reg_no,name,email,password,leetcode_username,profile_pic_path,is_approved,created_at,section_id) Values(@reg_no,@name,@email,@password,@leetcode_username,@profile_pic_path,@is_approved,@created_at,@section_id)";
             MySqlParameter[] parameters = new MySqlParameter[]
             {
                 new MySqlParameter("@name",student.Name),
@@ -21,12 +21,14 @@ namespace UET_CODERANK.DL
                 new MySqlParameter("@created_at",student.CreatedAt),
                 new MySqlParameter("@section_id",student.SectionId==0 ? (object)DBNull.Value : student.SectionId)
             };
+           
             try
             {
-                
                 DatabaseHelper.ExecuteNonQuery(querry, parameters);
+
             }
-            catch(Exception ex) {
+            catch (Exception ex)
+            {
                 ErrorLog.Log(ex);
                 throw;
             }

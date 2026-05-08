@@ -1,7 +1,7 @@
 ﻿using System.Net.Http;
 using UET_CODERANK.Model;
 
-namespace CodeRank.DL
+namespace UET_CODERANK.DL
 {
     internal class LeetCodeAPI
     {

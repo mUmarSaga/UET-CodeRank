@@ -21,6 +21,7 @@ namespace UET_CODERANK.BL
                 hash,
                 leetcode_username
             );
+           
             try
             {
                 DL.StudentDL.AddStudent(student);
