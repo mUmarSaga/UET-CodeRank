@@ -34,6 +34,35 @@ namespace UET_CODERANK.DL
                 throw;
             }
         }
+        public static Student GetByLeetCode_username(string leetcodeUsername)
+        {
+            string querry = "SELECT * FROM student WHERE leetcode_username = @leetcode_username";
+            MySqlParameter[] parameters = new MySqlParameter[]
+            {
+                new MySqlParameter("@leetcode_username",leetcodeUsername)
+            };
+            try
+            {
+                var dt = DatabaseHelper.ExecuteQuery(querry, parameters);
+                if (dt.Rows.Count == 0) return null;
+                var row = dt.Rows[0];
+                return new Student(row["reg_no"].ToString(), row["name"].ToString(), row["email"].ToString(), row["password"].ToString(), row["leetcode_username"].ToString(), row["profile_pic_path"].ToString(), row["profile_name"].ToString())
+                {
+                    Id = Convert.ToInt32(row["id"]),
+                    ProfilePicPath = row["profile_pic_path"].ToString(),
+                    ProfileName = row["profile_name"].ToString(),
+                    IsApproved = Convert.ToBoolean(row["is_approved"]),
+                    CreatedAt = Convert.ToDateTime(row["created_at"]),
+                    SectionId = Convert.ToInt32(row["section_id"])
+                };
+
+            }
+            catch (Exception ex)
+            {
+                ErrorLog.Log(ex);
+                throw;
+            }
+        }
         public static Student GetByID(int id)
         {
             string querry = "SELECT * FROM student WHERE id = @id";
@@ -75,6 +104,40 @@ namespace UET_CODERANK.DL
                 var dt = DatabaseHelper.ExecuteQuery(querry, parameters);
                 if (dt.Rows.Count == 0) return null;
                 var row = dt.Rows[0];
+                return new Student(
+                    row["reg_no"]?.ToString() ?? "",
+                    row["name"]?.ToString() ?? "",
+                    row["email"]?.ToString() ?? "",
+                    row["password"]?.ToString() ?? "",
+                    row["leetcode_username"]?.ToString() ?? "",
+                    row["profile_pic_path"]?.ToString() ?? "",
+                    row["profile_name"]?.ToString() ?? ""
+                )
+                {
+                    Id = row["id"] != DBNull.Value ? Convert.ToInt32(row["id"]) : 0,
+                    IsApproved = row["is_approved"] != DBNull.Value ? Convert.ToBoolean(row["is_approved"]) : false,
+                    CreatedAt = row["created_at"] != DBNull.Value ? Convert.ToDateTime(row["created_at"]) : DateTime.Now,
+                    SectionId = row["section_id"] != DBNull.Value ? Convert.ToInt32(row["section_id"]) : 0
+                };
+            }
+            catch (Exception ex)
+            {
+                ErrorLog.Log(ex);
+                throw;
+            }
+        }
+        public static Student GetByRegNo(string regNo)
+        {
+            string querry = "SELECT * FROM student WHERE reg_no = @reg_no";
+            MySqlParameter[] parameters = new MySqlParameter[]
+            {
+                new MySqlParameter("@reg_no",regNo)
+            };
+            try
+            {
+                var dt = DatabaseHelper.ExecuteQuery(querry, parameters);
+                if (dt.Rows.Count == 0) return null;
+                var row = dt.Rows[0];
                 return new Student(row["reg_no"].ToString(), row["name"].ToString(), row["email"].ToString(), row["password"].ToString(), row["leetcode_username"].ToString(), row["profile_pic_path"].ToString(), row["profile_name"].ToString())
                 {
                     Id = Convert.ToInt32(row["id"]),
@@ -91,12 +154,12 @@ namespace UET_CODERANK.DL
                 throw;
             }
         }
-        public static Student GetByRegNo(string regNo)
+        public static Student GetById(int id)
         {
-            string querry = "SELECT * FROM student WHERE reg_no = @reg_no";
+            string querry = "SELECT * FROM student WHERE id = @id";
             MySqlParameter[] parameters = new MySqlParameter[]
             {
-                new MySqlParameter("@reg_no",regNo)
+                new MySqlParameter("@id",id)
             };
             try
             {

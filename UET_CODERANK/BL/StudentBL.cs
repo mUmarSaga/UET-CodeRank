@@ -35,6 +35,19 @@ namespace UET_CODERANK.BL
                 return false;
             }
         }
+        public static int LoginStudent(string email, string password)
+        {
+            Student student = DL.StudentDL.GetByEmail(email);
+            if(student == null)
+            {
+                student = DL.StudentDL.GetByLeetCode_username(email);
+            }
+            if (student != null && BCrypt.Net.BCrypt.Verify(password, student.Password))
+            {
+                return student.Id;
+            }
+            return 0;
+        }
         public static bool IsValidEmailFormat(string email) {
             var foo = new EmailAddressAttribute();
             return foo.IsValid(email);

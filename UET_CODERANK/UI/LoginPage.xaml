@@ -43,11 +43,18 @@
             <!-- Email -->
             <TextBox 
                 x:Name="txtEmail"
-                Header="Email"
-                PlaceholderText="Enter your email"
+                Header="Email Or LeetCode Username"
+                PlaceholderText="Email or LeetCode username"
                 Background="#1A1A1A"
                 Foreground="White"
-                BorderBrush="#2A2A2A"/>
+                BorderBrush="#2A2A2A"
+                TextChanged="txtEmail_TextChanged"/>
+            <TextBlock x:Name="EmailErrorMessage" 
+                Text="Email is Required" 
+                Foreground="Red" 
+                Visibility="Collapsed" 
+                FontSize="12" 
+                Margin="0,4,0,0"/>
 
             <!-- Password -->
             <PasswordBox 
@@ -57,7 +64,14 @@
                 Background="#1A1A1A"
                 Foreground="White"
                 BorderBrush="#2A2A2A"
-                PasswordRevealMode="Peek"/>
+                PasswordRevealMode="Peek"
+                PasswordChanged="txtPassword_PasswordChanged"/>
+            <TextBlock x:Name="PasswordErrorMessage" 
+                Text="Password is Required" 
+                Foreground="Red" 
+                Visibility="Collapsed" 
+                FontSize="12" 
+                Margin="0,4,0,0"/>
             <CheckBox
                 x:Name="RememberMe"
                 Content="Remember Me"

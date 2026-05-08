@@ -11,8 +11,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
+using UET_CODERANK.BL;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -29,27 +32,47 @@ namespace UET_CODERANK.UI
             InitializeComponent();
         }
 
-        private void btnLogin_Click(object sender, RoutedEventArgs e)
+        private async void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             string email = txtEmail.Text;
             string password = txtPassword.Password;
             if (string.IsNullOrEmpty(email)) { 
-                
-                txtEmail.Header = "Email Cannot be empty";
+                ShowError(EmailErrorMessage, "Email Cannot be empty");
                 return;
             }
             if (string.IsNullOrEmpty(password)) { 
-                txtPassword.Header = "Password Cannot be empty";
+                ShowError(PasswordErrorMessage,"Enter Password");
                 return;
             }
-            if(BL.StudentBL.IsValidEmailFormat(email))
+            int Id = await Task.Run(() => StudentBL.LoginStudent(email, password));
+            if (Id > 0)
             {
-                
+                ShowError(PasswordErrorMessage, "Login successful");
+                var localSettings = ApplicationData.Current.LocalSettings;
+
+                if (RememberMe.IsChecked == true)
+                {
+                    localSettings.Values["RememberMeUserId"] = Id;
+                }
+                else
+                {
+                    localSettings.Values.Remove("RememberMeUserId");
+                }
+                return;
             }
             else
             {
-                
+                ShowError(PasswordErrorMessage, "Invalid email or password");
             }
+        }
+        public void ShowError(TextBlock errorLabel, string message)
+        {
+            errorLabel.Text = message;
+            errorLabel.Visibility = Visibility.Visible;
+        }
+        public void HideError(TextBlock errorLabel)
+        {
+            errorLabel.Visibility = Visibility.Collapsed;
         }
 
         private void btnRegister_Click(object sender, RoutedEventArgs e)
@@ -60,6 +83,15 @@ namespace UET_CODERANK.UI
                 Frame.Navigate(typeof(StudenrRegisterPage));
             }
         }
-       
+
+        private void txtEmail_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            HideError(EmailErrorMessage);
+        }
+
+        private void txtPassword_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            HideError(PasswordErrorMessage);
+        }
     }
 }

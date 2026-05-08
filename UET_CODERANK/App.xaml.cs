@@ -12,10 +12,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using UET_CODERANK.Model;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -45,7 +47,27 @@ namespace UET_CODERANK
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
             _window = new MainWindow();
+             var localSettings = ApplicationData.Current.LocalSettings;
+            if (localSettings.Values.ContainsKey("RememberMeUserId"))
+            {
+                int savedUserId = (int)localSettings.Values["RememberMeUserId"];
+
+                // 1. Fetch student details from DL using this ID
+                // Student autoUser = StudentDL.GetById(savedUserId);
+                Student student = DL.StudentDL.GetById(savedUserId);
+
+                // 2. Set your active session user
+                // 3. Navigate straight to the Leaderboard / Dashboard page
+                // m_window.Content = new MainPage(); 
+            }
+            else
+            {
+                // No saved user, show the normal Login Page
+                // m_window.Content = new LoginPage();
+                _window.Content = new UI.BlankPage1();
+            }
             _window.Activate();
+            
         }
     }
    
