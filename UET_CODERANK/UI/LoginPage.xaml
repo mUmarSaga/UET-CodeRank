@@ -58,6 +58,11 @@
                 Foreground="White"
                 BorderBrush="#2A2A2A"
                 PasswordRevealMode="Peek"/>
+            <CheckBox
+                x:Name="RememberMe"
+                Content="Remember Me"
+                Foreground="White"
+                />
 
             <!-- Login Button -->
             <Button

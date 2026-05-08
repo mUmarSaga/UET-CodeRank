@@ -32,7 +32,7 @@ public sealed partial class StudenrRegisterPage : Page
     }
     
 
-    private void btnRegister_Click(object sender, RoutedEventArgs e)
+    private async void btnRegister_Click(object sender, RoutedEventArgs e)
     {
         string username = txtName.Text;
         string Reg_No = txtRegNo.Text;
@@ -93,7 +93,8 @@ public sealed partial class StudenrRegisterPage : Page
             ShowError(EmailErrorMessage, "Email already exists");
             return;
         }
-        if(BL.StudentBL.RegisterStudent(Reg_No, username, Email, txtPassword.Password, Leetcode_Username))
+        bool done = await Task.Run(() => BL.StudentBL.RegisterStudent(Reg_No, username, Email, txtPassword.Password, Leetcode_Username, profileAvatarURL, profileName));
+        if (done)
         {
             Frame.Navigate(typeof(BlankPage1));
         }
@@ -144,11 +145,18 @@ public sealed partial class StudenrRegisterPage : Page
     }
     private bool isLeetcodeVerified = false;
     private string username;
+    private string profileName;
+    private string profileAvatarURL;
 
     private async void btnVerify_Click(object sender, RoutedEventArgs e)
     {
+        if(isLeetcodeVerified && txtLeetcode.Text.Trim() == username)
+        {
+            return;
+        }
         username = txtLeetcode.Text.Trim();
         if (string.IsNullOrEmpty(username)) return;
+        
 
         btnVerify.IsEnabled = false;
         txtVerifyStatus.Text = "Checking...";
@@ -166,6 +174,8 @@ public sealed partial class StudenrRegisterPage : Page
         // show profile card
         profileCard.Visibility = Visibility.Visible;
         txtProfileName.Text = profile.Name;
+        profileName = profile.Name;
+        profileAvatarURL = profile.Avatar;
         profilePic.ProfilePicture = new BitmapImage(new Uri(profile.Avatar));
         txtVerifyStatus.Text = "";
         btnVerify.IsEnabled = true;

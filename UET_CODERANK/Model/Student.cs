@@ -12,15 +12,19 @@ namespace UET_CODERANK.Model
         public string Password { get; set; }
         public string LeetcodeUsername { get; set; }
         public string ProfilePicPath { get; set; }
+        public string ProfileName { get; set; }
         public bool IsApproved { get; set; }
         public System.DateTime CreatedAt { get; set; }
         public int SectionId { get; set; }
-        public Student(string RegNo,string Name,string Email,string Password,string LeetcodeUsername)
+        public Student(string RegNo,string Name,string Email,string Password,string LeetcodeUsername,string ProfilePicPath,string ProfileName)
         {
             this.RegNo = RegNo;
             this.Name = Name;
             this.Email = Email;
             this.Password = Password;
+            this.LeetcodeUsername = LeetcodeUsername;
+            this.ProfilePicPath = ProfilePicPath;
+            this.ProfileName = ProfileName;
             CreatedAt = DateTime.Now;
             IsApproved  = false;
         }

@@ -11,7 +11,7 @@ namespace UET_CODERANK.BL
 {
     class StudentBL
     {
-        public static bool RegisterStudent(string reg_No,string name,string email,string password,string leetcode_username) {
+        public static bool RegisterStudent(string reg_No,string name,string email,string password,string leetcode_username,string profile_pic_path,string profile_name) {
             string hash = BCrypt.Net.BCrypt.HashPassword(password);
             Student student = new Student
             (
@@ -19,7 +19,9 @@ namespace UET_CODERANK.BL
                 name,
                 email,
                 hash,
-                leetcode_username
+                leetcode_username,
+                profile_pic_path,
+                profile_name
             );
            
             try

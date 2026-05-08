@@ -1,8 +1,14 @@
 ﻿using System.Net.Http;
 using UET_CODERANK.Model;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace UET_CODERANK.DL
 {
+    public class Data
+    {
+        // This is what becomes null if the user doesn't exist
+        public object matchedUser { get; set; }
+    }
     internal class LeetCodeAPI
     {
         private static HttpClient client = new HttpClient();
@@ -13,6 +19,10 @@ namespace UET_CODERANK.DL
                 string url = $"https://alfa-leetcode-api.onrender.com/{username}";
                 string json = client.GetStringAsync(url).Result;
                 LeetCodeProfile leetCodeProfile = Newtonsoft.Json.JsonConvert.DeserializeObject<LeetCodeProfile>(json);
+                if(leetCodeProfile.Username == null)
+                {
+                    return null;
+                }
                 return leetCodeProfile;
             }
             catch { 

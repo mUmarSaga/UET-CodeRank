@@ -8,7 +8,7 @@ namespace UET_CODERANK.DL
     {
         public static void AddStudent(Student student)
         {
-            string querry = "INSERT INTO student(reg_no,name,email,password,leetcode_username,profile_pic_path,is_approved,created_at,section_id) Values(@reg_no,@name,@email,@password,@leetcode_username,@profile_pic_path,@is_approved,@created_at,@section_id)";
+            string querry = "INSERT INTO student(reg_no,name,email,password,leetcode_username,profile_pic_path,profile_name,is_approved,created_at,section_id) Values(@reg_no,@name,@email,@password,@leetcode_username,@profile_pic_path,@profile_name,@is_approved,@created_at,@section_id)";
             MySqlParameter[] parameters = new MySqlParameter[]
             {
                 new MySqlParameter("@name",student.Name),
@@ -17,6 +17,7 @@ namespace UET_CODERANK.DL
                 new MySqlParameter("@password",student.Password),
                 new MySqlParameter("@leetcode_username",student.LeetcodeUsername ?? (object)DBNull.Value),
                 new MySqlParameter("@profile_pic_path",student.ProfilePicPath ?? (object)DBNull.Value),
+                new MySqlParameter("@profile_name",student.ProfileName ?? (object)DBNull.Value),
                 new MySqlParameter("@is_approved",student.IsApproved),
                 new MySqlParameter("@created_at",student.CreatedAt),
                 new MySqlParameter("@section_id",student.SectionId==0 ? (object)DBNull.Value : student.SectionId)
@@ -45,10 +46,11 @@ namespace UET_CODERANK.DL
                 var dt = DatabaseHelper.ExecuteQuery(querry, parameters);
                 if (dt.Rows.Count == 0) return null;
                 var row = dt.Rows[0];
-                return new Student(row["reg_no"].ToString(), row["name"].ToString(), row["email"].ToString(), row["password"].ToString(), row["leetcode_username"].ToString())
+                return new Student(row["reg_no"].ToString(), row["name"].ToString(), row["email"].ToString(), row["password"].ToString(), row["leetcode_username"].ToString(), row["profile_pic_path"].ToString(), row["profile_name"].ToString())
                 {
                     Id = Convert.ToInt32(row["id"]),
                     ProfilePicPath = row["profile_pic_path"].ToString(),
+                    ProfileName = row["profile_name"].ToString(),
                     IsApproved = Convert.ToBoolean(row["is_approved"]),
                     CreatedAt = Convert.ToDateTime(row["created_at"]),
                     SectionId = Convert.ToInt32(row["section_id"])
@@ -73,10 +75,11 @@ namespace UET_CODERANK.DL
                 var dt = DatabaseHelper.ExecuteQuery(querry, parameters);
                 if (dt.Rows.Count == 0) return null;
                 var row = dt.Rows[0];
-                return new Student(row["reg_no"].ToString(), row["name"].ToString(), row["email"].ToString(), row["password"].ToString(), row["leetcode_username"].ToString())
+                return new Student(row["reg_no"].ToString(), row["name"].ToString(), row["email"].ToString(), row["password"].ToString(), row["leetcode_username"].ToString(), row["profile_pic_path"].ToString(), row["profile_name"].ToString())
                 {
                     Id = Convert.ToInt32(row["id"]),
                     ProfilePicPath = row["profile_pic_path"].ToString(),
+                    ProfileName = row["profile_name"].ToString(),
                     IsApproved = Convert.ToBoolean(row["is_approved"]),
                     CreatedAt = Convert.ToDateTime(row["created_at"]),
                     SectionId = Convert.ToInt32(row["section_id"])
@@ -100,10 +103,11 @@ namespace UET_CODERANK.DL
                 var dt = DatabaseHelper.ExecuteQuery(querry, parameters);
                 if (dt.Rows.Count == 0) return null;
                 var row = dt.Rows[0];
-                return new Student(row["reg_no"].ToString(), row["name"].ToString(), row["email"].ToString(), row["password"].ToString(), row["leetcode_username"].ToString())
+                return new Student(row["reg_no"].ToString(), row["name"].ToString(), row["email"].ToString(), row["password"].ToString(), row["leetcode_username"].ToString(), row["profile_pic_path"].ToString(), row["profile_name"].ToString())
                 {
                     Id = Convert.ToInt32(row["id"]),
                     ProfilePicPath = row["profile_pic_path"].ToString(),
+                    ProfileName = row["profile_name"].ToString(),
                     IsApproved = Convert.ToBoolean(row["is_approved"]),
                     CreatedAt = Convert.ToDateTime(row["created_at"]),
                     SectionId = Convert.ToInt32(row["section_id"])

@@ -55,7 +55,10 @@ namespace UET_CODERANK.UI
         private void btnRegister_Click(object sender, RoutedEventArgs e)
         {
             // navigate to register page
-            Frame.Navigate(typeof(StudenrRegisterPage));
+            if (rbStudent.IsChecked == true)
+            {
+                Frame.Navigate(typeof(StudenrRegisterPage));
+            }
         }
        
     }

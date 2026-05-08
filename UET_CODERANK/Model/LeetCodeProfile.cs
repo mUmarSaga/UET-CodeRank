@@ -19,6 +19,7 @@ namespace UET_CODERANK.Model
 
         [JsonProperty("country")]
         private string country;
+
         public string Username => username;
         public string Name => name;
         public int Ranking => ranking;
