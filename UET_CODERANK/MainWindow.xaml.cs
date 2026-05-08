@@ -1,3 +1,4 @@
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -10,6 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using UET_CODERANK.UI;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 
@@ -26,6 +28,22 @@ namespace UET_CODERANK
         public MainWindow()
         {
             InitializeComponent();
+            rootFrame.Navigate(typeof(BlankPage1));
+            AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
+            if (AppWindow.TitleBar.ExtendsContentIntoTitleBar)
+            {
+                AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
+                AppWindow.TitleBar.ButtonBackgroundColor = Microsoft.UI.Colors.Transparent;
+                AppWindow.TitleBar.ButtonInactiveBackgroundColor = Microsoft.UI.Colors.Transparent;
+
+            }
+            this.SystemBackdrop = new MicaBackdrop();
+            var presenter = AppWindow.Presenter as OverlappedPresenter;
+            presenter.IsResizable = false;
+            presenter.IsMaximizable = false;
+
         }
+     
+      
     }
 }

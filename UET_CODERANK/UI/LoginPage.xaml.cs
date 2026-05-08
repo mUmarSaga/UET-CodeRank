@@ -1,3 +1,4 @@
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -26,6 +27,22 @@ namespace UET_CODERANK.UI
         public BlankPage1()
         {
             InitializeComponent();
+           
+
         }
+
+        private void btnLogin_Click(object sender, RoutedEventArgs e)
+        {
+            string email = txtEmail.Text;
+            string password = txtPassword.Password;
+            // call BL here
+        }
+
+        private void btnRegister_Click(object sender, RoutedEventArgs e)
+        {
+            // navigate to register page
+            Frame.Navigate(typeof(BlankPage1));
+        }
+       
     }
 }

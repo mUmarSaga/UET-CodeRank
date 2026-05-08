@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:UET_CODERANK">
+
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -11,6 +12,19 @@
                 <!-- Other merged dictionaries here -->
             </ResourceDictionary.MergedDictionaries>
             <!-- Other app resources here -->
+            <Color x:Key ="XboxGreen">#007738</Color>
+            <Color x:Key ="SideBoxColor">#25282c</Color>
+            <Color x:Key ="ButtonClicked">#67696c</Color>
+            <Color x:Key ="ButtonBackground">#25282c</Color>
+            <Color x:Key ="MainBackground">#1a1b1e</Color>
+
+           
+            <SolidColorBrush x:Key ="XboxGreenColor" Color="{StaticResource XboxGreen}"/>
+            <SolidColorBrush x:Key ="SideBoxBrush" Color="{StaticResource SideBoxColor}"/>
+            <SolidColorBrush x:Key ="ButtonClickedBrush" Color="{StaticResource ButtonClicked}"/>
+            <SolidColorBrush x:Key ="ButtonBackgroundBrush" Color="{StaticResource ButtonBackground}"/>
+            <SolidColorBrush x:Key ="MainBackgroundBrush" Color="{StaticResource MainBackground}"/>
         </ResourceDictionary>
+        
     </Application.Resources>
 </Application>
