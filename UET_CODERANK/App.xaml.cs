@@ -47,27 +47,24 @@ namespace UET_CODERANK
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
             _window = new MainWindow();
-             var localSettings = ApplicationData.Current.LocalSettings;
+
+            // Create a Frame to act as the navigation context
+            Frame rootFrame = new Frame();
+            _window.Content = rootFrame;
+
+            var localSettings = ApplicationData.Current.LocalSettings;
             if (localSettings.Values.ContainsKey("RememberMeUserId"))
             {
                 int savedUserId = (int)localSettings.Values["RememberMeUserId"];
-
-                // 1. Fetch student details from DL using this ID
-                // Student autoUser = StudentDL.GetById(savedUserId);
                 Student student = DL.StudentDL.GetById(savedUserId);
-
-                // 2. Set your active session user
-                // 3. Navigate straight to the Leaderboard / Dashboard page
-                // m_window.Content = new MainPage(); 
+                //rootFrame.Navigate(typeof(UI.DashboardPage)); // or wherever auto-login goes
             }
             else
             {
-                // No saved user, show the normal Login Page
-                // m_window.Content = new LoginPage();
-                _window.Content = new UI.BlankPage1();
+                rootFrame.Navigate(typeof(UI.BlankPage1)); // your login/landing page
             }
+
             _window.Activate();
-            
         }
     }
    

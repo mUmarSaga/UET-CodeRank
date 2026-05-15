@@ -34,14 +34,17 @@ namespace UET_CODERANK.UI
 
         private async void btnLogin_Click(object sender, RoutedEventArgs e)
         {
+            disableLoginButton();
             string email = txtEmail.Text;
             string password = txtPassword.Password;
             if (string.IsNullOrEmpty(email)) { 
                 ShowError(EmailErrorMessage, "Email Cannot be empty");
+                enableLoginButton();
                 return;
             }
             if (string.IsNullOrEmpty(password)) { 
                 ShowError(PasswordErrorMessage,"Enter Password");
+                enableLoginButton();
                 return;
             }
             int Id = await Task.Run(() => StudentBL.LoginStudent(email, password));
@@ -58,12 +61,25 @@ namespace UET_CODERANK.UI
                 {
                     localSettings.Values.Remove("RememberMeUserId");
                 }
-                return;
+                CurrentSession.SetStudent(DL.StudentDL.GetByID(Id));
+
             }
             else
             {
                 ShowError(PasswordErrorMessage, "Invalid email or password");
+                enableLoginButton(); return;
             }
+        }
+        private void disableLoginButton()
+        {
+            btnLogin.IsEnabled = false;
+            btnLogin.Content = "Loging In....";
+        }
+
+        private void enableLoginButton()
+        {
+            btnLogin.IsEnabled = true;
+            btnLogin.Content = "Login";
         }
         public void ShowError(TextBlock errorLabel, string message)
         {
@@ -80,7 +96,7 @@ namespace UET_CODERANK.UI
             // navigate to register page
             if (rbStudent.IsChecked == true)
             {
-                Frame.Navigate(typeof(StudenrRegisterPage));
+                this.Frame.Navigate(typeof(StudenrRegisterPage));
             }
         }
 

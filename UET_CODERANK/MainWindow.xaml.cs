@@ -38,12 +38,21 @@ namespace UET_CODERANK
 
             }
             this.SystemBackdrop = new MicaBackdrop();
-            var presenter = AppWindow.Presenter as OverlappedPresenter;
-            presenter.IsResizable = false;
-            presenter.IsMaximizable = false;
+            
+            rootFrame.Navigated += RootFrame_Navigated;
 
+            rootFrame.Navigate(typeof(BlankPage1));
         }
-     
-      
+        private void RootFrame_Navigated(object sender, NavigationEventArgs e)
+        {
+            // Pages that should be locked (non-resizable)
+            bool isAuthPage = e.SourcePageType == typeof(BlankPage1)
+                           || e.SourcePageType == typeof(StudenrRegisterPage); // add more as needed
+            var _presenter = AppWindow.Presenter as OverlappedPresenter;
+            _presenter.IsResizable = !isAuthPage;
+            _presenter.IsMaximizable = !isAuthPage;
+        }
+
+
     }
 }
