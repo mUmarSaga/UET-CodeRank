@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="UET_CODERANK.UI.MainShellPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:UET_CODERANK.UI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{StaticResource MainBackground}">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="260"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Sidebar -->
+        <Border Grid.Column="0"
+                Background="#25282c"
+                BorderBrush="#2A2A2A"
+                BorderThickness="0,0,1,0">
+            <Grid
+                Padding="0,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <!-- Profile section -->
+                <StackPanel Grid.Row="0" Padding="10,16,16,16" Spacing="0">
+                    <Button x:Name="Profile_Button"
+                            HorizontalAlignment="Left"
+                            HorizontalContentAlignment="Left"
+                            BorderThickness="0"
+                            CornerRadius="10"
+                            Width="Auto"
+                            Padding="10,8,10,8"
+                            
+                            >
+                        <StackPanel Orientation="Horizontal" Spacing="12" Padding="0,0,0,0">
+                            <PersonPicture x:Name="profilePic" Width="40" Height="40"
+                                           Padding="0,0,0,0"/>
+                            <StackPanel Orientation="Vertical" Spacing="0" Padding="0,10,0,0">
+                                <TextBlock x:Name="txtUsername"
+                                        Text="Username"
+                                        Foreground="White"
+                                        FontSize="13"
+                                        FontWeight="ExtraBold"
+                                        VerticalAlignment="Center"
+                                       Padding="0,0,0,0"/>
+                                <TextBlock x:Name="txtLeetcode"
+                                    Text="LeetCode"
+                                    Foreground="White"
+                                    FontSize="10"
+                                    FontWeight="Medium"
+                                    VerticalAlignment="Center"
+                                   Padding="1,0,0,0"/>
+                            </StackPanel>
+                            
+                        </StackPanel>
+                    </Button>
+                    
+                </StackPanel>
+
+                <!-- Nav Buttons -->
+                <StackPanel Grid.Row="1" Padding="8,0" Spacing="2">
+
+                    <!-- Active button style - filled background -->
+                    <Button x:Name="btnHome"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Left"
+                            Background="#4e535b"
+                            BorderThickness="0"
+                            Padding="17,10,14,14"
+                            CornerRadius="10"
+                            Click="btnHome_Click">
+                        <StackPanel Orientation="Horizontal" Spacing="16">
+                            <FontIcon Glyph="&#xE80F;" Foreground="White" FontSize="26" VerticalAlignment="Center"/>
+                            <TextBlock Text="Home" Foreground="White" FontSize="16" FontWeight="Medium" VerticalAlignment="Bottom"/>
+                        </StackPanel>
+                    </Button>
+
+                   
+
+                </StackPanel>
+
+                <!-- Bottom section - Settings with subtitle -->
+                <StackPanel Grid.Row="2" Padding="8,16">
+                    <Border Height="1" Background="#2A2A2A" Margin="0,0,0,8"/>
+                    <Button x:Name="btnSettings"
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Left"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Padding="12,10"
+                    CornerRadius="8"
+                    Click="btnSettings_Click">  
+                        <StackPanel Orientation="Horizontal" Spacing="16">
+                            <FontIcon Glyph="&#xE713;" Foreground="White" FontSize="20"/>
+                            <StackPanel Spacing="2">
+                                <TextBlock Text="Settings" Foreground="White" FontSize="14"/>
+                                <TextBlock Text="Manage your account" Foreground="#888888" FontSize="11"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Content Frame -->
+        <Frame x:Name="contentFrame"
+               Grid.Column="1"
+               Background="Transparent"/>
+
+    </Grid>
+</Page>

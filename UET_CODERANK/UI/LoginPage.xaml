@@ -64,7 +64,7 @@
                 Background="#1A1A1A"
                 Foreground="White"
                 BorderBrush="#2A2A2A"
-                PasswordRevealMode="Peek"
+                PasswordRevealMode ="Peek"
                 PasswordChanged="txtPassword_PasswordChanged"/>
             <TextBlock x:Name="PasswordErrorMessage" 
                 Text="Password is Required" 

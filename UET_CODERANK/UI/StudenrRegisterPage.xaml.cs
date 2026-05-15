@@ -34,7 +34,7 @@ public sealed partial class StudenrRegisterPage : Page
 
     private async void btnRegister_Click(object sender, RoutedEventArgs e)
     {
-        string username = txtName.Text;
+        string name = txtName.Text;
         string Reg_No = txtRegNo.Text;
         string Email = txtEmail.Text;
         string Password;
@@ -44,7 +44,7 @@ public sealed partial class StudenrRegisterPage : Page
             Leetcode_Username = username;
         }
         
-        if (string.IsNullOrEmpty(username))
+        if (string.IsNullOrEmpty(name))
         {
             ShowError(NameErrorMessage, "Name is required");
             return;
@@ -93,7 +93,8 @@ public sealed partial class StudenrRegisterPage : Page
             ShowError(EmailErrorMessage, "Email already exists");
             return;
         }
-        bool done = await Task.Run(() => BL.StudentBL.RegisterStudent(Reg_No, username, Email, txtPassword.Password, Leetcode_Username, profileAvatarURL, profileName));
+        string passwordText = txtPassword.Password;
+        bool done = await Task.Run(() => BL.StudentBL.RegisterStudent(Reg_No, name, Email, passwordText, Leetcode_Username, profileAvatarURL, profileName));
         if (done)
         {
             Frame.Navigate(typeof(BlankPage1));
@@ -187,6 +188,7 @@ public sealed partial class StudenrRegisterPage : Page
         profileCard.Visibility = Visibility.Collapsed;
         txtVerifyStatus.Text = "✅ LeetCode verified!";
         txtVerifyStatus.Foreground = new SolidColorBrush(Microsoft.UI.Colors.Green);
+
     }
 
     private void btnNo_Click(object sender, RoutedEventArgs e)

@@ -62,7 +62,7 @@ namespace UET_CODERANK.UI
                     localSettings.Values.Remove("RememberMeUserId");
                 }
                 CurrentSession.SetStudent(DL.StudentDL.GetByID(Id));
-
+                Frame.Navigate(typeof(MainShellPage));
             }
             else
             {
