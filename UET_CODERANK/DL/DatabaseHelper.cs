@@ -5,9 +5,6 @@ namespace UET_CODERANK.DL
 {
     internal class DatabaseHelper
     {
-        
-
-        
         private static readonly string ConnectionString =
             "Server=localhost;Database=db_final;Uid=root;Pwd=pakistan1947;";
 
@@ -18,22 +15,24 @@ namespace UET_CODERANK.DL
             return conn;
         }
 
-        public static int ExecuteNonQuery(string query, MySqlParameter[] parameters = null)
+        public static int ExecuteNonQuery(string query, MySqlParameter[] parameters = null, CommandType commandType = CommandType.Text)
         {
             using (MySqlConnection conn = GetConnection())
             using (MySqlCommand cmd = new MySqlCommand(query, conn))
             {
+                cmd.CommandType = commandType;
                 if (parameters != null)
                     cmd.Parameters.AddRange(parameters);
                 return cmd.ExecuteNonQuery();
             }
         }
 
-        public static DataTable ExecuteQuery(string query, MySqlParameter[] parameters = null)
+        public static DataTable ExecuteQuery(string query, MySqlParameter[] parameters = null, CommandType commandType = CommandType.Text)
         {
             using (MySqlConnection conn = GetConnection())
             using (MySqlCommand cmd = new MySqlCommand(query, conn))
             {
+                cmd.CommandType = commandType;
                 if (parameters != null)
                     cmd.Parameters.AddRange(parameters);
                 DataTable dt = new DataTable();
@@ -43,11 +42,12 @@ namespace UET_CODERANK.DL
             }
         }
 
-        public static object ExecuteScalar(string query, MySqlParameter[] parameters = null)
+        public static object ExecuteScalar(string query, MySqlParameter[] parameters = null, CommandType commandType = CommandType.Text)
         {
             using (MySqlConnection conn = GetConnection())
             using (MySqlCommand cmd = new MySqlCommand(query, conn))
             {
+                cmd.CommandType = commandType;
                 if (parameters != null)
                     cmd.Parameters.AddRange(parameters);
                 return cmd.ExecuteScalar();

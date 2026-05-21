@@ -2,7 +2,7 @@
 using System;
 namespace UET_CODERANK.Model
 {
-    internal class LeetCodeStat
+    public class LeetCodeStat
     {
         public int Id { get; set; }
         

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Security.Policy;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -95,15 +96,17 @@ public sealed partial class StudenrRegisterPage : Page
         }
         string passwordText = txtPassword.Password;
         bool done = await Task.Run(() => BL.StudentBL.RegisterStudent(Reg_No, name, Email, passwordText, Leetcode_Username, profileAvatarURL, profileName));
-        if (done)
+        bool done1 = false;
+        if (done && isLeetcodeVerified)
+        {
+            Model.Student student = DL.StudentDL.GetByRegNo(Reg_No);
+            done1 = await Task.Run(() => BL.LeetCodeStatBL.GetLeetCodeStat(student));
+         
+        }
+        if (done && done1)
         {
             Frame.Navigate(typeof(BlankPage1));
         }
-         else
-        {
-            
-        }
-
     }
 
     private void btnLogin_Click(object sender, RoutedEventArgs e)
@@ -160,6 +163,7 @@ public sealed partial class StudenrRegisterPage : Page
         
 
         btnVerify.IsEnabled = false;
+        btnRegister.IsEnabled = false;
         txtVerifyStatus.Text = "Checking...";
         
         var profile = await Task.Run(() => DL.LeetCodeAPI.GetProfile(username));
@@ -169,9 +173,10 @@ public sealed partial class StudenrRegisterPage : Page
             txtVerifyStatus.Text = "❌ Username not found";
             txtVerifyStatus.Foreground = new SolidColorBrush(Microsoft.UI.Colors.Red);
             btnVerify.IsEnabled = true;
+            btnRegister.IsEnabled = true;
             return;
         }
-
+       
         // show profile card
         profileCard.Visibility = Visibility.Visible;
         txtProfileName.Text = profile.Name;
@@ -180,6 +185,7 @@ public sealed partial class StudenrRegisterPage : Page
         profilePic.ProfilePicture = new BitmapImage(new Uri(profile.Avatar));
         txtVerifyStatus.Text = "";
         btnVerify.IsEnabled = true;
+        btnRegister.IsEnabled = true;
     }
 
     private void btnYes_Click(object sender, RoutedEventArgs e)
@@ -188,6 +194,7 @@ public sealed partial class StudenrRegisterPage : Page
         profileCard.Visibility = Visibility.Collapsed;
         txtVerifyStatus.Text = "✅ LeetCode verified!";
         txtVerifyStatus.Foreground = new SolidColorBrush(Microsoft.UI.Colors.Green);
+        
 
     }
 

@@ -11,6 +11,7 @@ namespace UET_CODERANK.BL
     {
         public static Student Student { get; private set; }
         public static Admin Admin { get; private set; }
+        public static LeetCodeStat leetCodeStat { get; private set; }
         public static bool IsAdmin => Admin != null;
         public static bool IsLoggedIn => Student != null || Admin != null;
 
@@ -19,7 +20,10 @@ namespace UET_CODERANK.BL
             Student = student;
             Admin = null;
         }
-
+        public static void SetLeetCodeStat(LeetCodeStat stat)
+        {
+            leetCodeStat = stat;
+        }
         public static void SetAdmin(Admin admin)
         {
             Admin = admin;

@@ -1,6 +1,7 @@
 ﻿
 using MySql.Data.MySqlClient;
 using System;
+using System.Data;
 
 namespace UET_CODERANK.DL
 {
@@ -8,20 +9,19 @@ namespace UET_CODERANK.DL
     {
         public static void AddLeetCodeStat(Model.LeetCodeStat stat)
         {
-            string querry = "INSERT INTO leetcode_stat(student_id,total_solved,easy_solved,medium_solved,hard_solved,global_ranking,last_updated) Values(@student_id,@total_solved,@easy_solved,@medium_solved,@hard_solved,@global_ranking,@last_updated)";
             MySqlParameter[] parameters = new MySqlParameter[]
             {
-                new MySqlParameter("@student_id",stat.Student_id),
-                new MySqlParameter("@total_solved",stat.Total_solved),
-                new MySqlParameter("@easy_solved",stat.Easy_solved),
-                new MySqlParameter("@medium_solved",stat.Medium_solved),
-                new MySqlParameter("@hard_solved",stat.Hard_solved),
-                new MySqlParameter("@global_ranking",stat.Global_rank),
-                new MySqlParameter("@last_updated",DateTime.Now)
+                new MySqlParameter("@studentId", stat.Student_id),
+                new MySqlParameter("@TotalSolved", stat.Total_solved),
+                new MySqlParameter("@EasySolved", stat.Easy_solved),
+                new MySqlParameter("@MediumSolved", stat.Medium_solved),
+                new MySqlParameter("@HardSolved", stat.Hard_solved),
+                new MySqlParameter("@Ranking", stat.Global_rank),
+                new MySqlParameter("@LastUpdated", DateTime.Now)
             };
             try
             {
-                DatabaseHelper.ExecuteNonQuery(querry, parameters);
+                DatabaseHelper.ExecuteNonQuery("stp_InsertLeetcodeStats", parameters, CommandType.StoredProcedure);
             }
             catch (Exception ex)
             {
@@ -31,20 +31,19 @@ namespace UET_CODERANK.DL
         }
         public static void UpdateLeetCodeStat(Model.LeetCodeStat stat)
         {
-            string querry = "UPDATE leetcode_stat SET total_solved=@total_solved,easy_solved=@easy_solved,medium_solved=@medium_solved,hard_solved=@hard_solved,global_ranking=@global_ranking,last_updated=@last_updated WHERE student_id=@student_id";
             MySqlParameter[] parameters = new MySqlParameter[]
             {
-                new MySqlParameter("@student_id",stat.Student_id),
-                new MySqlParameter("@total_solved",stat.Total_solved),
-                new MySqlParameter("@easy_solved",stat.Easy_solved),
-                new MySqlParameter("@medium_solved",stat.Medium_solved),
-                new MySqlParameter("@hard_solved",stat.Hard_solved),
-                new MySqlParameter("@global_ranking",stat.Global_rank),
-                new MySqlParameter("@last_updated",DateTime.Now)
+                new MySqlParameter("@StdId",stat.Student_id),
+                new MySqlParameter("@Total",stat.Total_solved),
+                new MySqlParameter("@Easy",stat.Easy_solved),
+                new MySqlParameter("@MediumSolved",stat.Medium_solved),
+                new MySqlParameter("@Hard",stat.Hard_solved),
+                new MySqlParameter("@ranking",stat.Global_rank),
+                new MySqlParameter("@lastUpdated",DateTime.Now)
             };
             try
             {
-                DatabaseHelper.ExecuteNonQuery(querry, parameters);
+                DatabaseHelper.ExecuteNonQuery("stp_UpdateLeetcodeStatsByStdId", parameters,CommandType.StoredProcedure);
             }
             catch (Exception ex)
             {
@@ -71,7 +70,7 @@ namespace UET_CODERANK.DL
         }
         public static Model.LeetCodeStat GetLeetCodeStatByStudentId(int student_id)
         {
-            string querry = "SELECT * FROM leetcode_stat WHERE student_id = @student_id";
+            string querry = "SELECT * FROM leetcode_stats WHERE student_id = @student_id";
             MySqlParameter[] parameters = new MySqlParameter[]
             {
                 new MySqlParameter("@student_id",student_id)

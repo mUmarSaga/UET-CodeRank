@@ -50,7 +50,6 @@ namespace UET_CODERANK.UI
             int Id = await Task.Run(() => StudentBL.LoginStudent(email, password));
             if (Id > 0)
             {
-                ShowError(PasswordErrorMessage, "Login successful");
                 var localSettings = ApplicationData.Current.LocalSettings;
 
                 if (RememberMe.IsChecked == true)
@@ -61,7 +60,10 @@ namespace UET_CODERANK.UI
                 {
                     localSettings.Values.Remove("RememberMeUserId");
                 }
-                CurrentSession.SetStudent(DL.StudentDL.GetByID(Id));
+                Model.Student student = DL.StudentDL.GetByID(Id);
+                CurrentSession.SetStudent(student);
+                CurrentSession.SetLeetCodeStat(DL.LeetCodeStatDL.GetLeetCodeStatByStudentId(Id));
+                LeetCodeStatBL.UpdateLeetCodeStat(student);
                 Frame.Navigate(typeof(MainShellPage));
             }
             else

@@ -33,6 +33,15 @@ CREATE TABLE `admin` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `admin`
+--
+
+LOCK TABLES `admin` WRITE;
+/*!40000 ALTER TABLE `admin` DISABLE KEYS */;
+/*!40000 ALTER TABLE `admin` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `api_sync_log`
 --
 
@@ -52,6 +61,15 @@ CREATE TABLE `api_sync_log` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `api_sync_log`
+--
+
+LOCK TABLES `api_sync_log` WRITE;
+/*!40000 ALTER TABLE `api_sync_log` DISABLE KEYS */;
+/*!40000 ALTER TABLE `api_sync_log` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `badges`
 --
 
@@ -66,6 +84,15 @@ CREATE TABLE `badges` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `badges`
+--
+
+LOCK TABLES `badges` WRITE;
+/*!40000 ALTER TABLE `badges` DISABLE KEYS */;
+/*!40000 ALTER TABLE `badges` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `batch`
@@ -84,6 +111,15 @@ CREATE TABLE `batch` (
   CONSTRAINT `department_id` FOREIGN KEY (`department_id`) REFERENCES `department` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `batch`
+--
+
+LOCK TABLES `batch` WRITE;
+/*!40000 ALTER TABLE `batch` DISABLE KEYS */;
+/*!40000 ALTER TABLE `batch` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `contest_stats`
@@ -106,6 +142,15 @@ CREATE TABLE `contest_stats` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `contest_stats`
+--
+
+LOCK TABLES `contest_stats` WRITE;
+/*!40000 ALTER TABLE `contest_stats` DISABLE KEYS */;
+/*!40000 ALTER TABLE `contest_stats` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `department`
 --
 
@@ -121,6 +166,15 @@ CREATE TABLE `department` (
   CONSTRAINT `id` FOREIGN KEY (`university_id`) REFERENCES `university` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `department`
+--
+
+LOCK TABLES `department` WRITE;
+/*!40000 ALTER TABLE `department` DISABLE KEYS */;
+/*!40000 ALTER TABLE `department` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `enrollment_request`
@@ -145,6 +199,15 @@ CREATE TABLE `enrollment_request` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `enrollment_request`
+--
+
+LOCK TABLES `enrollment_request` WRITE;
+/*!40000 ALTER TABLE `enrollment_request` DISABLE KEYS */;
+/*!40000 ALTER TABLE `enrollment_request` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `error_log`
 --
 
@@ -160,6 +223,15 @@ CREATE TABLE `error_log` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `error_log`
+--
+
+LOCK TABLES `error_log` WRITE;
+/*!40000 ALTER TABLE `error_log` DISABLE KEYS */;
+/*!40000 ALTER TABLE `error_log` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `leetcode_stats`
@@ -180,8 +252,18 @@ CREATE TABLE `leetcode_stats` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `student_id_UNIQUE` (`student_id`),
   CONSTRAINT `std_id` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `leetcode_stats`
+--
+
+LOCK TABLES `leetcode_stats` WRITE;
+/*!40000 ALTER TABLE `leetcode_stats` DISABLE KEYS */;
+INSERT INTO `leetcode_stats` VALUES (1,1,3935,944,2057,934,13,'2026-05-21 21:00:36');
+/*!40000 ALTER TABLE `leetcode_stats` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `notification`
@@ -203,6 +285,15 @@ CREATE TABLE `notification` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `notification`
+--
+
+LOCK TABLES `notification` WRITE;
+/*!40000 ALTER TABLE `notification` DISABLE KEYS */;
+/*!40000 ALTER TABLE `notification` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `section`
 --
 
@@ -220,6 +311,15 @@ CREATE TABLE `section` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `section`
+--
+
+LOCK TABLES `section` WRITE;
+/*!40000 ALTER TABLE `section` DISABLE KEYS */;
+/*!40000 ALTER TABLE `section` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `student`
 --
 
@@ -234,15 +334,29 @@ CREATE TABLE `student` (
   `password` varchar(255) NOT NULL,
   `leetcode_username` varchar(100) DEFAULT NULL,
   `profile_pic_path` varchar(255) DEFAULT NULL,
+  `profile_name` varchar(75) DEFAULT NULL,
   `is_approved` tinyint DEFAULT '0',
   `created_at` datetime DEFAULT NULL,
   `section_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `reg_no_UNIQUE` (`reg_no`),
   UNIQUE KEY `email_UNIQUE` (`email`),
-  UNIQUE KEY `leetcode_username_UNIQUE` (`leetcode_username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  UNIQUE KEY `leetcode_username_UNIQUE` (`leetcode_username`),
+  KEY `section_idx` (`section_id`),
+  KEY `section_student_idx` (`section_id`),
+  CONSTRAINT `section_student` FOREIGN KEY (`section_id`) REFERENCES `section` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `student`
+--
+
+LOCK TABLES `student` WRITE;
+/*!40000 ALTER TABLE `student` DISABLE KEYS */;
+INSERT INTO `student` VALUES (1,'2025-CS-00','Test','test@gmail.com','$2a$11$a//HgsgL2OMTW5N3Y9jhp.zw/30cRQzxUhblvfZyJaNpYkdcmUPkW','agrawalji','https://assets.leetcode.com/users/agrawalji/avatar_1716646875.png','Nikhil Agrawal',0,'2026-05-21 19:55:18',NULL);
+/*!40000 ALTER TABLE `student` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `student_badges`
@@ -265,6 +379,15 @@ CREATE TABLE `student_badges` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `student_badges`
+--
+
+LOCK TABLES `student_badges` WRITE;
+/*!40000 ALTER TABLE `student_badges` DISABLE KEYS */;
+/*!40000 ALTER TABLE `student_badges` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `university`
 --
 
@@ -278,6 +401,15 @@ CREATE TABLE `university` (
   UNIQUE KEY `name_UNIQUE` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `university`
+--
+
+LOCK TABLES `university` WRITE;
+/*!40000 ALTER TABLE `university` DISABLE KEYS */;
+/*!40000 ALTER TABLE `university` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `weekly_snapshot`
@@ -300,6 +432,15 @@ CREATE TABLE `weekly_snapshot` (
   CONSTRAINT `_id` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `weekly_snapshot`
+--
+
+LOCK TABLES `weekly_snapshot` WRITE;
+/*!40000 ALTER TABLE `weekly_snapshot` DISABLE KEYS */;
+/*!40000 ALTER TABLE `weekly_snapshot` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -310,4 +451,4 @@ CREATE TABLE `weekly_snapshot` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-05-01 13:32:39
+-- Dump completed on 2026-05-21 21:15:11

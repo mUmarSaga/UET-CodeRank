@@ -29,6 +29,7 @@ namespace UET_CODERANK.UI
         public MainShellPage()
         {
             this.InitializeComponent();
+            
             LoadUserInfo();
         
         }
@@ -42,7 +43,7 @@ namespace UET_CODERANK.UI
 
         private void btnHome_Click(object sender, RoutedEventArgs e)
         {
-            //contentFrame.Navigate(typeof(DashboardPage));
+            contentFrame.Navigate(typeof(HomePage));
         }
 
         private void btnLeaderboard_Click(object sender, RoutedEventArgs e)

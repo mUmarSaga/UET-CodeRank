@@ -38,7 +38,8 @@ namespace UET_CODERANK.DL
                 LeetCodeStat leetCodeStat = Newtonsoft.Json.JsonConvert.DeserializeObject<LeetCodeStat>(json);
                 string url2 = $"https://alfa-leetcode-api.onrender.com/{username}";
                 string json2 = client.GetStringAsync(url2).Result;
-                leetCodeStat = Newtonsoft.Json.JsonConvert.DeserializeObject<LeetCodeStat>(json2);
+                LeetCodeStat leetCodeStat2 = Newtonsoft.Json.JsonConvert.DeserializeObject<LeetCodeStat>(json2);
+                leetCodeStat.Global_rank = leetCodeStat2.Global_rank;
                 return leetCodeStat;
             } catch { return null; }
         }
