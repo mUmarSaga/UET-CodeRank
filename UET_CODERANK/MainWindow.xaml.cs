@@ -25,17 +25,21 @@ namespace UET_CODERANK
     /// </summary>
     public sealed partial class MainWindow : Window
     {
+        private AppWindow _appWindow;
+
         public MainWindow()
         {
             InitializeComponent();
-            rootFrame.Navigate(typeof(BlankPage1));
-            AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
-            if (AppWindow.TitleBar.ExtendsContentIntoTitleBar)
-            {
-                AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
-                AppWindow.TitleBar.ButtonBackgroundColor = Microsoft.UI.Colors.Transparent;
-                AppWindow.TitleBar.ButtonInactiveBackgroundColor = Microsoft.UI.Colors.Transparent;
+            // Obtain the AppWindow for this Window instance
+            var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
+            var windowId = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(hwnd);
+            _appWindow = AppWindow.GetFromWindowId(windowId);
 
+            if (_appWindow != null)
+            {
+                _appWindow.TitleBar.ExtendsContentIntoTitleBar = true;
+                _appWindow.TitleBar.ButtonBackgroundColor = Microsoft.UI.Colors.Transparent;
+                _appWindow.TitleBar.ButtonInactiveBackgroundColor = Microsoft.UI.Colors.Transparent;
             }
             this.SystemBackdrop = new MicaBackdrop();
             
@@ -48,9 +52,15 @@ namespace UET_CODERANK
             // Pages that should be locked (non-resizable)
             bool isAuthPage = e.SourcePageType == typeof(BlankPage1)
                            || e.SourcePageType == typeof(StudenrRegisterPage); // add more as needed
-            var _presenter = AppWindow.Presenter as OverlappedPresenter;
-            _presenter.IsResizable = !isAuthPage;
-            _presenter.IsMaximizable = !isAuthPage;
+
+            if (_appWindow == null) return;
+
+            var presenter = _appWindow.Presenter as OverlappedPresenter;
+            if (presenter != null)
+            {
+                presenter.IsResizable = !isAuthPage;
+                presenter.IsMaximizable = !isAuthPage;
+            }
         }
 
 
