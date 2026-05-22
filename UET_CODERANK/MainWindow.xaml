@@ -15,6 +15,6 @@
     </Window.SystemBackdrop>
 
     <Grid>
-        <Frame x:Name="rootFrame"/>
+        <Frame x:Name="rootFrame" x:FieldModifier="public"/>
     </Grid>
 </Window>

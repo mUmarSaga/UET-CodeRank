@@ -64,7 +64,7 @@ namespace UET_CODERANK.UI
                 CurrentSession.SetStudent(student);
                 CurrentSession.SetLeetCodeStat(DL.LeetCodeStatDL.GetLeetCodeStatByStudentId(Id));
                 LeetCodeStatBL.UpdateLeetCodeStat(student);
-                Frame.Navigate(typeof(MainShellPage));
+                App.MainWindowFrame?.Navigate(typeof(MainShellPage));
             }
             else
             {
@@ -98,7 +98,9 @@ namespace UET_CODERANK.UI
             // navigate to register page
             if (rbStudent.IsChecked == true)
             {
-                this.Frame.Navigate(typeof(StudenrRegisterPage));
+                App.MainWindowFrame?.Navigate(typeof(StudenrRegisterPage));
+       
+                
             }
         }
 

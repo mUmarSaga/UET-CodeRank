@@ -30,6 +30,7 @@ namespace UET_CODERANK
     public partial class App : Application
     {
         private Window? _window;
+        public static Frame? MainWindowFrame { get; private set; }
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -47,21 +48,14 @@ namespace UET_CODERANK
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
             _window = new MainWindow();
-
-            // Create a Frame to act as the navigation context
-            Frame rootFrame = new Frame();
-            _window.Content = rootFrame;
+            MainWindowFrame = ((MainWindow)_window).rootFrame;
 
             var localSettings = ApplicationData.Current.LocalSettings;
             if (localSettings.Values.ContainsKey("RememberMeUserId"))
             {
                 int savedUserId = (int)localSettings.Values["RememberMeUserId"];
                 Student student = DL.StudentDL.GetById(savedUserId);
-                //rootFrame.Navigate(typeof(UI.DashboardPage)); // or wherever auto-login goes
-            }
-            else
-            {
-                rootFrame.Navigate(typeof(UI.BlankPage1)); // your login/landing page
+                // navigate to dashboard via MainWindow's frame
             }
 
             _window.Activate();
