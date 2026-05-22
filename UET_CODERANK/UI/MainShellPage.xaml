@@ -64,7 +64,7 @@
                 </StackPanel>
 
                 <!-- Nav Buttons -->
-                <StackPanel Grid.Row="1" Padding="8,0" Spacing="2">
+                <StackPanel Grid.Row="1" Padding="8,0" Spacing="10">
 
                     <!-- Active button style - filled background -->
                     <Button x:Name="btnHome"
@@ -80,8 +80,34 @@
                             <TextBlock Text="Home" Foreground="White" FontSize="16" FontWeight="Medium" VerticalAlignment="Bottom"/>
                         </StackPanel>
                     </Button>
+                    <Button x:Name="btnLeaderboard"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Left"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Padding="17,10,14,14"
+                            CornerRadius="10"
+                            Click="btnLeaderboard_Click">
+                        <StackPanel Orientation="Horizontal" Spacing="16">
+                            <FontIcon Glyph="&#xE9D5;" Foreground="White" FontSize="26" VerticalAlignment="Center"/>
+                            <TextBlock Text="Leaderboard" Foreground="White" FontSize="16" FontWeight="Medium" VerticalAlignment="Bottom"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="btnJoinClass"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Left"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Padding="17,10,14,14"
+                            CornerRadius="10"
+                            Click="btnJoinClass_Click">
+                        <StackPanel Orientation="Horizontal" Spacing="16">
+                            <FontIcon Glyph="&#xE9D5;" Foreground="White" FontSize="26" VerticalAlignment="Center"/>
+                            <TextBlock Text="Leaderboard" Foreground="White" FontSize="16" FontWeight="Medium" VerticalAlignment="Bottom"/>
+                        </StackPanel>
+                    </Button>
 
-                   
+
 
                 </StackPanel>
 

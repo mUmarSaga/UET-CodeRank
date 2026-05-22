@@ -8,25 +8,24 @@ namespace UET_CODERANK.DL
     {
         public static void AddStudent(Student student)
         {
-            string querry = "INSERT INTO student(reg_no,name,email,password,leetcode_username,profile_pic_path,profile_name,is_approved,created_at,section_id) Values(@reg_no,@name,@email,@password,@leetcode_username,@profile_pic_path,@profile_name,@is_approved,@created_at,@section_id)";
+         
             MySqlParameter[] parameters = new MySqlParameter[]
             {
-                new MySqlParameter("@name",student.Name),
-                new MySqlParameter("@reg_no",student.RegNo),
-                new MySqlParameter("@email",student.Email),
-                new MySqlParameter("@password",student.Password),
-                new MySqlParameter("@leetcode_username",student.LeetcodeUsername ?? (object)DBNull.Value),
-                new MySqlParameter("@profile_pic_path",student.ProfilePicPath ?? (object)DBNull.Value),
-                new MySqlParameter("@profile_name",student.ProfileName ?? (object)DBNull.Value),
-                new MySqlParameter("@is_approved",student.IsApproved),
-                new MySqlParameter("@created_at",student.CreatedAt),
-                new MySqlParameter("@section_id",student.SectionId==0 ? (object)DBNull.Value : student.SectionId)
+                new MySqlParameter("@std_name",student.Name),
+                new MySqlParameter("@REG_NO",student.RegNo),
+                new MySqlParameter("@Email",student.Email),
+                new MySqlParameter("@Password_",student.Password),
+                new MySqlParameter("@Leetcode",student.LeetcodeUsername ?? (object)DBNull.Value),
+                new MySqlParameter("@Pp",student.ProfilePicPath ?? (object)DBNull.Value),
+                new MySqlParameter("@Pn",student.ProfileName ?? (object)DBNull.Value),
+                new MySqlParameter("@Approved",student.IsApproved),
+                new MySqlParameter("@created",student.CreatedAt),
+                new MySqlParameter("@section",student.SectionId==0 ? (object)DBNull.Value : student.SectionId)
             };
            
             try
             {
-                DatabaseHelper.ExecuteNonQuery(querry, parameters);
-
+                DatabaseHelper.ExecuteNonQuery("stp_AddStudent", parameters,System.Data.CommandType.StoredProcedure);
             }
             catch (Exception ex)
             {

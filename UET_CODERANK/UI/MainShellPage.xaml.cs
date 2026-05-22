@@ -43,12 +43,13 @@ namespace UET_CODERANK.UI
 
         private void btnHome_Click(object sender, RoutedEventArgs e)
         {
+            
             contentFrame.Navigate(typeof(HomePage));
         }
 
         private void btnLeaderboard_Click(object sender, RoutedEventArgs e)
         {
-            //contentFrame.Navigate(typeof(LeaderboardPage));
+            contentFrame.Navigate(typeof(LeaderboardPage));
         }
 
         private void btnJoinClass_Click(object sender, RoutedEventArgs e)
