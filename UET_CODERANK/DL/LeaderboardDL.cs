@@ -49,7 +49,8 @@ namespace UET_CODERANK.DL
                     HardSolved = row["hard_solved"] == DBNull.Value ? 0 : Convert.ToInt32(row["hard_solved"]),
                     GlobalRanking = row["global_ranking"] == DBNull.Value ? 0 : Convert.ToInt32(row["global_ranking"]),
                     ContestRating = row["contest_rating"] == DBNull.Value ? 0 : Convert.ToSingle(row["contest_rating"]),
-                    ContestAttended = row["contest_attended"] == DBNull.Value ? 0 : Convert.ToInt32(row["contest_attended"])
+                    ContestAttended = row["contest_attended"] == DBNull.Value ? 0 : Convert.ToInt32(row["contest_attended"]),
+                    Score = row["score"] == DBNull.Value ? 0 : Convert.ToInt32(row["score"])
                 });
             }
             return entries;

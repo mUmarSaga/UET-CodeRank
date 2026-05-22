@@ -15,6 +15,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="UI\HomePage.xaml" />
+    <None Remove="UI\JoinClassPage.xaml" />
     <None Remove="UI\LeaderboardPage.xaml" />
     <None Remove="UI\MainShellPage.xaml" />
     <None Remove="UI\StudenrRegisterPage.xaml" />
@@ -49,6 +50,11 @@
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="2.0.1" />
     <PackageReference Include="MySql.Data" Version="9.7.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="UI\JoinClassPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="UI\LeaderboardPage.xaml">

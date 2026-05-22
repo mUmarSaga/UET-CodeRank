@@ -78,7 +78,7 @@ namespace UET_CODERANK.UI
 
         private void btnJoinClass_Click(object sender, RoutedEventArgs e)
         {
-            //contentFrame.Navigate(typeof(JoinClassPage));
+            contentFrame.Navigate(typeof(JoinClassPage));
         }
 
         private void btnSettings_Click(object sender, RoutedEventArgs e)

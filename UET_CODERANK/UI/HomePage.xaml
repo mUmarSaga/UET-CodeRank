@@ -33,10 +33,18 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
+                <Border Grid.Column="0" Background="#1A1A1A" CornerRadius="12" Padding="16">
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="Score" Foreground="#888888" FontSize="12"/>
+                        <TextBlock x:Name="txtScore" Text="0" Foreground="White" FontSize="32" FontWeight="Bold"/>
+                        <TextBlock Text="Score" Foreground="#888888" FontSize="11"/>
+                    </StackPanel>
+                </Border>
 
                 <!-- Total Solved -->
-                <Border Grid.Column="0" Background="#1A1A1A" CornerRadius="12" Padding="16">
+                <Border Grid.Column="1" Background="#1A1A1A" CornerRadius="12" Padding="16">
                     <StackPanel Spacing="4">
                         <TextBlock Text="Total Solved" Foreground="#888888" FontSize="12"/>
                         <TextBlock x:Name="txtTotalSolved" Text="0" Foreground="White" FontSize="32" FontWeight="Bold"/>
@@ -45,7 +53,7 @@
                 </Border>
 
                 <!-- Global Rank -->
-                <Border Grid.Column="1" Background="#1A1A1A" CornerRadius="12" Padding="16">
+                <Border Grid.Column="2" Background="#1A1A1A" CornerRadius="12" Padding="16">
                     <StackPanel Spacing="4">
                         <TextBlock Text="Global Rank" Foreground="#888888" FontSize="12"/>
                         <TextBlock x:Name="txtGlobalRank" Text="#0" Foreground="White" FontSize="32" FontWeight="Bold"/>
@@ -54,7 +62,7 @@
                 </Border>
 
                 <!-- Contest Rating -->
-                <Border Grid.Column="2" Background="#1A1A1A" CornerRadius="12" Padding="16">
+                <Border Grid.Column="3" Background="#1A1A1A" CornerRadius="12" Padding="16">
                     <StackPanel Spacing="4">
                         <TextBlock Text="Contest Rating" Foreground="#888888" FontSize="12"/>
                         <TextBlock x:Name="txtContestRating" Text="0" Foreground="White" FontSize="32" FontWeight="Bold"/>
@@ -63,7 +71,7 @@
                 </Border>
 
                 <!-- Contests Attended -->
-                <Border Grid.Column="3" Background="#1A1A1A" CornerRadius="12" Padding="16">
+                <Border Grid.Column="4" Background="#1A1A1A" CornerRadius="12" Padding="16">
                     <StackPanel Spacing="4">
                         <TextBlock Text="Contests" Foreground="#888888" FontSize="12"/>
                         <TextBlock x:Name="txtContests" Text="0" Foreground="White" FontSize="32" FontWeight="Bold"/>

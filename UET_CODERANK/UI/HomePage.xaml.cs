@@ -38,11 +38,11 @@ public sealed partial class HomePage : Page
     {
         InitializeComponent();
         LoadStats();
-        
     }
     private void LoadStats()
     {
         Model.LeetCodeStat stats = CurrentSession.leetCodeStat;
+        int score = stats.Easy_solved * 1 + stats.Medium_solved * 3 + stats.Hard_solved * 5;
         Model.ContestStats contest = null;
         
 
@@ -50,10 +50,12 @@ public sealed partial class HomePage : Page
         {
             txtWelcome.Text = $"Welcome back, {CurrentSession.Student.Name} 👋";
             txtTotalSolved.Text = stats.Total_solved.ToString();
-            txtGlobalRank.Text = $"#{stats.Global_rank}";
+            txtGlobalRank.Text = $"#{stats.Global_rank}";   
+            txtScore.Text = $"{score}";
             txtEasy.Text = $"Easy: {stats.Easy_solved}";
             txtMedium.Text = $"Medium: {stats.Medium_solved}";
             txtHard.Text = $"Hard: {stats.Hard_solved}";
+           
 
             // Donut chart
             donutChart.Series = new ISeries[]

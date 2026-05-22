@@ -268,6 +268,7 @@
                                 <ColumnDefinition Width="100"/>
                                 <ColumnDefinition Width="120"/>
                                 <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="120"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0" Text="Rank" Foreground="#888888" FontSize="12" FontWeight="SemiBold"/>
                             <TextBlock Grid.Column="1" Text="Student" Foreground="#888888" FontSize="12" FontWeight="SemiBold"/>
@@ -276,6 +277,7 @@
                             <TextBlock Grid.Column="4" Text="Hard" Foreground="#FF375F" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Center"/>
                             <TextBlock Grid.Column="5" Text="Total" Foreground="White" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Center"/>
                             <TextBlock Grid.Column="6" Text="Contest Rating" Foreground="#888888" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Column="7" Text="Score" Foreground="#888888" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Center"/>
                         </Grid>
 
                         <!-- Rows loaded in code -->

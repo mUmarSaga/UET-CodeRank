@@ -38,6 +38,8 @@ namespace UET_CODERANK.UI
 
         private void LoadFilters()
         {
+            cmbBatch.Items.Add(new ComboBoxItem { Content = "All Batches" });
+            cmbSection.Items.Add(new ComboBoxItem { Content = "All Sections" });
             var batches = BatchDL.GetAllBatches();
             foreach (var batch in batches)
             {
@@ -128,6 +130,7 @@ namespace UET_CODERANK.UI
             AddCell(grid, 4, entry.HardSolved.ToString(), 13, "#FF375F", true);
             AddCell(grid, 5, entry.TotalSolved.ToString(), 14, "#FFFFFF", true, true);
             AddCell(grid, 6, entry.ContestRating.ToString("F0"), 13, "#888888", true);
+            AddCell(grid, 7, entry.Score.ToString("F0"), 13, "#888888", true);
 
             row.Child = grid;
             return row;

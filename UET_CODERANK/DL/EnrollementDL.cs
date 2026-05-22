@@ -1,131 +1,110 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Data;
-
-using MySql.Data.MySqlClient;
+using UET_CODERANK.Model;
 
 namespace UET_CODERANK.DL
 {
-    internal class EnrollementDL
+    public class EnrollmentDL
     {
-        public static void AddRequest(Model.EnrollementRequest request)
+        public static bool SendRequest(int studentId, int sectionId)
         {
-            string querry = $"INSERT INTO enrollement_request (id,student_id,section_id,status,requested_at,reviewed_at) VALUES (@id,@student_id,@section_id,@status,@requested_at,@reviewed_At)";
-            MySqlParameter[] parameters = new MySqlParameter[] {
-                new MySqlParameter("@id", request.Id),
-                new MySqlParameter("@student_id", request.StudentId),
-                new MySqlParameter("@section_id", request.SectionId),
-                new MySqlParameter("@status", request.Status.ToString()),
-                new MySqlParameter("@requested_at", request.RequestedAt),
-                new MySqlParameter("@reviewed_at", request.ReviewedAt)
+            string query = "INSERT INTO enrollment_request (student_id, section_id, status, requested_at) " +
+                           "VALUES (@studentId, @sectionId, 'PENDING', @requestedAt)";
+            MySqlParameter[] p = {
+                new MySqlParameter("@studentId", studentId),
+                new MySqlParameter("@sectionId", sectionId),
+                new MySqlParameter("@requestedAt", DateTime.Now)
             };
-            try
-            {
-                DatabaseHelper.ExecuteNonQuery(querry, parameters);
+            return DatabaseHelper.ExecuteNonQuery(query, p) > 0;
+        }
 
-            }
-            catch (Exception ex)
-            {
-                ErrorLog.Log(ex);
-                throw;
-            }
-        }
-        public static List<Model.EnrollementRequest> GetRequestsByStudentId(int studentId)
+        public static EnrollementRequest GetLatestRequest(int studentId)
         {
-            string querry = $"SELECT * FROM enrollement_request WHERE student_id = @student_id";
-            MySqlParameter[] parameters = new MySqlParameter[] {
-                new MySqlParameter("@student_id", studentId)
+            string query = "SELECT * FROM enrollment_request WHERE student_id = @studentId " +
+                           "ORDER BY requested_at DESC LIMIT 1";
+            MySqlParameter[] p = { new MySqlParameter("@studentId", studentId) };
+            DataTable dt = DatabaseHelper.ExecuteQuery(query, p);
+
+            if (dt.Rows.Count == 0) return null;
+
+            var row = dt.Rows[0];
+            return new EnrollementRequest
+            {
+                Id = Convert.ToInt32(row["id"]),
+                StudentId = Convert.ToInt32(row["student_id"]),
+                SectionId = Convert.ToInt32(row["section_id"]),
+                Status = Enum.Parse<EnrollementStatus>(row["status"].ToString()),
+                RequestedAt = Convert.ToDateTime(row["requested_at"]),
+                ReviewedAt = row["reviewed_at"] == DBNull.Value ? null : Convert.ToDateTime(row["reviewed_at"])
             };
+        }
+
+        public static bool HasPendingRequest(int studentId)
+        {
+            string query = "SELECT COUNT(*) FROM enrollment_request WHERE student_id = @studentId AND status = 'PENDING'";
+            MySqlParameter[] p = { new MySqlParameter("@studentId", studentId) };
+            return Convert.ToInt32(DatabaseHelper.ExecuteScalar(query, p)) > 0;
+        }
+
+        public static bool ApproveRequest(int requestId, int studentId, int sectionId)
+        {
             try
             {
-                var dt = DatabaseHelper.ExecuteQuery(querry, parameters);
-                List<Model.EnrollementRequest> requests = new List<Model.EnrollementRequest>();
-                foreach (DataRow row in dt.Rows)
+                // Update request status
+                string q1 = "UPDATE enrollment_request SET status = 'APPROVED', reviewed_at = @reviewedAt WHERE id = @id";
+                MySqlParameter[] p1 = {
+                    new MySqlParameter("@reviewedAt", DateTime.Now),
+                    new MySqlParameter("@id", requestId)
+                };
+                DatabaseHelper.ExecuteNonQuery(q1, p1);
+
+                // Update student section
+                string q2 = "UPDATE student SET section_id = @sectionId, is_approved = 1 WHERE id = @studentId";
+                MySqlParameter[] p2 = {
+                    new MySqlParameter("@sectionId", sectionId),
+                    new MySqlParameter("@studentId", studentId)
+                };
+                DatabaseHelper.ExecuteNonQuery(q2, p2);
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public static bool RejectRequest(int requestId)
+        {
+            string query = "UPDATE enrollment_request SET status = 'REJECTED', reviewed_at = @reviewedAt WHERE id = @id";
+            MySqlParameter[] p = {
+                new MySqlParameter("@reviewedAt", DateTime.Now),
+                new MySqlParameter("@id", requestId)
+            };
+            return DatabaseHelper.ExecuteNonQuery(query, p) > 0;
+        }
+
+        public static List<EnrollementRequest> GetAllPending()
+        {
+            string query = "SELECT * FROM enrollment_request WHERE status = 'PENDING' ORDER BY requested_at ASC";
+            DataTable dt = DatabaseHelper.ExecuteQuery(query);
+            List<EnrollementRequest> list = new List<EnrollementRequest>();
+
+            foreach (DataRow row in dt.Rows)
+            {
+                list.Add(new EnrollementRequest
                 {
-                    requests.Add(new Model.EnrollementRequest
-                    {
-                        Id = Convert.ToInt32(row["id"]),
-                        StudentId = Convert.ToInt32(row["student_id"]),
-                        SectionId = Convert.ToInt32(row["section_id"]),
-                        Status = Enum.Parse<Model.EnrollementStatus>(row["status"].ToString()),
-                        RequestedAt = Convert.ToDateTime(row["requested_at"]),
-                        ReviewedAt = row["reviewed_at"] == DBNull.Value ? null : (DateTime?)Convert.ToDateTime(row["reviewed_at"])
-                    });
-                }
-                return requests;
+                    Id = Convert.ToInt32(row["id"]),
+                    StudentId = Convert.ToInt32(row["student_id"]),
+                    SectionId = Convert.ToInt32(row["section_id"]),
+                    Status = Enum.Parse<EnrollementStatus>(row["status"].ToString()),
+                    RequestedAt = Convert.ToDateTime(row["requested_at"]),
+                    ReviewedAt = row["reviewed_at"] == DBNull.Value ? null : Convert.ToDateTime(row["reviewed_at"])
+                });
             }
-            catch (Exception ex)
-            {
-                ErrorLog.Log(ex);
-                throw;
-            }
-        }
-        public static List<Model.EnrollementRequest> GetPending()
-        {
-            string querry  = $"SELECT * FROM enrollement_request WHERE status = @status";
-            MySqlParameter[] parameters = new MySqlParameter[] {
-                new MySqlParameter("@status", "PENDING")
-            };
-            try
-            {
-                DataTable table = DatabaseHelper.ExecuteQuery(querry, parameters);
-                List<Model.EnrollementRequest> requests = new List<Model.EnrollementRequest>();
-                foreach (DataRow row in table.Rows) { 
-                    requests.Add(new Model.EnrollementRequest
-                    {
-                        Id = Convert.ToInt32(row["id"]),
-                        StudentId = Convert.ToInt32(row["student_id"]),
-                        SectionId = Convert.ToInt32(row["section_id"]),
-                        Status = Enum.Parse<Model.EnrollementStatus>(row["status"].ToString()),
-                        RequestedAt = Convert.ToDateTime(row["requested_at"]),
-                        ReviewedAt = row["reviewed_at"] == DBNull.Value ? null : (DateTime?)Convert.ToDateTime(row["reviewed_at"])
-                    });
-                }
-                return requests;
-            }
-            catch (Exception ex)
-            {
-                ErrorLog.Log(ex);
-                throw;
-            }
-        }
-        public static void AcceptRequest(int StudentID)
-        {
-            string querry = $"UPDATE enrollement_request SET status = @status, reviewed_at = @reviewed_at WHERE student_id = @student_id AND status = @pending_status";
-            MySqlParameter[] parameters = new MySqlParameter[] {
-                new MySqlParameter("@status", "ACCEPTED"),
-                new MySqlParameter("@reviewed_at", DateTime.Now),
-                new MySqlParameter("@student_id", StudentID),
-                new MySqlParameter("@pending_status", "PENDING")
-            };
-            try
-            {
-                DatabaseHelper.ExecuteNonQuery(querry, parameters);
-            }
-            catch (Exception ex)
-            {
-                ErrorLog.Log(ex);
-                throw;
-            }
-        }
-        public static void RejectRequest(int StudentID)
-        {
-            string querry = $"UPDATE enrollement_request SET status = @status, reviewed_at = @reviewed_at WHERE student_id = @student_id AND status = @pending_status";
-            MySqlParameter[] parameters = new MySqlParameter[] {
-                new MySqlParameter("@status", "REJECTED"),
-                new MySqlParameter("@reviewed_at", DateTime.Now),
-                new MySqlParameter("@student_id", StudentID),
-                new MySqlParameter("@pending_status", "PENDING")
-            };
-            try
-            {
-                DatabaseHelper.ExecuteNonQuery(querry, parameters);
-            }
-            catch (Exception ex)
-            {
-                ErrorLog.Log(ex);
-                throw;
-            }
+            return list;
         }
     }
 }

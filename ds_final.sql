@@ -111,7 +111,7 @@ CREATE TABLE `batch` (
   PRIMARY KEY (`id`),
   KEY `id_idx` (`department_id`),
   CONSTRAINT `department_id` FOREIGN KEY (`department_id`) REFERENCES `department` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -120,6 +120,7 @@ CREATE TABLE `batch` (
 
 LOCK TABLES `batch` WRITE;
 /*!40000 ALTER TABLE `batch` DISABLE KEYS */;
+INSERT INTO `batch` VALUES (1,'2025',1,'2026-05-22 18:27:50');
 /*!40000 ALTER TABLE `batch` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -161,12 +162,12 @@ DROP TABLE IF EXISTS `department`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `department` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) NOT NULL,
+  `name` varchar(100) NOT NULL,
   `university_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `id_idx` (`university_id`),
   CONSTRAINT `id` FOREIGN KEY (`university_id`) REFERENCES `university` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -175,6 +176,7 @@ CREATE TABLE `department` (
 
 LOCK TABLES `department` WRITE;
 /*!40000 ALTER TABLE `department` DISABLE KEYS */;
+INSERT INTO `department` VALUES (1,'CS',1);
 /*!40000 ALTER TABLE `department` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -257,7 +259,8 @@ SET @saved_cs_client     = @@character_set_client;
  1 AS `hard_solved`,
  1 AS `global_ranking`,
  1 AS `contest_rating`,
- 1 AS `contest_attended`*/;
+ 1 AS `contest_attended`,
+ 1 AS `score`*/;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -288,7 +291,7 @@ CREATE TABLE `leetcode_stats` (
 
 LOCK TABLES `leetcode_stats` WRITE;
 /*!40000 ALTER TABLE `leetcode_stats` DISABLE KEYS */;
-INSERT INTO `leetcode_stats` VALUES (1,1,3935,944,2057,934,13,'2026-05-22 16:25:41');
+INSERT INTO `leetcode_stats` VALUES (1,1,3935,944,2057,934,13,'2026-05-22 18:41:21');
 /*!40000 ALTER TABLE `leetcode_stats` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -334,7 +337,7 @@ CREATE TABLE `section` (
   PRIMARY KEY (`id`),
   KEY `batch_id_idx` (`batch_id`),
   CONSTRAINT `batch_id` FOREIGN KEY (`batch_id`) REFERENCES `batch` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -343,6 +346,7 @@ CREATE TABLE `section` (
 
 LOCK TABLES `section` WRITE;
 /*!40000 ALTER TABLE `section` DISABLE KEYS */;
+INSERT INTO `section` VALUES (1,'A',1);
 /*!40000 ALTER TABLE `section` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -426,7 +430,7 @@ CREATE TABLE `university` (
   `name` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -435,6 +439,7 @@ CREATE TABLE `university` (
 
 LOCK TABLES `university` WRITE;
 /*!40000 ALTER TABLE `university` DISABLE KEYS */;
+INSERT INTO `university` VALUES (1,'UET Lahore');
 /*!40000 ALTER TABLE `university` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -482,7 +487,7 @@ UNLOCK TABLES;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `leaderboard_view` AS select `s`.`id` AS `student_id`,`s`.`name` AS `name`,`s`.`reg_no` AS `reg_no`,`sec`.`id` AS `section_id`,`sec`.`name` AS `section_name`,`b`.`id` AS `batch_id`,`b`.`name` AS `batch_name`,coalesce(`ls`.`total_solved`,0) AS `total_solved`,coalesce(`ls`.`easy_solved`,0) AS `easy_solved`,coalesce(`ls`.`medium_solved`,0) AS `medium_solved`,coalesce(`ls`.`hard_solved`,0) AS `hard_solved`,coalesce(`ls`.`global_ranking`,0) AS `global_ranking`,coalesce(`cs`.`contest_rating`,0) AS `contest_rating`,coalesce(`cs`.`contest_attended`,0) AS `contest_attended` from ((((`student` `s` join `section` `sec` on((`s`.`section_id` = `sec`.`id`))) join `batch` `b` on((`sec`.`batch_id` = `b`.`id`))) left join `leetcode_stats` `ls` on((`s`.`id` = `ls`.`student_id`))) left join `contest_stats` `cs` on((`s`.`id` = `cs`.`student_id`))) where (`s`.`is_approved` = 1) order by coalesce(`ls`.`total_solved`,0) desc */;
+/*!50001 VIEW `leaderboard_view` AS select `s`.`id` AS `student_id`,`s`.`name` AS `name`,`s`.`reg_no` AS `reg_no`,`sec`.`id` AS `section_id`,`sec`.`name` AS `section_name`,`b`.`id` AS `batch_id`,`b`.`name` AS `batch_name`,coalesce(`ls`.`total_solved`,0) AS `total_solved`,coalesce(`ls`.`easy_solved`,0) AS `easy_solved`,coalesce(`ls`.`medium_solved`,0) AS `medium_solved`,coalesce(`ls`.`hard_solved`,0) AS `hard_solved`,coalesce(`ls`.`global_ranking`,0) AS `global_ranking`,coalesce(`cs`.`contest_rating`,0) AS `contest_rating`,coalesce(`cs`.`contest_attended`,0) AS `contest_attended`,(((coalesce(`ls`.`easy_solved`,0) * 1) + (coalesce(`ls`.`medium_solved`,0) * 3)) + (coalesce(`ls`.`hard_solved`,0) * 5)) AS `score` from ((((`student` `s` join `section` `sec` on((`s`.`section_id` = `sec`.`id`))) join `batch` `b` on((`sec`.`batch_id` = `b`.`id`))) left join `leetcode_stats` `ls` on((`s`.`id` = `ls`.`student_id`))) left join `contest_stats` `cs` on((`s`.`id` = `cs`.`student_id`))) where (`s`.`is_approved` = 1) order by (((coalesce(`ls`.`easy_solved`,0) * 1) + (coalesce(`ls`.`medium_solved`,0) * 3)) + (coalesce(`ls`.`hard_solved`,0) * 5)) desc */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -496,4 +501,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-05-22 16:32:47
+-- Dump completed on 2026-05-22 18:52:19

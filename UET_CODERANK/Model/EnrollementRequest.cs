@@ -2,7 +2,7 @@
 
 namespace UET_CODERANK.Model
 {
-    internal class EnrollementRequest
+    public class EnrollementRequest
     {
         public int Id { get; set; }
         public int StudentId { get; set; }

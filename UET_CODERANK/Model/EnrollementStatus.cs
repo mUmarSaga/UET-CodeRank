@@ -1,7 +1,7 @@
 ﻿
 namespace UET_CODERANK.Model
 {
-    internal enum EnrollementStatus
+    public enum EnrollementStatus
     {
         PENDING,
         APPROVED,

@@ -76,7 +76,7 @@
                             CornerRadius="10"
                             Click="btnHome_Click">
                         <StackPanel Orientation="Horizontal" Spacing="16">
-                            <FontIcon Glyph="&#xE80F;" Foreground="White" FontSize="26" VerticalAlignment="Center"/>
+                            <FontIcon Glyph="&#xE80F;" Foreground="White" FontSize="24" VerticalAlignment="Center"/>
                             <TextBlock Text="Home" Foreground="White" FontSize="16" FontWeight="Medium" VerticalAlignment="Bottom"/>
                         </StackPanel>
                     </Button>
@@ -89,7 +89,7 @@
                             CornerRadius="10"
                             Click="btnLeaderboard_Click">
                         <StackPanel Orientation="Horizontal" Spacing="16">
-                            <FontIcon Glyph="&#xE9D5;" Foreground="White" FontSize="26" VerticalAlignment="Center"/>
+                            <FontIcon Glyph="&#xEA3A;" Foreground="White" FontSize="24" VerticalAlignment="Center"/>
                             <TextBlock Text="Leaderboard" Foreground="White" FontSize="16" FontWeight="Medium" VerticalAlignment="Bottom"/>
                         </StackPanel>
                     </Button>
@@ -102,7 +102,7 @@
                             CornerRadius="10"
                             Click="btnJoinClass_Click">
                         <StackPanel Orientation="Horizontal" Spacing="16">
-                            <FontIcon Glyph="&#xE9D5;" Foreground="White" FontSize="26" VerticalAlignment="Center"/>
+                            <FontIcon Glyph="&#xE9D5;" Foreground="White" FontSize="24" VerticalAlignment="Center"/>
                             <TextBlock Text="Leaderboard" Foreground="White" FontSize="16" FontWeight="Medium" VerticalAlignment="Bottom"/>
                         </StackPanel>
                     </Button>

@@ -16,5 +16,6 @@
         public int GlobalRanking { get; set; }
         public float ContestRating { get; set; }
         public int ContestAttended { get; set; }
+        public int Score { get; set; }
     }
 }
