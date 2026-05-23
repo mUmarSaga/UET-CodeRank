@@ -266,9 +266,9 @@
                                 <ColumnDefinition Width="100"/>
                                 <ColumnDefinition Width="100"/>
                                 <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="100"/>
                                 <ColumnDefinition Width="120"/>
-                                <ColumnDefinition Width="120"/>
-                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="100"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0" Text="Rank" Foreground="#888888" FontSize="12" FontWeight="SemiBold"/>
                             <TextBlock Grid.Column="1" Text="Student" Foreground="#888888" FontSize="12" FontWeight="SemiBold"/>

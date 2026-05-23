@@ -101,6 +101,7 @@ namespace UET_CODERANK.UI
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(100) });
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(120) });
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(120) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(100) });
 
             // Rank
             string rankText = rank == 1 ? "🥇" : rank == 2 ? "🥈" : rank == 3 ? "🥉" : $"#{rank}";

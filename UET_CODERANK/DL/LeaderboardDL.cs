@@ -36,7 +36,7 @@ namespace UET_CODERANK.DL
             {
                 entries.Add(new LeaderboardEntry
                 {
-                    StudentId = Convert.ToInt32(row["id"]),
+                    StudentId = Convert.ToInt32(row["student_id"]),
                     Name = row["name"].ToString(),
                     RegNo = row["reg_no"].ToString(),
                     SectionId = Convert.ToInt32(row["section_id"]),
