@@ -50,30 +50,7 @@ namespace UET_CODERANK.UI
                 enableLoginButton();
                 return;
             }
-            int Id = await Task.Run(() => StudentBL.LoginStudent(email, password));
-            if (Id > 0)
-            {
-                var localSettings = ApplicationData.Current.LocalSettings;
-
-                if (RememberMe.IsChecked == true)
-                {
-                    localSettings.Values["RememberMeUserId"] = Id;
-                }
-                else
-                {
-                    localSettings.Values.Remove("RememberMeUserId");
-                }
-                Model.Student student = DL.StudentDL.GetByID(Id);
-                CurrentSession.SetStudent(student);
-                CurrentSession.SetLeetCodeStat(DL.LeetCodeStatDL.GetLeetCodeStatByStudentId(Id));
-                LeetCodeStatBL.UpdateLeetCodeStat(student);
-                App.MainWindowFrame?.Navigate(typeof(MainShellPage));
-            }
-            else
-            {
-                ShowError(PasswordErrorMessage, "Invalid email or password");
-                enableLoginButton();
-                return;
+            
 
             if (rbAdmin.IsChecked == true)
             {
@@ -114,22 +91,9 @@ namespace UET_CODERANK.UI
                     enableLoginButton();
                 }
 
-                ShowError(PasswordErrorMessage, "Invalid email or password");
-                enableLoginButton();
-                return;
-
-                Model.Student student = DL.StudentDL.GetByID(Id);
-                CurrentSession.SetStudent(student);
-                CurrentSession.SetLeetCodeStat(DL.LeetCodeStatDL.GetLeetCodeStatByStudentId(Id));
-                LeetCodeStatBL.UpdateLeetCodeStat(student);
-                App.MainWindowFrame?.Navigate(typeof(MainShellPage));
+               
             }
-            else
-            {
-                ShowError(PasswordErrorMessage, "Invalid email or password");
-                enableLoginButton();
-                return;
-            }
+            
         }
         private void disableLoginButton()
         {
