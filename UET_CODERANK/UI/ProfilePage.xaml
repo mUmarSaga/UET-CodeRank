@@ -47,30 +47,37 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-
                 <Border Grid.Column="0" Background="#25282c" CornerRadius="12" Padding="16">
+                    <StackPanel Spacing="6" HorizontalAlignment="Center">
+                        <TextBlock Text="Score" Foreground="#888888" FontSize="12" TextAlignment="Center"/>
+                        <TextBlock x:Name="txtScore" Text="—" Foreground="White" FontSize="26" FontWeight="Bold" TextAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="1" Background="#25282c" CornerRadius="12" Padding="16">
                     <StackPanel Spacing="6" HorizontalAlignment="Center">
                         <TextBlock Text="Total Solved" Foreground="#888888" FontSize="12" TextAlignment="Center"/>
                         <TextBlock x:Name="txtTotal" Text="—" Foreground="White" FontSize="26" FontWeight="Bold" TextAlignment="Center"/>
                     </StackPanel>
                 </Border>
 
-                <Border Grid.Column="1" Background="#25282c" CornerRadius="12" Padding="16">
+                <Border Grid.Column="2" Background="#25282c" CornerRadius="12" Padding="16">
                     <StackPanel Spacing="6" HorizontalAlignment="Center">
                         <TextBlock Text="Easy" Foreground="#00b8a3" FontSize="12" TextAlignment="Center"/>
                         <TextBlock x:Name="txtEasy" Text="—" Foreground="#00b8a3" FontSize="26" FontWeight="Bold" TextAlignment="Center"/>
                     </StackPanel>
                 </Border>
 
-                <Border Grid.Column="2" Background="#25282c" CornerRadius="12" Padding="16">
+                <Border Grid.Column="3" Background="#25282c" CornerRadius="12" Padding="16">
                     <StackPanel Spacing="6" HorizontalAlignment="Center">
                         <TextBlock Text="Medium" Foreground="#ffc01e" FontSize="12" TextAlignment="Center"/>
                         <TextBlock x:Name="txtMedium" Text="—" Foreground="#ffc01e" FontSize="26" FontWeight="Bold" TextAlignment="Center"/>
                     </StackPanel>
                 </Border>
 
-                <Border Grid.Column="3" Background="#25282c" CornerRadius="12" Padding="16">
+                <Border Grid.Column="4" Background="#25282c" CornerRadius="12" Padding="16">
                     <StackPanel Spacing="6" HorizontalAlignment="Center">
                         <TextBlock Text="Hard" Foreground="#ef4743" FontSize="12" TextAlignment="Center"/>
                         <TextBlock x:Name="txtHard" Text="—" Foreground="#ef4743" FontSize="26" FontWeight="Bold" TextAlignment="Center"/>
@@ -95,12 +102,7 @@
                 </Grid>
             </Border>
 
-            <Button x:Name="btnUpdateProfile"
-                    Content="Edit Profile"
-                    HorizontalAlignment="Left"
-                    Padding="20,10"
-                    CornerRadius="8"
-                    Click="btnUpdateProfile_Click"/>
+            
 
         </StackPanel>
     </ScrollViewer>

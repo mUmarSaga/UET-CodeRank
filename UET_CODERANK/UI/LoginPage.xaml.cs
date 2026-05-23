@@ -50,6 +50,30 @@ namespace UET_CODERANK.UI
                 enableLoginButton();
                 return;
             }
+            int Id = await Task.Run(() => StudentBL.LoginStudent(email, password));
+            if (Id > 0)
+            {
+                var localSettings = ApplicationData.Current.LocalSettings;
+
+                if (RememberMe.IsChecked == true)
+                {
+                    localSettings.Values["RememberMeUserId"] = Id;
+                }
+                else
+                {
+                    localSettings.Values.Remove("RememberMeUserId");
+                }
+                Model.Student student = DL.StudentDL.GetByID(Id);
+                CurrentSession.SetStudent(student);
+                CurrentSession.SetLeetCodeStat(DL.LeetCodeStatDL.GetLeetCodeStatByStudentId(Id));
+                LeetCodeStatBL.UpdateLeetCodeStat(student);
+                App.MainWindowFrame?.Navigate(typeof(MainShellPage));
+            }
+            else
+            {
+                ShowError(PasswordErrorMessage, "Invalid email or password");
+                enableLoginButton();
+                return;
 
             if (rbAdmin.IsChecked == true)
             {
@@ -68,6 +92,7 @@ namespace UET_CODERANK.UI
             }
             else
             {
+
                 int Id = await Task.Run(() => StudentBL.LoginStudent(email, password));
                 if (Id > 0)
                 {
@@ -88,16 +113,42 @@ namespace UET_CODERANK.UI
                     ShowError(PasswordErrorMessage, "Invalid email or password");
                     enableLoginButton();
                 }
+
+                ShowError(PasswordErrorMessage, "Invalid email or password");
+                enableLoginButton();
+                return;
+
+                Model.Student student = DL.StudentDL.GetByID(Id);
+                CurrentSession.SetStudent(student);
+                CurrentSession.SetLeetCodeStat(DL.LeetCodeStatDL.GetLeetCodeStatByStudentId(Id));
+                LeetCodeStatBL.UpdateLeetCodeStat(student);
+                App.MainWindowFrame?.Navigate(typeof(MainShellPage));
+            }
+            else
+            {
+                ShowError(PasswordErrorMessage, "Invalid email or password");
+                enableLoginButton();
+                return;
             }
         }
         private void disableLoginButton()
         {
+            rbAdmin.IsEnabled= false;
+            rbStudent.IsEnabled = false;
+            txtEmail.IsEnabled = false;
+            txtPassword.IsEnabled = false;
+            linkRegister.IsEnabled = false;
             btnLogin.IsEnabled = false;
             btnLogin.Content = "Loging In....";
         }
 
         private void enableLoginButton()
         {
+            rbAdmin.IsEnabled = true;
+            rbStudent.IsEnabled = true;
+            txtEmail.IsEnabled = true;
+            txtPassword.IsEnabled = true;
+            linkRegister.IsEnabled = true;
             btnLogin.IsEnabled = true;
             btnLogin.Content = "Login";
         }

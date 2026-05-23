@@ -48,7 +48,7 @@
                 Background="#1A1A1A"
                 Foreground="White"
                 BorderBrush="#2A2A2A"
-                TextChanged="txtEmail_TextChanged"/>
+                TextChanged="txtEmail_TextChanged" IsSpellCheckEnabled="False"/>
             <TextBlock x:Name="EmailErrorMessage" 
                 Text="Email is Required" 
                 Foreground="Red" 
@@ -95,6 +95,7 @@
 
             <!-- Register Link -->
             <HyperlinkButton 
+                x:Name="linkRegister"
                 Content="Don't have an account? Register here"
                 HorizontalAlignment="Center"
                 Foreground="#107C10"

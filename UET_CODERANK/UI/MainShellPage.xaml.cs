@@ -78,17 +78,45 @@ namespace UET_CODERANK.UI
 
         private void btnJoinClass_Click(object sender, RoutedEventArgs e)
         {
+            activeButton((Button)sender);
             contentFrame.Navigate(typeof(JoinClassPage));
         }
 
         private void btnSettings_Click(object sender, RoutedEventArgs e)
         {
-            //contentFrame.Navigate(typeof(SettingsPage));
+            // flyout handles it automatically, nothing needed here
+        }
+
+        private void menuEditProfile_Click(object sender, RoutedEventArgs e)
+        {
+            activeButton(btnSettings);
+            contentFrame.Navigate(typeof(UpdateProfilePage));
+        }
+
+        private void menuChangePassword_Click(object sender, RoutedEventArgs e)
+        {
+            activeButton(btnSettings);
+            //contentFrame.Navigate(typeof(ChangePasswordPage));
+        }
+
+        private void menuSync_Click(object sender, RoutedEventArgs e)
+        {
+            // call your sync BL method
+            // BL.SyncBL.SyncStudent(CurrentSession.Student.Id);
+        }
+
+        private void menuLogout_Click(object sender, RoutedEventArgs e)
+        {
+            // clear session and navigate to login
+            CurrentSession.SetStudent(null);
+            var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            localSettings.Values.Remove("RememberMeUserId");
+            App.MainWindowFrame?.Navigate(typeof(BlankPage1));
         }
 
         private void Profile_Button_Click(object sender, RoutedEventArgs e)
         {
-            disableButton();
+            activeButton((Button)sender);
             contentFrame.Navigate(typeof(ProfilePage));
         }
     }

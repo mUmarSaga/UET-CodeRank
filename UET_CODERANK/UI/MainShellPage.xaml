@@ -36,6 +36,7 @@
                             CornerRadius="10"
                             Width="Auto"
                             Padding="10,8,10,8"
+                            Background="Transparent"
                             Click="Profile_Button_Click">
                         <StackPanel Orientation="Horizontal" Spacing="12" Padding="0,0,0,0">
                             <PersonPicture x:Name="profilePic" Width="40" Height="40"
@@ -102,7 +103,7 @@
                             Click="btnJoinClass_Click">
                         <StackPanel Orientation="Horizontal" Spacing="16">
                             <FontIcon Glyph="&#xE9D5;" Foreground="White" FontSize="24" VerticalAlignment="Center"/>
-                            <TextBlock Text="Leaderboard" Foreground="White" FontSize="16" FontWeight="Medium" VerticalAlignment="Bottom"/>
+                            <TextBlock Text="Join Section" Foreground="White" FontSize="16" FontWeight="Medium" VerticalAlignment="Bottom"/>
                         </StackPanel>
                     </Button>
 
@@ -114,13 +115,42 @@
                 <StackPanel Grid.Row="2" Padding="8,16">
                     <Border Height="1" Background="#2A2A2A" Margin="0,0,0,8"/>
                     <Button x:Name="btnSettings"
-                    HorizontalAlignment="Stretch"
-                    HorizontalContentAlignment="Left"
-                    Background="Transparent"
-                    BorderThickness="0"
-                    Padding="12,10"
-                    CornerRadius="8"
-                    Click="btnSettings_Click">  
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Left"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Padding="12,10"
+                        CornerRadius="8"
+                        Click="btnSettings_Click">
+                        <Button.Flyout>
+                            <MenuFlyout Placement="RightEdgeAlignedBottom">
+                                <MenuFlyoutItem Text="Edit Profile"
+                            Click="menuEditProfile_Click">
+                                    <MenuFlyoutItem.Icon>
+                                        <FontIcon Glyph="&#xE77B;"/>
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
+                                <MenuFlyoutItem Text="Change Password"
+                            Click="menuChangePassword_Click">
+                                    <MenuFlyoutItem.Icon>
+                                        <FontIcon Glyph="&#xE8D7;"/>
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
+                                <MenuFlyoutItem Text="Sync LeetCode Stats"
+                            Click="menuSync_Click">
+                                    <MenuFlyoutItem.Icon>
+                                        <FontIcon Glyph="&#xE895;"/>
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
+                                <MenuFlyoutSeparator/>
+                                <MenuFlyoutItem Text="Logout"
+                            Click="menuLogout_Click">
+                                    <MenuFlyoutItem.Icon>
+                                        <FontIcon Glyph="&#xF3B1;" Foreground="#C42B1C"/>
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
+                            </MenuFlyout>
+                        </Button.Flyout>
                         <StackPanel Orientation="Horizontal" Spacing="16">
                             <FontIcon Glyph="&#xE713;" Foreground="White" FontSize="20"/>
                             <StackPanel Spacing="2">

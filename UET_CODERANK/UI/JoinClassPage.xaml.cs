@@ -66,6 +66,14 @@ namespace UET_CODERANK.UI
                 });
             }
         }
+        private void btnCancelRequest_Click(object sender, RoutedEventArgs e)
+        {
+            int studentId = CurrentSession.Student.Id;
+            
+            pendingBanner.Visibility = Visibility.Collapsed;
+            LoadBatches();
+            
+        }
 
         private void cmbDepartment_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

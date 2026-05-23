@@ -52,13 +52,11 @@ namespace UET_CODERANK.UI
                 txtMedium.Text = stat.Medium_solved.ToString();
                 txtHard.Text = stat.Hard_solved.ToString();
                 txtRating.Text = stat.Global_rank.ToString();
+                txtScore.Text = (stat.Hard_solved * 5 + stat.Medium_solved * 3 + stat.Easy_solved * 1).ToString();
                 txtLastSync.Text = stat.Last_updated.ToString("dd MMM yyyy, hh:mm tt");
             }
         }
 
-        private void btnUpdateProfile_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(UpdateProfilePage));
-        }
+      
     }
 }
