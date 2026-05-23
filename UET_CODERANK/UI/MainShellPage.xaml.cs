@@ -85,5 +85,11 @@ namespace UET_CODERANK.UI
         {
             //contentFrame.Navigate(typeof(SettingsPage));
         }
+
+        private void Profile_Button_Click(object sender, RoutedEventArgs e)
+        {
+            disableButton();
+            contentFrame.Navigate(typeof(ProfilePage));
+        }
     }
 }

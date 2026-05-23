@@ -36,8 +36,7 @@
                             CornerRadius="10"
                             Width="Auto"
                             Padding="10,8,10,8"
-                            
-                            >
+                            Click="Profile_Button_Click">
                         <StackPanel Orientation="Horizontal" Spacing="12" Padding="0,0,0,0">
                             <PersonPicture x:Name="profilePic" Width="40" Height="40"
                                            Padding="0,0,0,0"/>
