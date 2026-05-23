@@ -271,5 +271,39 @@ namespace UET_CODERANK.DL
                 throw;
             }
         }
+
+        public static System.Collections.Generic.List<Student> GetAllStudents()
+        {
+            string querry = "SELECT * FROM student";
+            try
+            {
+                var dt = DatabaseHelper.ExecuteQuery(querry);
+                var list = new System.Collections.Generic.List<Student>();
+                foreach (System.Data.DataRow row in dt.Rows)
+                {
+                    list.Add(new Student(
+                        row["reg_no"]?.ToString() ?? "",
+                        row["name"]?.ToString() ?? "",
+                        row["email"]?.ToString() ?? "",
+                        row["password"]?.ToString() ?? "",
+                        row["leetcode_username"]?.ToString() ?? "",
+                        row["profile_pic_path"]?.ToString() ?? "",
+                        row["profile_name"]?.ToString() ?? ""
+                    )
+                    {
+                        Id = row["id"] != DBNull.Value ? Convert.ToInt32(row["id"]) : 0,
+                        IsApproved = row["is_approved"] != DBNull.Value ? Convert.ToBoolean(row["is_approved"]) : false,
+                        CreatedAt = row["created_at"] != DBNull.Value ? Convert.ToDateTime(row["created_at"]) : DateTime.Now,
+                        SectionId = row["section_id"] != DBNull.Value ? Convert.ToInt32(row["section_id"]) : 0
+                    });
+                }
+                return list;
+            }
+            catch (Exception ex)
+            {
+                ErrorLog.Log(ex);
+                throw;
+            }
+        }
     }
 }

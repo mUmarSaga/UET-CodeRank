@@ -37,39 +37,57 @@ namespace UET_CODERANK.UI
             disableLoginButton();
             string email = txtEmail.Text;
             string password = txtPassword.Password;
-            if (string.IsNullOrEmpty(email)) { 
+
+            if (string.IsNullOrEmpty(email))
+            {
                 ShowError(EmailErrorMessage, "Email Cannot be empty");
                 enableLoginButton();
                 return;
             }
-            if (string.IsNullOrEmpty(password)) { 
-                ShowError(PasswordErrorMessage,"Enter Password");
+            if (string.IsNullOrEmpty(password))
+            {
+                ShowError(PasswordErrorMessage, "Enter Password");
                 enableLoginButton();
                 return;
             }
-            int Id = await Task.Run(() => StudentBL.LoginStudent(email, password));
-            if (Id > 0)
-            {
-                var localSettings = ApplicationData.Current.LocalSettings;
 
-                if (RememberMe.IsChecked == true)
+            if (rbAdmin.IsChecked == true)
+            {
+                int adminId = await Task.Run(() => AdminBL.LoginAdmin(email, password));
+                if (adminId > 0)
                 {
-                    localSettings.Values["RememberMeUserId"] = Id;
+                    var admin = DL.AdminDL.GetByUsername(email);
+                    CurrentSession.SetAdmin(admin);
+                    App.MainWindowFrame?.Navigate(typeof(AdminShellPage));
                 }
                 else
                 {
-                    localSettings.Values.Remove("RememberMeUserId");
+                    ShowError(PasswordErrorMessage, "Invalid admin credentials");
+                    enableLoginButton();
                 }
-                Model.Student student = DL.StudentDL.GetByID(Id);
-                CurrentSession.SetStudent(student);
-                CurrentSession.SetLeetCodeStat(DL.LeetCodeStatDL.GetLeetCodeStatByStudentId(Id));
-                LeetCodeStatBL.UpdateLeetCodeStat(student);
-                App.MainWindowFrame?.Navigate(typeof(MainShellPage));
             }
             else
             {
-                ShowError(PasswordErrorMessage, "Invalid email or password");
-                enableLoginButton(); return;
+                int Id = await Task.Run(() => StudentBL.LoginStudent(email, password));
+                if (Id > 0)
+                {
+                    var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+                    if (RememberMe.IsChecked == true)
+                        localSettings.Values["RememberMeUserId"] = Id;
+                    else
+                        localSettings.Values.Remove("RememberMeUserId");
+
+                    Model.Student student = DL.StudentDL.GetByID(Id);
+                    CurrentSession.SetStudent(student);
+                    CurrentSession.SetLeetCodeStat(DL.LeetCodeStatDL.GetLeetCodeStatByStudentId(Id));
+                    LeetCodeStatBL.UpdateLeetCodeStat(student);
+                    App.MainWindowFrame?.Navigate(typeof(MainShellPage));
+                }
+                else
+                {
+                    ShowError(PasswordErrorMessage, "Invalid email or password");
+                    enableLoginButton();
+                }
             }
         }
         private void disableLoginButton()

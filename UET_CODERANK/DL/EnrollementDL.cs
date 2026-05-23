@@ -106,5 +106,26 @@ namespace UET_CODERANK.DL
             }
             return list;
         }
+
+        public static List<EnrollementRequest> GetAllRequests()
+        {
+            string query = "SELECT * FROM enrollment_request ORDER BY requested_at DESC";
+            System.Data.DataTable dt = DatabaseHelper.ExecuteQuery(query);
+            List<EnrollementRequest> list = new List<EnrollementRequest>();
+            foreach (System.Data.DataRow row in dt.Rows)
+            {
+                list.Add(new EnrollementRequest
+                {
+                    Id = Convert.ToInt32(row["id"]),
+                    StudentId = Convert.ToInt32(row["student_id"]),
+                    SectionId = Convert.ToInt32(row["section_id"]),
+                    Status = Enum.Parse<EnrollementStatus>(row["status"].ToString()),
+                    RequestedAt = Convert.ToDateTime(row["requested_at"]),
+                    ReviewedAt = row["reviewed_at"] == DBNull.Value ? null : Convert.ToDateTime(row["reviewed_at"])
+                });
+            }
+            return list;
+        }
+
     }
 }

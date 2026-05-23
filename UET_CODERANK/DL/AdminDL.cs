@@ -88,5 +88,30 @@ namespace UET_CODERANK.DL
             }
 
         }
+
+        public static System.Collections.Generic.List<Model.Admin> GetAllAdmins()
+        {
+            string querry = "SELECT * FROM admin";
+            try
+            {
+                var dt = DatabaseHelper.ExecuteQuery(querry, new MySqlParameter[0]);
+                var list = new System.Collections.Generic.List<Model.Admin>();
+                foreach (System.Data.DataRow row in dt.Rows)
+                {
+                    var admin = new Model.Admin(row["username"].ToString(), row["password"].ToString())
+                    {
+                        Id = Convert.ToInt32(row["id"]),
+                        Created_at = Convert.ToDateTime(row["created_at"])
+                    };
+                    list.Add(admin);
+                }
+                return list;
+            }
+            catch (Exception ex)
+            {
+                ErrorLog.Log(ex);
+                throw;
+            }
+        }
     }
 }
