@@ -50,14 +50,7 @@ namespace UET_CODERANK
             _window = new MainWindow();
             MainWindowFrame = ((MainWindow)_window).rootFrame;
 
-            var localSettings = ApplicationData.Current.LocalSettings;
-            if (localSettings.Values.ContainsKey("RememberMeUserId"))
-            {
-                int savedUserId = (int)localSettings.Values["RememberMeUserId"];
-                Student student = DL.StudentDL.GetById(savedUserId);
-                // navigate to dashboard via MainWindow's frame
-            }
-
+            
             _window.Activate();
         }
     }

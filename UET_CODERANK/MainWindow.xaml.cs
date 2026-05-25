@@ -11,9 +11,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using UET_CODERANK.BL;
+using UET_CODERANK.DL;
+using UET_CODERANK.Model;
 using UET_CODERANK.UI;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -45,7 +49,28 @@ namespace UET_CODERANK
             
             rootFrame.Navigated += RootFrame_Navigated;
 
-            rootFrame.Navigate(typeof(BlankPage1));
+            var localSettings = ApplicationData.Current.LocalSettings;
+            if (localSettings.Values.ContainsKey("RememberMeUserId"))
+            {
+                int savedUserId = (int)localSettings.Values["RememberMeUserId"];
+                Student student = DL.StudentDL.GetById(savedUserId);
+                CurrentSession.SetStudent(student);
+                CurrentSession.SetLeetCodeStat(DL.LeetCodeStatDL.GetLeetCodeStatByStudentId(student.Id));
+                LeetCodeStatBL.UpdateLeetCodeStat(student);
+                if (student.SectionId != null)
+                {
+                    Model.Section section = SectionDL.GetSectionById(student.SectionId);
+                    string batchName = BatchDL.GetBatchById(section.Batch_id).Name;
+                    CurrentSession.SetSectionAndSession(section.Name, batchName);
+                }
+                // navigate to dashboard via MainWindow's frame
+                rootFrame.Navigate(typeof(MainShellPage));
+            }
+            else {
+                rootFrame.Navigate(typeof(BlankPage1));
+            }
+
+        
         }
         private void RootFrame_Navigated(object sender, NavigationEventArgs e)
         {
