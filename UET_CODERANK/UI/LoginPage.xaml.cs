@@ -31,6 +31,7 @@ namespace UET_CODERANK.UI
         public BlankPage1()
         {
             InitializeComponent();
+            AdminBL.AddAdmin("Umar", "123456");
         }
 
         private async void btnLogin_Click(object sender, RoutedEventArgs e)

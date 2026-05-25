@@ -17,7 +17,16 @@ namespace UET_CODERANK.DL
                 new MySqlParameter("@sectionId", sectionId),
                 new MySqlParameter("@requestedAt", DateTime.Now)
             };
-            return DatabaseHelper.ExecuteNonQuery(query, p) > 0;
+            try
+            {
+                return DatabaseHelper.ExecuteNonQuery(query, p) > 0;
+            }
+            catch(Exception ex)
+            {
+                ErrorLog.Log(ex, "EnrollmentDL.SendRequest");
+                return false;
+            }
+           
         }
 
         public static EnrollementRequest GetLatestRequest(int studentId)
@@ -70,8 +79,9 @@ namespace UET_CODERANK.DL
 
                 return true;
             }
-            catch
+            catch(Exception ex)
             {
+                ErrorLog.Log(ex, "EnrollmentDL.ApproveRequest");
                 return false;
             }
         }
@@ -131,7 +141,16 @@ namespace UET_CODERANK.DL
         {
             string query = "DELETE FROM enrollment_request WHERE student_id = @id";
             MySqlParameter[] p = { new MySqlParameter("@id", requestId) };
-            DatabaseHelper.ExecuteNonQuery(query, p);
+            try
+            {
+                DatabaseHelper.ExecuteNonQuery(query, p);
+
+            }
+            catch (Exception ex)
+            {
+                ErrorLog.Log(ex, "EnrollmentDL.DeleteRequest");
+                DatabaseHelper.ExecuteNonQuery(query, p);
+            }
         }
 
     }

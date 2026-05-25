@@ -21,7 +21,7 @@ namespace UET_CODERANK.DL
             }
             catch (Exception ex)
             {
-                ErrorLog.Log(ex);
+                ErrorLog.Log(ex,"SectionDL.AddSection");
                 throw;
             }
         }
@@ -40,7 +40,7 @@ namespace UET_CODERANK.DL
             }
             catch (Exception ex)
             {
-                ErrorLog.Log(ex);
+                ErrorLog.Log(ex, "SectionDL.UpdateSection");
                 throw;
             }
         }
@@ -57,7 +57,7 @@ namespace UET_CODERANK.DL
             }
             catch (Exception ex)
             {
-                ErrorLog.Log(ex);
+                ErrorLog.Log(ex, "SectionDL.DeleteSection");
                 throw;
             }
         }
@@ -83,7 +83,7 @@ namespace UET_CODERANK.DL
             }
             catch (Exception ex)
             {
-                ErrorLog.Log(ex);
+                ErrorLog.Log(ex, "SectionDL.GetSectionsByBatchId");
                 throw;
             }
         }
@@ -105,7 +105,7 @@ namespace UET_CODERANK.DL
             }
             catch (Exception ex)
             {
-                ErrorLog.Log(ex);
+                ErrorLog.Log(ex, "SectionDL.GetAllSections");
                 throw;
             }
         }
@@ -131,7 +131,7 @@ namespace UET_CODERANK.DL
             }
             catch (Exception ex)
             {
-                ErrorLog.Log(ex);
+                ErrorLog.Log(ex, "SectionDL.GetSectionById");
                 throw;
             }
         }

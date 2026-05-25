@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using UET_CODERANK.Model;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -25,7 +26,8 @@ namespace UET_CODERANK.DL
                 }
                 return leetCodeProfile;
             }
-            catch { 
+            catch (Exception ex){ 
+                ErrorLog.Log(ex, "LeetCodeAPI.GetProfile");
                 return null;
             }
         }
@@ -41,7 +43,10 @@ namespace UET_CODERANK.DL
                 LeetCodeStat leetCodeStat2 = Newtonsoft.Json.JsonConvert.DeserializeObject<LeetCodeStat>(json2);
                 leetCodeStat.Global_rank = leetCodeStat2.Global_rank;
                 return leetCodeStat;
-            } catch { return null; }
+            } catch(Exception ex) { 
+                ErrorLog.Log(ex, "LeetCodeAPI.GetSolvedStats");
+                return null; 
+            }
         }
         public static ContestStats GetContestStats(string username)
         {
@@ -52,7 +57,10 @@ namespace UET_CODERANK.DL
                 ContestStats contestStats = Newtonsoft.Json.JsonConvert.DeserializeObject<ContestStats>(json);
                 return contestStats;
             }
-            catch { return null; }
+            catch(Exception ex) { 
+                ErrorLog.Log(ex, "LeetCodeAPI.GetContestStats");
+                return null; 
+            }
         }
 
     }

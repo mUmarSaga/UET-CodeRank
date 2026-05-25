@@ -30,6 +30,7 @@ namespace UET_CODERANK.BL
             }
             catch (Exception)
             {
+
                 return false;
             }
         }

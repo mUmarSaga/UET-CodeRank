@@ -29,7 +29,7 @@ namespace UET_CODERANK.DL
             }
             catch (Exception ex)
             {
-                ErrorLog.Log(ex);
+                ErrorLog.Log(ex, "StudentDL.AddStudent");
                 throw;
             }
         }
@@ -64,7 +64,7 @@ namespace UET_CODERANK.DL
             }
             catch (Exception ex)
             {
-                ErrorLog.Log(ex);
+                ErrorLog.Log(ex, "StudentDL.GetByLeetCode_username");
                 throw;
             }
         }
@@ -98,7 +98,7 @@ namespace UET_CODERANK.DL
             }
             catch(Exception ex)
              {
-                ErrorLog.Log(ex);
+                ErrorLog.Log(ex, "StudentDL.GetByID");
                  throw;
              }
             
@@ -133,7 +133,7 @@ namespace UET_CODERANK.DL
             }
             catch (Exception ex)
             {
-                ErrorLog.Log(ex);
+                ErrorLog.Log(ex, "StudentDL.GetByID");
                 throw;
             }
         }
@@ -167,7 +167,7 @@ namespace UET_CODERANK.DL
             }
             catch (Exception ex)
             {
-                ErrorLog.Log(ex);
+                ErrorLog.Log(ex, "StudentDL.GetByEmail");
                 throw;
             }
         }
@@ -201,7 +201,7 @@ namespace UET_CODERANK.DL
             }
             catch (Exception ex)
             {
-                ErrorLog.Log(ex);
+                ErrorLog.Log(ex, "StudentDL.GetByID");
                 throw;
             }
         }
@@ -226,7 +226,7 @@ namespace UET_CODERANK.DL
             }
             catch (Exception ex)
             {
-                ErrorLog.Log(ex);
+                ErrorLog.Log(ex, "StudentDL.UpdateStudent");
                 throw;
             }
         }
@@ -243,7 +243,7 @@ namespace UET_CODERANK.DL
             }
             catch (Exception ex)
             {
-                ErrorLog.Log(ex);
+                ErrorLog.Log(ex, "StudentDL.DeleteStudent");
                 throw;
             }
         }
@@ -261,7 +261,7 @@ namespace UET_CODERANK.DL
             }
             catch (Exception ex)
             {
-                ErrorLog.Log(ex);
+                ErrorLog.Log(ex, "StudentDL.IsEmailExists");
                 throw;
             }
         }
@@ -279,7 +279,7 @@ namespace UET_CODERANK.DL
             }
             catch (Exception ex)
             {
-                ErrorLog.Log(ex);
+                ErrorLog.Log(ex, "StudentDL.IsRegNoExists");
                 throw;
             }
         }
@@ -313,7 +313,7 @@ namespace UET_CODERANK.DL
             }
             catch (Exception ex)
             {
-                ErrorLog.Log(ex);
+                ErrorLog.Log(ex, "StudentDL.GetAllStudents");
                 throw;
             }
         }

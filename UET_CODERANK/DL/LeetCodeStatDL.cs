@@ -25,7 +25,7 @@ namespace UET_CODERANK.DL
             }
             catch (Exception ex)
             {
-                ErrorLog.Log(ex);
+                ErrorLog.Log(ex,"LeetCodeStatDL.AddLeetCodeStat");
                 throw;
             }
         }
@@ -47,7 +47,7 @@ namespace UET_CODERANK.DL
             }
             catch (Exception ex)
             {
-                ErrorLog.Log(ex);
+                ErrorLog.Log(ex, "LeetCodeStatDL.UpdateLeetCodeStat");
                 throw;
             }
         }
@@ -64,7 +64,7 @@ namespace UET_CODERANK.DL
             }
             catch (Exception ex)
             {
-                ErrorLog.Log(ex);
+                ErrorLog.Log(ex, "LeetCodeStatDL.DeleteLeetCodeStat");
                 throw;
             }
         }
@@ -88,7 +88,7 @@ namespace UET_CODERANK.DL
             }
             catch (Exception ex)
             {
-                ErrorLog.Log(ex);
+                ErrorLog.Log(ex, "LeetCodeStatDL.GetLeetCodeStatByStudentId");
                 throw;
             }
         }

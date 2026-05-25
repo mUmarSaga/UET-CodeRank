@@ -25,7 +25,7 @@ namespace UET_CODERANK.DL
             }
             catch (Exception ex)
             {
-                ErrorLog.Log(ex);
+                ErrorLog.Log(ex, "UpdateProfileDL.UpdateProfile");
                 throw;
             }
         }
@@ -44,7 +44,7 @@ namespace UET_CODERANK.DL
             }
             catch (Exception ex)
             {
-                ErrorLog.Log(ex);
+                ErrorLog.Log(ex, "UpdateProfileDL.UpdatePassword");
                 throw;
             }
         }

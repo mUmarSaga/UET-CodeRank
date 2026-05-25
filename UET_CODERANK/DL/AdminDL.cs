@@ -1,6 +1,8 @@
 ﻿
 using MySql.Data.MySqlClient;
 using System;
+using BCrypt.Net;
+using Org.BouncyCastle.Crypto.Generators;
 namespace UET_CODERANK.DL
 {
     internal class AdminDL
@@ -20,7 +22,7 @@ namespace UET_CODERANK.DL
             }
             catch (Exception ex)
             {
-                ErrorLog.Log(ex);
+                ErrorLog.Log(ex, "AdminDL.AddAdmin");
                 throw;
             }
         }
@@ -44,7 +46,7 @@ namespace UET_CODERANK.DL
             }
             catch (Exception ex)
             {
-                ErrorLog.Log(ex);
+                ErrorLog.Log(ex, "AdminDL.GetByUsername");
                 throw;
             }
         }
@@ -63,7 +65,7 @@ namespace UET_CODERANK.DL
             }
             catch (Exception ex)
             {
-                ErrorLog.Log(ex);
+                ErrorLog.Log(ex, "AdminDL.DeleteAdmin");
                 throw;
             }
         }
@@ -83,7 +85,7 @@ namespace UET_CODERANK.DL
             }
             catch (Exception ex)
             {
-                ErrorLog.Log(ex);
+                ErrorLog.Log(ex, "AdminDL.UpdateAdmin");
                 throw;
             }
 
@@ -109,7 +111,7 @@ namespace UET_CODERANK.DL
             }
             catch (Exception ex)
             {
-                ErrorLog.Log(ex);
+                ErrorLog.Log(ex, "AdminDL.GetAllAdmins");
                 throw;
             }
         }

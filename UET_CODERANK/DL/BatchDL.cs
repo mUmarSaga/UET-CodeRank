@@ -23,7 +23,7 @@ namespace UET_CODERANK.DL
             }
             catch (Exception ex)
             {
-                ErrorLog.Log(ex);
+                ErrorLog.Log(ex, "BatchDL.AddBatch");
                 throw;
             }
         }
@@ -41,7 +41,7 @@ namespace UET_CODERANK.DL
             }
             catch (Exception ex)
             {
-                ErrorLog.Log(ex);
+                ErrorLog.Log(ex, "BatchDL.DeleteBatch");
                 throw;
             }
         }
@@ -60,7 +60,7 @@ namespace UET_CODERANK.DL
             }
             catch (Exception ex)
             {
-                ErrorLog.Log(ex);
+                ErrorLog.Log(ex, "BatchDL.UpdateBatch");
                 throw;
             }
         }
@@ -87,7 +87,7 @@ namespace UET_CODERANK.DL
             }
             catch (Exception ex)
             {
-                ErrorLog.Log(ex);
+                ErrorLog.Log(ex, "BatchDL.GetBatchById");
                 throw;
             }
         }
@@ -114,7 +114,7 @@ namespace UET_CODERANK.DL
             }
             catch (Exception ex)
             {
-                ErrorLog.Log(ex);
+                ErrorLog.Log(ex, "BatchDL.GetBatchesByDepartmentId");
                 throw;
             }
         }
@@ -137,7 +137,7 @@ namespace UET_CODERANK.DL
             }
             catch (Exception ex)
             {
-                ErrorLog.Log(ex);
+                ErrorLog.Log(ex, "BatchDL.GetAllBatches");
                 throw;
             }
         }

@@ -23,7 +23,7 @@ namespace UET_CODERANK.DL
             }
             catch (Exception ex)
             {
-                ErrorLog.Log(ex);
+                ErrorLog.Log(ex, "ContestStatsDL.AddContestStats");
                 throw;
             }
         }
