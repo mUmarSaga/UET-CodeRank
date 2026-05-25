@@ -146,5 +146,18 @@ namespace UET_CODERANK.UI
         {
             HideError(PasswordErrorMessage);
         }
+
+        private void rbStudent_Click(object sender, RoutedEventArgs e)
+        {
+            txtEmail.Header = "Email or LeetCode username";
+            txtEmail.PlaceholderText = "Email or LeetCode username";
+        }
+
+        private void rbAdmin_Click(object sender, RoutedEventArgs e)
+        {
+            txtEmail.Header = "Admin Email";
+            txtEmail.PlaceholderText = "Admin Email";
+
+        }
     }
 }

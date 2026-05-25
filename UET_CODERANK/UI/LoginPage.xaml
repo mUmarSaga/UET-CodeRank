@@ -36,8 +36,8 @@
 
             <!-- Role Toggle -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="24">
-                <RadioButton x:Name="rbStudent" Content="Student" IsChecked="True" Foreground="White"/>
-                <RadioButton x:Name="rbAdmin" Content="Admin" Foreground="White" />
+                <RadioButton x:Name="rbStudent" Content="Student" IsChecked="True" Foreground="White" Click="rbStudent_Click"/>
+                <RadioButton x:Name="rbAdmin" Content="Admin" Foreground="White" Click="rbAdmin_Click"/>
             </StackPanel>
 
             <!-- Email -->
