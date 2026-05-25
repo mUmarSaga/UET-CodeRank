@@ -1,21 +1,22 @@
+using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
+using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UET_CODERANK.BL;
+using UET_CODERANK.Model;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
-using Microsoft.UI;
 
 
 // To learn more about WinUI, the WinUI project structure,
@@ -96,13 +97,15 @@ namespace UET_CODERANK.UI
         private void menuChangePassword_Click(object sender, RoutedEventArgs e)
         {
             activeButton(btnSettings);
-            //contentFrame.Navigate(typeof(ChangePasswordPage));
+            contentFrame.Navigate(typeof(ChangePasswordPage));
         }
 
         private void menuSync_Click(object sender, RoutedEventArgs e)
         {
             // call your sync BL method
             // BL.SyncBL.SyncStudent(CurrentSession.Student.Id);
+            LeetCodeStatBL.UpdateLeetCodeStat(CurrentSession.Student);
+            contentFrame.Navigate(typeof(HomePage));
         }
 
         private void menuLogout_Click(object sender, RoutedEventArgs e)

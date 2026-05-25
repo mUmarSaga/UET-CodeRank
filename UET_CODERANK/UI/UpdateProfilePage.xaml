@@ -23,9 +23,68 @@
                         <TextBox x:Name="EmailBox" Background="#1e2124" Foreground="White" PlaceholderText="Enter your email"/>
                     </StackPanel>
 
-                    <StackPanel Spacing="6">
-                        <TextBlock Text="LeetCode Username" Foreground="#888888" FontSize="12"/>
-                        <TextBox x:Name="LeetcodeBox" Background="#1e2124" Foreground="White" PlaceholderText="Enter your LeetCode username"/>
+
+
+                    <StackPanel Spacing="0">
+                        <TextBlock Text="Leetcode Username" Foreground="#888888" FontSize="12"/>
+                        
+                    </StackPanel>
+                    <Grid ColumnSpacing="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox
+                             x:Name="LeetcodeBox"
+                             Grid.Column="0"
+                             PlaceholderText="your-leetcode-username"
+                             Background="#1A1A1A"
+                             Foreground="White"
+                             BorderBrush="#2A2A2A"
+                             TextChanged="LeetcodeBox_TextChanged"/>
+
+                        <Button
+                             x:Name="btnVerify"
+                             Grid.Column="1"
+                            IsEnabled="False"
+                             Content="Verify"
+                             Background="#1A1A1A"
+                             Foreground="#107C10"
+                             BorderBrush="#107C10"
+                             Click="btnVerify_Click"/>
+                    </Grid>
+
+                    <!-- Verify Status -->
+                    <TextBlock
+                         x:Name="txtVerifyStatus"
+                         FontSize="12"
+                         Foreground="#B4B4B4"
+                         Text=""/>
+                    <StackPanel x:Name="profileCard" 
+                             Visibility="Collapsed"
+                             Background="#1A1A1A"
+                             Padding="12"
+                             CornerRadius="8"
+                             Orientation="Horizontal"
+                             Spacing="12">
+
+                        <PersonPicture x:Name="profilePic" Width="48" Height="48"/>
+
+                        <StackPanel Spacing="4" VerticalAlignment="Center">
+                            <TextBlock x:Name="txtProfileName" Foreground="White" FontWeight="SemiBold"/>
+                            <TextBlock Text="Is this you?" Foreground="#B4B4B4" FontSize="12"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                            <Button x:Name="btnYes" Content="Yes, that's me" 
+                                 Background="#107C10" Foreground="White"
+                                 Click="btnYes_Click"/>
+                            <Button x:Name="btnNo" Content="No" 
+                                 Background="#2A2A2A" Foreground="White"
+                                 Click="btnNo_Click"/>
+                        </StackPanel>
+
                     </StackPanel>
 
                     <StackPanel Spacing="6">
@@ -41,32 +100,7 @@
                 </StackPanel>
             </Border>
 
-            <Border Background="#25282c" CornerRadius="12" Padding="24">
-                <StackPanel Spacing="16">
-                    <TextBlock Text="Change Password" Foreground="White" FontSize="16" FontWeight="SemiBold"/>
-
-                    <StackPanel Spacing="6">
-                        <TextBlock Text="Current Password" Foreground="#888888" FontSize="12"/>
-                        <PasswordBox x:Name="CurrentPasswordBox" Background="#1e2124" Foreground="White" PlaceholderText="Enter current password"/>
-                    </StackPanel>
-
-                    <StackPanel Spacing="6">
-                        <TextBlock Text="New Password" Foreground="#888888" FontSize="12"/>
-                        <PasswordBox x:Name="NewPasswordBox" Background="#1e2124" Foreground="White" PlaceholderText="Enter new password"/>
-                    </StackPanel>
-
-                    <StackPanel Spacing="6">
-                        <TextBlock Text="Confirm New Password" Foreground="#888888" FontSize="12"/>
-                        <PasswordBox x:Name="ConfirmPasswordBox" Background="#1e2124" Foreground="White" PlaceholderText="Confirm new password"/>
-                    </StackPanel>
-
-                    <Button x:Name="SavePasswordBtn" Content="Update Password"
-                            HorizontalAlignment="Stretch" Padding="0,12"
-                            CornerRadius="8" Click="SavePasswordBtn_Click"/>
-
-                    <TextBlock x:Name="PasswordStatusText" FontSize="13" TextWrapping="Wrap"/>
-                </StackPanel>
-            </Border>
+           
 
         </StackPanel>
     </ScrollViewer>
