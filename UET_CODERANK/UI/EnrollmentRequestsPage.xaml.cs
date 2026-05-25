@@ -66,17 +66,19 @@ namespace UET_CODERANK.UI
             };
 
             var grid = new Grid();
-            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(120) });
-            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(120) });
-            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(140) });
-            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(100) });
-            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(180) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }); // 0 name
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(120) });                  // 1 batch
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(100) });                  // 2 section
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(140) });                  // 3 leetcode
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(100) });                  // 4 date
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(100) });                  // 5 status
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(180) });                  // 6 actions
 
             var student = StudentDL.GetById(req.StudentId);
             var section = SectionDL.GetSectionById(req.SectionId);
             var batch = section != null ? BatchDL.GetBatchById(section.Batch_id) : null;
 
+            // Col 0 — Name + RegNo
             var nameStack = new StackPanel();
             nameStack.Children.Add(new TextBlock
             {
@@ -94,14 +96,25 @@ namespace UET_CODERANK.UI
             Grid.SetColumn(nameStack, 0);
             grid.Children.Add(nameStack);
 
+            // Col 1 — Batch
             AddText(grid, 1, batch?.Name ?? "—", "#888888");
-            AddText(grid, 2, section?.Name ?? "—", "#888888");
-            AddText(grid, 3, req.RequestedAt.ToString("dd MMM yyyy"), "#888888");
 
+            // Col 2 — Section
+            AddText(grid, 2, section?.Name ?? "—", "#888888");
+
+            // Col 3 — LeetCode username + verified badge
+            // Col 3 — LeetCode username
+            AddText(grid, 3, student?.LeetcodeUsername ?? "—", "#00b8a3");
+
+            // Col 4 — Date
+            AddText(grid, 4, req.RequestedAt.ToString("dd MMM yyyy"), "#888888");
+
+            // Col 5 — Status
             string statusColor = req.Status == EnrollementStatus.PENDING ? "#FFC01E" :
                                  req.Status == EnrollementStatus.APPROVED ? "#00b8a3" : "#ef4743";
-            AddText(grid, 4, req.Status.ToString(), statusColor);
+            AddText(grid, 5, req.Status.ToString(), statusColor);
 
+            // Col 6 — Actions
             if (req.Status == EnrollementStatus.PENDING)
             {
                 var actionStack = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 8 };
@@ -130,7 +143,7 @@ namespace UET_CODERANK.UI
 
                 actionStack.Children.Add(approveBtn);
                 actionStack.Children.Add(rejectBtn);
-                Grid.SetColumn(actionStack, 5);
+                Grid.SetColumn(actionStack, 6);
                 grid.Children.Add(actionStack);
             }
 

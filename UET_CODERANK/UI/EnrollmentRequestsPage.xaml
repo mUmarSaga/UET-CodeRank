@@ -29,17 +29,19 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="120"/>
-                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="100"/>
                         <ColumnDefinition Width="140"/>
+                        <ColumnDefinition Width="100"/>
                         <ColumnDefinition Width="100"/>
                         <ColumnDefinition Width="180"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Text="Student" Foreground="#888888" FontSize="12" FontWeight="SemiBold"/>
                     <TextBlock Grid.Column="1" Text="Batch" Foreground="#888888" FontSize="12" FontWeight="SemiBold"/>
                     <TextBlock Grid.Column="2" Text="Section" Foreground="#888888" FontSize="12" FontWeight="SemiBold"/>
-                    <TextBlock Grid.Column="3" Text="Requested" Foreground="#888888" FontSize="12" FontWeight="SemiBold"/>
-                    <TextBlock Grid.Column="4" Text="Status" Foreground="#888888" FontSize="12" FontWeight="SemiBold"/>
-                    <TextBlock Grid.Column="5" Text="Action" Foreground="#888888" FontSize="12" FontWeight="SemiBold"/>
+                    <TextBlock Grid.Column="3" Text="LEETCODE" Foreground="#888888" FontSize="12" FontWeight="SemiBold"/>
+                    <TextBlock Grid.Column="4" Text="Date" Foreground="#888888" FontSize="12" FontWeight="SemiBold"/>
+                    <TextBlock Grid.Column="5" Text="Status" Foreground="#888888" FontSize="12" FontWeight="SemiBold"/>
+                    <TextBlock Grid.Column="6" Text="Action" Foreground="#888888" FontSize="12" FontWeight="SemiBold"/>
                 </Grid>
                 <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="600">
                     <StackPanel x:Name="requestRows"/>
