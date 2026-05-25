@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using UET_CODERANK.DL;
 using UET_CODERANK.Model;
 
 namespace UET_CODERANK.BL
@@ -63,6 +64,18 @@ namespace UET_CODERANK.BL
         public static bool IsEmailAlreadyExist(string email)
         {
             return DL.StudentDL.IsEmailExists(email);
+        }
+        public static string UpdateLeetCodeAccount(int studentId, string username, string avatarUrl,string profileName)
+        {
+            if (string.IsNullOrWhiteSpace(username)) return "Username is required";
+
+            // Check if username taken by another student
+            if (StudentDL.IsLeetcodeUsernameTaken(username, studentId))
+                return "This LeetCode account is already linked to another student";
+
+            bool success = StudentDL.UpdateLeetCodeAccount(studentId, username, avatarUrl, profileName);
+            if (success) return null;
+            return "Failed to update account";
         }
     }
 }

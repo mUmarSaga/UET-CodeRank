@@ -36,6 +36,7 @@ namespace UET_CODERANK.BL
             }
             stats.Student_id = student.Id;
             DL.LeetCodeStatDL.UpdateLeetCodeStat(stats);
+            CurrentSession.SetLeetCodeStat(stats);
         }
 
 

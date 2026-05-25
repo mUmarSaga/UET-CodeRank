@@ -35,5 +35,11 @@ namespace UET_CODERANK.BL
             Student = null;
             Admin = null;
         }
+        public static event Action ProfileUpdated;
+
+        public static void NotifyProfileUpdated()
+        {
+            ProfileUpdated?.Invoke();
+        }
     }
 }

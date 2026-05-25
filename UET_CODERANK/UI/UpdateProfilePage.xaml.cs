@@ -31,43 +31,63 @@ namespace UET_CODERANK.UI
             LoadProfile();
         }
         Model.Student student;
+
         private void LoadProfile()
         {
             student = CurrentSession.Student;
             NameBox.Text = student.Name ?? "";
             EmailBox.Text = student.Email ?? "";
-            LeetcodeBox.Text = student.LeetcodeUsername ?? "";
-            ProfileNameBox.Text = student.ProfileName ?? "";
+        
+            
         }
 
-        private void SaveProfileBtn_Click(object sender, RoutedEventArgs e)
+        private async void SaveProfileBtn_Click(object sender, RoutedEventArgs e)
         {
-            if(string.IsNullOrWhiteSpace(NameBox.Text) ||
-               string.IsNullOrWhiteSpace(EmailBox.Text))
+            if (string.IsNullOrWhiteSpace(NameBox.Text) ||
+                string.IsNullOrWhiteSpace(EmailBox.Text))
             {
                 ProfileStatusText.Text = "Name and Email cannot be empty.";
                 ProfileStatusText.Foreground = new SolidColorBrush(Colors.Red);
                 return;
             }
-            if(EmailBox.Text == student.Email && LeetcodeBox.Text == student.LeetcodeUsername && NameBox.Text == student.Name && ProfileNameBox.Text == student.ProfileName)
+            if (EmailBox.Text == student.Email && NameBox.Text == student.Name )
             {
                 ProfileStatusText.Text = "No changes detected.";
                 ProfileStatusText.Foreground = new SolidColorBrush(Colors.Orange);
                 return;
             }
+     
+           
+            ContentDialog dialog = new ContentDialog
+            {
+                Title = "Save Changes",
+                Content = "Are you sure you want to update your profile?",
+                PrimaryButtonText = "Save",
+                CloseButtonText = "Cancel",
+                DefaultButton = ContentDialogButton.Primary,
+                XamlRoot = this.XamlRoot
+            };
+
+            var result = await dialog.ShowAsync();
+            if (result != ContentDialogResult.Primary) return;
+           
+
+            
+
+
             bool success = UpdateProfileBL.UpdateProfile(
                 CurrentSession.Student.Id,
                 NameBox.Text.Trim(),
-                EmailBox.Text.Trim(),
-                LeetcodeBox.Text.Trim(),
-                ProfileNameBox.Text.Trim(),
-                CurrentSession.Student.ProfilePicPath
+                EmailBox.Text.Trim()
+               
             );
 
             if (success)
             {
                 var updated = StudentDL.GetById(CurrentSession.Student.Id);
                 CurrentSession.SetStudent(updated);
+                CurrentSession.NotifyProfileUpdated();
+                LeetCodeStatBL.UpdateLeetCodeStat(CurrentSession.Student);
                 ProfileStatusText.Text = "Profile updated successfully.";
                 ProfileStatusText.Foreground = new SolidColorBrush(Colors.Green);
             }
@@ -77,55 +97,7 @@ namespace UET_CODERANK.UI
                 ProfileStatusText.Foreground = new SolidColorBrush(Colors.Red);
             }
         }
-        private async void btnVerify_Click(object sender, RoutedEventArgs e)
-        {
-            string username = LeetcodeBox.Text.Trim();
-            if (string.IsNullOrEmpty(username)) return;
-
-
-
-            txtVerifyStatus.Text = "Checking...";
-
-            var profile = await Task.Run(() => DL.LeetCodeAPI.GetProfile(username));
-
-            if (profile == null)
-            {
-                txtVerifyStatus.Text = "❌ Username not found";
-                txtVerifyStatus.Foreground = new SolidColorBrush(Microsoft.UI.Colors.Red);
-    
-                return;
-            }
-
-            // show profile card
-            profileCard.Visibility = Visibility.Visible;
-            txtProfileName.Text = profile.Name;
-           
-            profilePic.ProfilePicture = new BitmapImage(new Uri(profile.Avatar));
-            txtVerifyStatus.Text = "";
-      
-        }
-
-        private void btnYes_Click(object sender, RoutedEventArgs e)
-        {
-            profileCard.Visibility = Visibility.Collapsed;
-            txtVerifyStatus.Text = "✅ LeetCode verified!";
-            txtVerifyStatus.Foreground = new SolidColorBrush(Microsoft.UI.Colors.Green);
-
-
-        }
-
-        private void btnNo_Click(object sender, RoutedEventArgs e)
-        {
-
-            profileCard.Visibility = Visibility.Collapsed;
-
-            txtVerifyStatus.Text = "";
-        }
-
-        private void LeetcodeBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if(LeetcodeBox.Text == student.LeetcodeUsername) { btnVerify.IsEnabled = false; }
-            else { btnVerify.IsEnabled = true; }
-        }
+        
+        
     }
 }

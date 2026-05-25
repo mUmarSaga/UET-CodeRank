@@ -317,5 +317,26 @@ namespace UET_CODERANK.DL
                 throw;
             }
         }
+        public static bool UpdateLeetCodeAccount(int studentId, string username, string avatarUrl, string profileName)
+        {
+            string query = "UPDATE student SET leetcode_username = @username, profile_pic_path = @avatar,profile_name=@profile_name WHERE id = @id";
+            MySqlParameter[] p = {
+                new MySqlParameter("@username", username),
+                new MySqlParameter("@avatar", avatarUrl),
+                new MySqlParameter("@profile_name", profileName),
+                new MySqlParameter("@id", studentId)
+                };
+            return DatabaseHelper.ExecuteNonQuery(query, p) > 0;
+        }
+
+        public static bool IsLeetcodeUsernameTaken(string username, int excludeStudentId)
+        {
+            string query = "SELECT COUNT(*) FROM student WHERE leetcode_username = @username AND id != @id";
+            MySqlParameter[] p = {
+                    new MySqlParameter("@username", username),
+                    new MySqlParameter("@id", excludeStudentId)
+                };
+            return Convert.ToInt32(DatabaseHelper.ExecuteScalar(query, p)) > 0;
+        }
     }
 }

@@ -32,7 +32,7 @@ namespace UET_CODERANK.UI
         public MainShellPage()
         {
             this.InitializeComponent();
-            
+            CurrentSession.ProfileUpdated += RefreshProfile;
             LoadUserInfo();
         
         }
@@ -62,6 +62,15 @@ namespace UET_CODERANK.UI
             activeButton(btnHome);
             contentFrame.Navigate(typeof(HomePage));
 
+        }
+        private void RefreshProfile()
+        {
+            DispatcherQueue.TryEnqueue(() =>
+            {
+                txtUsername.Text = CurrentSession.Student.Name;
+                txtLeetcode.Text = CurrentSession.Student.LeetcodeUsername;
+                profilePic.ProfilePicture = new BitmapImage(new Uri(CurrentSession.Student.ProfilePicPath));
+            });
         }
 
 
@@ -121,6 +130,12 @@ namespace UET_CODERANK.UI
         {
             activeButton((Button)sender);
             contentFrame.Navigate(typeof(ProfilePage));
+        }
+
+        private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            activeButton(btnSettings);
+            contentFrame.Navigate(typeof(LeetCodeSettingsPage));
         }
     }
 }

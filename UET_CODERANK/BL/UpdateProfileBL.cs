@@ -11,7 +11,7 @@ namespace UET_CODERANK.BL
 {
     class UpdateProfileBL
     {
-        public static bool UpdateProfile(int id, string name, string email, string leetcodeUsername, string profileName, string profilePicPath)
+        public static bool UpdateProfile(int id, string name, string email)
         {
             if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(email))
                 return false;
@@ -26,7 +26,7 @@ namespace UET_CODERANK.BL
 
             try
             {
-                UpdateProfileDL.UpdateProfile(id, name, email, leetcodeUsername, profileName, profilePicPath);
+                UpdateProfileDL.UpdateProfile(id, name, email);
                 return true;
             }
             catch (Exception)

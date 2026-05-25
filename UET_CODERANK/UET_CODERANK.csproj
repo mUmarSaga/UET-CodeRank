@@ -23,6 +23,7 @@
     <None Remove="UI\HomePage.xaml" />
     <None Remove="UI\JoinClassPage.xaml" />
     <None Remove="UI\LeaderboardPage.xaml" />
+    <None Remove="UI\LeetCodeSettingsPage.xaml" />
     <None Remove="UI\MainShellPage.xaml" />
     <None Remove="UI\ManageAdminsPage.xaml" />
     <None Remove="UI\ManageBatchesPage.xaml" />
@@ -62,6 +63,11 @@
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="2.0.1" />
     <PackageReference Include="MySql.Data" Version="9.7.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="UI\LeetCodeSettingsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="UI\ChangePasswordPage.xaml">

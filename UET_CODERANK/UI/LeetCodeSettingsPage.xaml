@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="UET_CODERANK.UI.LeetCodeSettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:UET_CODERANK.UI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{StaticResource MainBackground}">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="24,20">
+        <StackPanel Spacing="24" MaxWidth="600" HorizontalAlignment="Left">
+
+            <!-- Header -->
+            <StackPanel Spacing="4">
+                <TextBlock Text="LeetCode Account"
+                           Foreground="White"
+                           FontSize="22"
+                           FontWeight="Bold"/>
+                <TextBlock Text="Link or update your LeetCode account to appear on the leaderboard"
+                           Foreground="#888888"
+                           FontSize="12"/>
+            </StackPanel>
+
+            <!-- Current account card -->
+            <Border x:Name="currentAccountCard"
+                    Background="#1A1A1A"
+                    CornerRadius="12"
+                    Padding="20">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="Current Account"
+                               Foreground="#888888"
+                               FontSize="12"
+                               FontWeight="SemiBold"/>
+
+                    <StackPanel x:Name="hasAccountPanel" Visibility="Collapsed" 
+                                Orientation="Horizontal" Spacing="16">
+                        <PersonPicture x:Name="currentPic" Width="48" Height="48"/>
+                        <StackPanel Spacing="4" VerticalAlignment="Center">
+                            <TextBlock x:Name="txtCurrentName"
+                                       Foreground="White"
+                                       FontSize="15"
+                                       FontWeight="SemiBold"/>
+                            <TextBlock x:Name="txtCurrentUsername"
+                                       Foreground="#107C10"
+                                       FontSize="12"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel x:Name="noAccountPanel" Visibility="Collapsed"
+                                Orientation="Horizontal" Spacing="12">
+                        <FontIcon Glyph="&#xE783;" Foreground="#888888" FontSize="20"/>
+                        <TextBlock Text="No LeetCode account linked"
+                                   Foreground="#888888"
+                                   FontSize="13"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                </StackPanel>
+            </Border>
+
+            <!-- Update form -->
+            <Border Background="#1A1A1A" CornerRadius="12" Padding="20">
+                <StackPanel Spacing="16">
+
+                    <TextBlock Text="Link New Account"
+                               Foreground="White"
+                               FontSize="14"
+                               FontWeight="SemiBold"/>
+
+                    <!-- Username input + verify button -->
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="LeetCode Username"
+                                   Foreground="#888888"
+                                   FontSize="12"/>
+                        <Grid ColumnSpacing="8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBox x:Name="txtUsername"
+                                     Grid.Column="0"
+                                     PlaceholderText="Enter LeetCode username"
+                                     Background="#111111"
+                                     Foreground="White"
+                                     BorderBrush="#2A2A2A"
+                                     TextChanged="txtUsername_TextChanged"/>
+
+                            <Button x:Name="btnVerify"
+                                    Grid.Column="1"
+                                    Content="Verify"
+                                    Background="Transparent"
+                                    BorderBrush="#107C10"
+                                    Foreground="#107C10"
+                                    CornerRadius="6"
+                                    Padding="16,8"
+                                    Click="btnVerify_Click"/>
+                        </Grid>
+
+                        <!-- Verify status -->
+                        <TextBlock x:Name="txtVerifyStatus"
+                                   FontSize="12"
+                                   Foreground="#888888"
+                                   Visibility="Collapsed"/>
+                    </StackPanel>
+
+                    <!-- Profile preview card -->
+                    <Border x:Name="profileCard"
+                            Visibility="Collapsed"
+                            Background="#111111"
+                            CornerRadius="10"
+                            Padding="16,12">
+                        <Grid ColumnSpacing="16">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <PersonPicture x:Name="previewPic"
+                                           Grid.Column="0"
+                                           Width="48" Height="48"/>
+
+                            <StackPanel Grid.Column="1" Spacing="4" VerticalAlignment="Center">
+                                <TextBlock x:Name="txtPreviewName"
+                                           Foreground="White"
+                                           FontSize="14"
+                                           FontWeight="SemiBold"/>
+                                <TextBlock Text="Is this you?"
+                                           Foreground="#888888"
+                                           FontSize="12"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="2" Orientation="Horizontal"
+                                        Spacing="8" VerticalAlignment="Center">
+                                <Button x:Name="btnYes"
+                                        Content="Yes, that's me"
+                                        Background="#107C10"
+                                        Foreground="White"
+                                        CornerRadius="6"
+                                        Padding="12,8"
+                                        Click="btnYes_Click"/>
+                                <Button x:Name="btnNo"
+                                        Content="No"
+                                        Background="#2A2A2A"
+                                        Foreground="White"
+                                        CornerRadius="6"
+                                        Padding="12,8"
+                                        Click="btnNo_Click"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <!-- Save button -->
+                    <Button x:Name="btnSave"
+                            Content="Save Changes"
+                            HorizontalAlignment="Stretch"
+                            Background="#107C10"
+                            Foreground="White"
+                            FontSize="14"
+                            Height="42"
+                            CornerRadius="8"
+                            IsEnabled="False"
+                            Click="btnSave_Click"/>
+
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</Page>

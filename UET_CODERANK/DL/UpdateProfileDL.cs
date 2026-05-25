@@ -9,18 +9,16 @@ namespace UET_CODERANK.DL
 {
     public class UpdateProfileDL
     {
-        public static void UpdateProfile(int id, string name, string email, string leetcodeUsername, string profileName, string profilePicPath)
+        public static void UpdateProfile(int id, string name, string email)
         {
-            string query = "UPDATE student SET name=@name, email=@email, leetcode_username=@leetcode_username, profile_name=@profile_name, profile_pic_path=@profile_pic_path WHERE id=@id";
+            string query = "UPDATE student SET name=@name, email=@email WHERE id=@id";
             MySqlParameter[] parameters = new MySqlParameter[]
             {
                 new MySqlParameter("@name", name),
                 new MySqlParameter("@email", email),
-                new MySqlParameter("@leetcode_username", leetcodeUsername ?? (object)DBNull.Value),
-                new MySqlParameter("@profile_name", profileName ?? (object)DBNull.Value),
-                new MySqlParameter("@profile_pic_path", profilePicPath ?? (object)DBNull.Value),
                 new MySqlParameter("@id", id)
             };
+            
             try
             {
                 DatabaseHelper.ExecuteNonQuery(query, parameters);

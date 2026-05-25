@@ -25,75 +25,15 @@
 
 
 
-                    <StackPanel Spacing="0">
-                        <TextBlock Text="Leetcode Username" Foreground="#888888" FontSize="12"/>
-                        
-                    </StackPanel>
-                    <Grid ColumnSpacing="0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
+                    
+                    
 
-                        <TextBox
-                             x:Name="LeetcodeBox"
-                             Grid.Column="0"
-                             PlaceholderText="your-leetcode-username"
-                             Background="#1A1A1A"
-                             Foreground="White"
-                             BorderBrush="#2A2A2A"
-                             TextChanged="LeetcodeBox_TextChanged"/>
-
-                        <Button
-                             x:Name="btnVerify"
-                             Grid.Column="1"
-                            IsEnabled="False"
-                             Content="Verify"
-                             Background="#1A1A1A"
-                             Foreground="#107C10"
-                             BorderBrush="#107C10"
-                             Click="btnVerify_Click"/>
-                    </Grid>
-
-                    <!-- Verify Status -->
-                    <TextBlock
-                         x:Name="txtVerifyStatus"
-                         FontSize="12"
-                         Foreground="#B4B4B4"
-                         Text=""/>
-                    <StackPanel x:Name="profileCard" 
-                             Visibility="Collapsed"
-                             Background="#1A1A1A"
-                             Padding="12"
-                             CornerRadius="8"
-                             Orientation="Horizontal"
-                             Spacing="12">
-
-                        <PersonPicture x:Name="profilePic" Width="48" Height="48"/>
-
-                        <StackPanel Spacing="4" VerticalAlignment="Center">
-                            <TextBlock x:Name="txtProfileName" Foreground="White" FontWeight="SemiBold"/>
-                            <TextBlock Text="Is this you?" Foreground="#B4B4B4" FontSize="12"/>
-                        </StackPanel>
-
-                        <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
-                            <Button x:Name="btnYes" Content="Yes, that's me" 
-                                 Background="#107C10" Foreground="White"
-                                 Click="btnYes_Click"/>
-                            <Button x:Name="btnNo" Content="No" 
-                                 Background="#2A2A2A" Foreground="White"
-                                 Click="btnNo_Click"/>
-                        </StackPanel>
-
-                    </StackPanel>
-
-                    <StackPanel Spacing="6">
-                        <TextBlock Text="Display Name" Foreground="#888888" FontSize="12"/>
-                        <TextBox x:Name="ProfileNameBox" Background="#1e2124" Foreground="White" PlaceholderText="Enter a display name"/>
-                    </StackPanel>
+                    
 
                     <Button x:Name="SaveProfileBtn" Content="Save Changes"
                             HorizontalAlignment="Stretch" Padding="0,12"
+                             Background="#107C10"
+                             Foreground="White"
                             CornerRadius="8" Click="SaveProfileBtn_Click"/>
 
                     <TextBlock x:Name="ProfileStatusText" FontSize="13" TextWrapping="Wrap"/>
