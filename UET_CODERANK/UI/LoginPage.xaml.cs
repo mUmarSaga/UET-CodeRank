@@ -31,7 +31,7 @@ namespace UET_CODERANK.UI
         public BlankPage1()
         {
             InitializeComponent();
-            AdminBL.AddAdmin("Umar", "123456");
+          
         }
 
         private async void btnLogin_Click(object sender, RoutedEventArgs e)
@@ -84,8 +84,8 @@ namespace UET_CODERANK.UI
                     Model.Student student = DL.StudentDL.GetByID(Id);
                     CurrentSession.SetStudent(student);
                     CurrentSession.SetLeetCodeStat(DL.LeetCodeStatDL.GetLeetCodeStatByStudentId(Id));
-                    LeetCodeStatBL.UpdateLeetCodeStat(student);
-                    if (student.SectionId != null) { 
+                    LeetCodeStatBL.UpsertLeetCodeStat(student);
+                    if (student.SectionId != 0) { 
                         Model.Section section = SectionDL.GetSectionById(student.SectionId);
                         string batchName = BatchDL.GetBatchById(section.Batch_id).Name;
                         CurrentSession.SetSectionAndSession(section.Name, batchName);

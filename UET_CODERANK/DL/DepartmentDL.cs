@@ -15,23 +15,25 @@ namespace UET_CODERANK.DL
             DataTable dt;
             try
             {
-                 dt = DatabaseHelper.ExecuteQuery(query);
+                dt = DatabaseHelper.ExecuteQuery(query);
             }
-            catch(Exception ex) {
-            {
-                ErrorLog.Log(ex, "DepartmentDL.GetAll");
-                    return null;
-            }
-            List<Department> list = new List<Department>();
-            foreach (DataRow row in dt.Rows)
-            {
-                list.Add(new Department
+            catch (Exception ex)
+            
                 {
-                    Id = row["id"] != DBNull.Value ? Convert.ToInt32(row["id"]) : 0,
-                    Name = row["name"] != DBNull.Value ? row["name"].ToString() : ""
-                });
-            }
-            return list;
+                    ErrorLog.Log(ex, "DepartmentDL.GetAll");
+                    return null;
+                }
+                List<Department> list = new List<Department>();
+                foreach (DataRow row in dt.Rows)
+                {
+                    list.Add(new Department
+                    {
+                        Id = row["id"] != DBNull.Value ? Convert.ToInt32(row["id"]) : 0,
+                        Name = row["name"] != DBNull.Value ? row["name"].ToString() : ""
+                    });
+                }
+                return list;
+            
         }
     }
 }

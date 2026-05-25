@@ -13,10 +13,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using UET_CODERANK.BL;
 using UET_CODERANK.Model;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using static System.Collections.Specialized.BitVector32;
 
 
 // To learn more about WinUI, the WinUI project structure,
@@ -33,8 +35,10 @@ namespace UET_CODERANK.UI
         {
             this.InitializeComponent();
             CurrentSession.ProfileUpdated += RefreshProfile;
+            CurrentSession.NavigationRequested += NavigateTo;
             LoadUserInfo();
-        
+            contentFrame.Navigate(typeof(HomePage));
+
         }
         private Button crntButton;
 
@@ -57,11 +61,12 @@ namespace UET_CODERANK.UI
         private void LoadUserInfo()
         {
             txtUsername.Text = CurrentSession.Student.Name;
-            profilePic.ProfilePicture = new BitmapImage(new Uri(CurrentSession.Student.ProfilePicPath));
+            if(!string.IsNullOrEmpty(CurrentSession.Student.LeetcodeUsername))
+            {
+                profilePic.ProfilePicture = new BitmapImage(new Uri(CurrentSession.Student.ProfilePicPath));
+            }
             txtLeetcode.Text = CurrentSession.Student.LeetcodeUsername;
             activeButton(btnHome);
-            contentFrame.Navigate(typeof(HomePage));
-
         }
         private void RefreshProfile()
         {
@@ -69,7 +74,10 @@ namespace UET_CODERANK.UI
             {
                 txtUsername.Text = CurrentSession.Student.Name;
                 txtLeetcode.Text = CurrentSession.Student.LeetcodeUsername;
-                profilePic.ProfilePicture = new BitmapImage(new Uri(CurrentSession.Student.ProfilePicPath));
+                if (!string.IsNullOrEmpty(CurrentSession.Student.LeetcodeUsername))
+                {
+                    profilePic.ProfilePicture = new BitmapImage(new Uri(CurrentSession.Student.ProfilePicPath));
+                }
             });
         }
 
@@ -90,6 +98,11 @@ namespace UET_CODERANK.UI
         {
             activeButton((Button)sender);
             contentFrame.Navigate(typeof(JoinClassPage));
+        }
+
+        private void NavigateTo(Type pageType)
+        {
+            contentFrame.Navigate(pageType);
         }
 
         private void btnSettings_Click(object sender, RoutedEventArgs e)
@@ -113,9 +126,14 @@ namespace UET_CODERANK.UI
         {
             // call your sync BL method
             // BL.SyncBL.SyncStudent(CurrentSession.Student.Id);
-            LeetCodeStatBL.UpdateLeetCodeStat(CurrentSession.Student);
-            contentFrame.Navigate(typeof(HomePage));
+            if (!string.IsNullOrEmpty(CurrentSession.Student.LeetcodeUsername)) {
+                LeetCodeStatBL.UpsertLeetCodeStat(CurrentSession.Student);
+                contentFrame.Navigate(typeof(HomePage));
+            }
+            
+      
         }
+       
 
         private void menuLogout_Click(object sender, RoutedEventArgs e)
         {

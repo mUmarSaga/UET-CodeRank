@@ -241,6 +241,11 @@ namespace UET_CODERANK.UI
             }
             try
             {
+                if(SectionDL.IsSectionNameExists(name, selectedBatchId))
+                {
+                    SetStatus(txtSectionStatus, "Section name already exists in this batch.", false);
+                    return;
+                }
                 SectionDL.AddSection(new Section(name, selectedBatchId));
                 txtSectionName.Text = "";
                 SetStatus(txtSectionStatus, "Section added successfully.", true);

@@ -160,7 +160,7 @@ namespace UET_CODERANK.UI
                 txtUsername.Text = "";
                 isVerified = false;
                 CurrentSession.NotifyProfileUpdated();
-                LeetCodeStatBL.UpdateLeetCodeStat(CurrentSession.Student);
+                LeetCodeStatBL.UpsertLeetCodeStat(CurrentSession.Student);
             }
             else
             {

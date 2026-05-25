@@ -96,16 +96,15 @@ public sealed partial class StudenrRegisterPage : Page
         }
         string passwordText = txtPassword.Password;
         bool done = await Task.Run(() => BL.StudentBL.RegisterStudent(Reg_No, name, Email, passwordText, Leetcode_Username, profileAvatarURL, profileName));
-        bool done1 = false;
-        if (done && isLeetcodeVerified)
+        if (done)
         {
-            Model.Student student = DL.StudentDL.GetByRegNo(Reg_No);
-            done1 = await Task.Run(() => BL.LeetCodeStatBL.GetLeetCodeStat(student));
-         
-        }
-        if (done && done1)
-        {
-            Frame.Navigate(typeof(BlankPage1));
+            if (isLeetcodeVerified)
+            {
+                Model.Student student = DL.StudentDL.GetByRegNo(Reg_No);
+                await Task.Run(() => BL.LeetCodeStatBL.UpsertLeetCodeStat(student));
+            }
+
+            Frame.Navigate(typeof(BlankPage1));  // always navigate if registration succeeded
         }
     }
 

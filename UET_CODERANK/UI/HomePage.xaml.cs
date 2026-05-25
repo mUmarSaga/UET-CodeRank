@@ -37,7 +37,12 @@ public sealed partial class HomePage : Page
     public HomePage()
     {
         InitializeComponent();
-        LoadStats();
+        if (!string.IsNullOrEmpty(CurrentSession.Student.LeetcodeUsername))
+            
+        {
+            LoadStats();
+        }
+        
     }
     private void LoadStats()
     {

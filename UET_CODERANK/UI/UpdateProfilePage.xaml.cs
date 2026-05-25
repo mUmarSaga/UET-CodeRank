@@ -87,7 +87,7 @@ namespace UET_CODERANK.UI
                 var updated = StudentDL.GetById(CurrentSession.Student.Id);
                 CurrentSession.SetStudent(updated);
                 CurrentSession.NotifyProfileUpdated();
-                LeetCodeStatBL.UpdateLeetCodeStat(CurrentSession.Student);
+                LeetCodeStatBL.UpsertLeetCodeStat(CurrentSession.Student);
                 ProfileStatusText.Text = "Profile updated successfully.";
                 ProfileStatusText.Foreground = new SolidColorBrush(Colors.Green);
             }

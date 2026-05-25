@@ -109,6 +109,28 @@ namespace UET_CODERANK.DL
                 throw;
             }
         }
+        public static bool IsSectionNameExists(string name, int batchId, int? excludeId = null)
+        {
+            string querry = "SELECT COUNT(*) FROM section WHERE name = @name AND batch_id = @batch_id";
+            if (excludeId != null)
+                querry += " AND id != @exclude_id";
+            MySqlParameter[] parameters = new MySqlParameter[]
+            {
+                    new MySqlParameter("@name",name),
+                    new MySqlParameter("@batch_id",batchId),
+                    new MySqlParameter("@exclude_id",excludeId ?? 0)
+            };
+            try
+            {
+                var count = Convert.ToInt32(DatabaseHelper.ExecuteScalar(querry, parameters));
+                return count > 0;
+            }
+            catch (Exception ex)
+            {
+                ErrorLog.Log(ex, "SectionDL.IsSectionNameExists");
+                throw;
+            }
+        }
         public static Model.Section GetSectionById(int id)
         {
             string querry = "SELECT * FROM section WHERE id = @id";

@@ -7,47 +7,25 @@ namespace UET_CODERANK.DL
 {
     internal class LeetCodeStatDL
     {
-        public static void AddLeetCodeStat(Model.LeetCodeStat stat)
+        public static void UpsertLeetCodeStat(Model.LeetCodeStat stat)
         {
             MySqlParameter[] parameters = new MySqlParameter[]
             {
-                new MySqlParameter("@studentId", stat.Student_id),
-                new MySqlParameter("@TotalSolved", stat.Total_solved),
-                new MySqlParameter("@EasySolved", stat.Easy_solved),
-                new MySqlParameter("@MediumSolved", stat.Medium_solved),
-                new MySqlParameter("@HardSolved", stat.Hard_solved),
-                new MySqlParameter("@Ranking", stat.Global_rank),
-                new MySqlParameter("@LastUpdated", DateTime.Now)
+        new MySqlParameter("@p_student_id",     stat.Student_id),
+        new MySqlParameter("@p_total_solved",   stat.Total_solved),
+        new MySqlParameter("@p_easy_solved",    stat.Easy_solved),
+        new MySqlParameter("@p_medium_solved",  stat.Medium_solved),
+        new MySqlParameter("@p_hard_solved",    stat.Hard_solved),
+        new MySqlParameter("@p_global_ranking", stat.Global_rank),
+        new MySqlParameter("@p_last_updated",   DateTime.Now)
             };
             try
             {
-                DatabaseHelper.ExecuteNonQuery("stp_InsertLeetcodeStats", parameters, CommandType.StoredProcedure);
+                DatabaseHelper.ExecuteNonQuery("stp_UpsertLeetcodeStats", parameters, CommandType.StoredProcedure);
             }
             catch (Exception ex)
             {
-                ErrorLog.Log(ex,"LeetCodeStatDL.AddLeetCodeStat");
-                throw;
-            }
-        }
-        public static void UpdateLeetCodeStat(Model.LeetCodeStat stat)
-        {
-            MySqlParameter[] parameters = new MySqlParameter[]
-            {
-                new MySqlParameter("@StdId",stat.Student_id),
-                new MySqlParameter("@Total",stat.Total_solved),
-                new MySqlParameter("@Easy",stat.Easy_solved),
-                new MySqlParameter("@MediumSolved",stat.Medium_solved),
-                new MySqlParameter("@Hard",stat.Hard_solved),
-                new MySqlParameter("@ranking",stat.Global_rank),
-                new MySqlParameter("@lastUpdated",DateTime.Now)
-            };
-            try
-            {
-                DatabaseHelper.ExecuteNonQuery("stp_UpdateLeetcodeStatsByStdId", parameters,CommandType.StoredProcedure);
-            }
-            catch (Exception ex)
-            {
-                ErrorLog.Log(ex, "LeetCodeStatDL.UpdateLeetCodeStat");
+                ErrorLog.Log(ex, "LeetCodeStatDL.UpsertLeetCodeStat");
                 throw;
             }
         }

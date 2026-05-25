@@ -8,22 +8,8 @@ namespace UET_CODERANK.BL
 {
     public class LeetCodeStatBL
     {
-        public static bool GetLeetCodeStat(Model.Student student)
-        {
-            if(student.LeetcodeUsername == null)
-            {
-                return false;
-            }
-            Model.LeetCodeStat stats =DL.LeetCodeAPI.GetSolvedStats(student.LeetcodeUsername);
-            if(stats == null)
-            {
-                return false;
-            }
-            stats.Student_id = student.Id;
-            DL.LeetCodeStatDL.AddLeetCodeStat(stats);
-            return true;
-        }
-        public static void UpdateLeetCodeStat(Model.Student student)
+        
+        public static void UpsertLeetCodeStat(Model.Student student)
         {
             if (student.LeetcodeUsername == null)
             {
@@ -35,7 +21,7 @@ namespace UET_CODERANK.BL
                 return;
             }
             stats.Student_id = student.Id;
-            DL.LeetCodeStatDL.UpdateLeetCodeStat(stats);
+            DL.LeetCodeStatDL.UpsertLeetCodeStat(stats);
             CurrentSession.SetLeetCodeStat(stats);
         }
 

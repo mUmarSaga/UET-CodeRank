@@ -56,7 +56,7 @@ namespace UET_CODERANK
                 Student student = DL.StudentDL.GetById(savedUserId);
                 CurrentSession.SetStudent(student);
                 CurrentSession.SetLeetCodeStat(DL.LeetCodeStatDL.GetLeetCodeStatByStudentId(student.Id));
-                LeetCodeStatBL.UpdateLeetCodeStat(student);
+                LeetCodeStatBL.UpsertLeetCodeStat(student);
                 if (student.SectionId != null)
                 {
                     Model.Section section = SectionDL.GetSectionById(student.SectionId);

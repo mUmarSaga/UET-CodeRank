@@ -48,5 +48,11 @@ namespace UET_CODERANK.BL
         {
             ProfileUpdated?.Invoke();
         }
+        public static event Action<Type> NavigationRequested;
+
+        public static void RequestNavigation(Type pageType)
+        {
+            NavigationRequested?.Invoke(pageType);
+        }
     }
 }

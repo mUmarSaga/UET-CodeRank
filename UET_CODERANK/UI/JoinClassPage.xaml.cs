@@ -69,7 +69,7 @@ namespace UET_CODERANK.UI
         private void btnCancelRequest_Click(object sender, RoutedEventArgs e)
         {
             int studentId = CurrentSession.Student.Id;
-            
+            EnrollmentDL.DeleteRequest(CurrentSession.Student.Id);
             pendingBanner.Visibility = Visibility.Collapsed;
             LoadBatches();
             
@@ -211,6 +211,28 @@ namespace UET_CODERANK.UI
 
         private async Task JoinSection(Model.Section section)
         {
+            if(string.IsNullOrEmpty(CurrentSession.Student.LeetcodeUsername))
+            {
+                ContentDialog leetcodeError = new ContentDialog
+                {
+                    Title = "LeetCode Username Required",
+                    Content = "Please update your LeetCode username in your profile before requesting to join a section.",
+                    PrimaryButtonText = "Update Profile",
+                    CloseButtonText = "Cancel",
+                    XamlRoot = this.XamlRoot
+                };
+
+                var result1 = await leetcodeError.ShowAsync();
+
+                if (result1 == ContentDialogResult.Primary)
+                {
+               
+                    CurrentSession.RequestNavigation(typeof(LeetCodeSettingsPage));
+                }
+
+                return;
+            }
+
             ContentDialog dialog = new ContentDialog
             {
                 Title = "Confirm Join Request",
