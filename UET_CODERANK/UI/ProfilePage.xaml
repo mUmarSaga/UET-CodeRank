@@ -26,6 +26,7 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0" Spacing="4">
                             <TextBlock Text="LeetCode Username" Foreground="#888888" FontSize="12"/>
@@ -34,6 +35,10 @@
                         <StackPanel Grid.Column="1" Spacing="4">
                             <TextBlock Text="Section" Foreground="#888888" FontSize="12"/>
                             <TextBlock x:Name="txtSection" Foreground="White" FontSize="15" FontWeight="SemiBold"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2" Spacing="4">
+                            <TextBlock Text="Batch" Foreground="#888888" FontSize="12"/>
+                            <TextBlock x:Name="txtBatch" Foreground="White" FontSize="15" FontWeight="SemiBold" Text="-"/>
                         </StackPanel>
                     </Grid>
                 </StackPanel>

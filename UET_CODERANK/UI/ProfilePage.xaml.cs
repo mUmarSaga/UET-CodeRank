@@ -36,7 +36,8 @@ namespace UET_CODERANK.UI
             txtRegNo.Text = student.RegNo ?? "";
             txtEmail.Text = student.Email ?? "";
             txtLeetcode.Text = student.LeetcodeUsername ?? "Not set";
-            txtSection.Text = student.SectionId != 0 ? student.SectionId.ToString() : "Not enrolled";
+            txtSection.Text = CurrentSession.SectionName;
+            txtBatch.Text = CurrentSession.SessionName;
 
             if (!string.IsNullOrEmpty(student.ProfilePicPath))
             {

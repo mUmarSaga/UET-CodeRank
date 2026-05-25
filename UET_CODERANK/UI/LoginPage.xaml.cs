@@ -13,6 +13,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using UET_CODERANK.BL;
+using UET_CODERANK.DL;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
@@ -83,6 +84,12 @@ namespace UET_CODERANK.UI
                     CurrentSession.SetStudent(student);
                     CurrentSession.SetLeetCodeStat(DL.LeetCodeStatDL.GetLeetCodeStatByStudentId(Id));
                     LeetCodeStatBL.UpdateLeetCodeStat(student);
+                    if (student.SectionId != null) { 
+                        Model.Section section = SectionDL.GetSectionById(student.SectionId);
+                        string batchName = BatchDL.GetBatchById(section.Batch_id).Name;
+                        CurrentSession.SetSectionAndSession(section.Name, batchName);
+                    }
+                        
                     App.MainWindowFrame?.Navigate(typeof(MainShellPage));
                 }
                 else
