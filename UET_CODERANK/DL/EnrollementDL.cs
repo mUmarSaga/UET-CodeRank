@@ -133,11 +133,11 @@ namespace UET_CODERANK.DL
             MySqlParameter[] p = { new MySqlParameter("@id", requestId) };
             DatabaseHelper.ExecuteNonQuery(query, p);
         }
-        public static void DeleteRequest(int requestId)
-        {
-            string query = "DELETE FROM enrollment_request WHERE student_id = @id";
-            MySqlParameter[] p = { new MySqlParameter("@id", requestId) };
-            DatabaseHelper.ExecuteNonQuery(query, p);
-        }
+        //public static void DeleteRequest(int requestId)
+        //{
+        //    string query = "DELETE FROM enrollment_request WHERE student_id = @id";
+        //    MySqlParameter[] p = { new MySqlParameter("@id", requestId) };
+        //    DatabaseHelper.ExecuteNonQuery(query, p);
+        //}
     }
 }
