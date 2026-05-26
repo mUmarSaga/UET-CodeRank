@@ -118,7 +118,7 @@ namespace UET_CODERANK.UI
             btn.IsEnabled = false;
             btn.Content = "Syncing...";
 
-            await Task.Run(() => LeetCodeStatBL.UpdateLeetCodeStat(student));
+            await Task.Run(() => LeetCodeStatBL.UpsertLeetCodeStat(student));
 
             btn.Content = "Done";
             LoadStudents();
@@ -134,7 +134,7 @@ namespace UET_CODERANK.UI
             int count = 0;
             foreach (var student in students)
             {
-                await Task.Run(() => LeetCodeStatBL.UpdateLeetCodeStat(student));
+                await Task.Run(() => LeetCodeStatBL.UpsertLeetCodeStat(student));
                 count++;
                 txtSyncStatus.Text = $"Synced {count} of {students.Count}...";
             }

@@ -14,14 +14,9 @@ namespace UET_CODERANK.UI
 {
     public sealed partial class LeaderboardPage : Page
     {
-<<<<<<< HEAD
         private List<LeaderboardEntry> _allEntries = new List<LeaderboardEntry>();
         private bool _isUpdatingFilters = false;
 
-=======
-        private List<LeaderboardEntry> allEntries = new List<LeaderboardEntry>();
-        private bool isUpdatingFilters = false;
->>>>>>> 3632b65 (Fixed leaderboard filter crash when switching batch selection)
         public LeaderboardPage()
         {
             this.InitializeComponent();
@@ -54,7 +49,6 @@ namespace UET_CODERANK.UI
             RenderLeaderboard(_allEntries);
         }
 
-        // ── Batch changed — reload sections then apply ────────────────────
         private void cmbBatch_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (_isUpdatingFilters) return;
@@ -88,20 +82,16 @@ namespace UET_CODERANK.UI
             ApplyFilters();
         }
 
-        // ── Core filter logic ─────────────────────────────────────────────
         private void ApplyFilters()
         {
             var filtered = new List<LeaderboardEntry>(_allEntries);
 
-            // Batch filter
             if (cmbBatch.SelectedItem is ComboBoxItem batch && batch.Tag != null)
                 filtered = filtered.Where(e => e.BatchId == (int)batch.Tag).ToList();
 
-            // Section filter — independent of batch
             if (cmbSection.SelectedItem is ComboBoxItem section && section.Tag != null)
                 filtered = filtered.Where(e => e.SectionId == (int)section.Tag).ToList();
 
-            // Sort
             if (cmbSortBy.SelectedItem is ComboBoxItem sort)
             {
                 filtered = sort.Content.ToString() switch
@@ -116,18 +106,15 @@ namespace UET_CODERANK.UI
             RenderLeaderboard(filtered);
         }
 
-        // ── Render ────────────────────────────────────────────────────────
         private void RenderLeaderboard(List<LeaderboardEntry> entries)
         {
             if (leaderboardRows != null)
                 leaderboardRows.Children.Clear();
 
-            // Podium
             if (entries.Count >= 1) SetPodium(txt1stName, txt1stReg, txt1stSolved, entries[0]);
             if (entries.Count >= 2) SetPodium(txt2ndName, txt2ndReg, txt2ndSolved, entries[1]);
             if (entries.Count >= 3) SetPodium(txt3rdName, txt3rdReg, txt3rdSolved, entries[2]);
 
-            // Table rows
             for (int i = 0; i < entries.Count; i++)
                 leaderboardRows.Children.Add(CreateRow(i + 1, entries[i]));
         }
@@ -200,9 +187,9 @@ namespace UET_CODERANK.UI
             {
                 Text = text,
                 Foreground = new SolidColorBrush(ColorHelper.FromArgb(255,
-                                        Convert.ToByte(color.Substring(1, 2), 16),
-                                        Convert.ToByte(color.Substring(3, 2), 16),
-                                        Convert.ToByte(color.Substring(5, 2), 16))),
+                    Convert.ToByte(color.Substring(1, 2), 16),
+                    Convert.ToByte(color.Substring(3, 2), 16),
+                    Convert.ToByte(color.Substring(5, 2), 16))),
                 FontSize = size,
                 HorizontalAlignment = center ? HorizontalAlignment.Center : HorizontalAlignment.Left,
                 VerticalAlignment = VerticalAlignment.Center,
@@ -212,65 +199,6 @@ namespace UET_CODERANK.UI
             grid.Children.Add(tb);
         }
 
-<<<<<<< HEAD
-=======
-        private void cmbBatch_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ApplyFilters();
-        }
-
-        private void cmbSection_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ApplyFilters();
-        }
-
-        private void cmbSortBy_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ApplyFilters();
-        }
-
-        private void ApplyFilters()
-        {
-            if (isUpdatingFilters) return;
-            var filtered = new List<LeaderboardEntry>(allEntries);
-
-            if (cmbBatch.SelectedItem is ComboBoxItem batch && batch.Tag != null)
-            {
-                int batchId = (int)batch.Tag;
-                filtered = filtered.Where(e => e.BatchId == batchId).ToList();
-
-                // Load sections for selected batch
-                isUpdatingFilters = true;
-                cmbSection.Items.Clear();
-                cmbSection.Items.Add(new ComboBoxItem { Content = "All Sections" });
-                var sections = SectionDL.GetSectionsByBatchId(batchId);
-                foreach (var s in sections)
-                    cmbSection.Items.Add(new ComboBoxItem { Content = s.Name, Tag = s.Id });
-                cmbSection.SelectedIndex = 0;
-                isUpdatingFilters = false;
-            }
-
-            if (cmbSection.SelectedItem is ComboBoxItem section && section.Tag != null)
-            {
-                int sectionId = (int)section.Tag;
-                filtered = filtered.Where(e => e.SectionId == sectionId).ToList();
-            }
-
-            if (cmbSortBy.SelectedItem is ComboBoxItem sort)
-            {
-                filtered = sort.Content.ToString() switch
-                {
-                    "Hard Solved" => filtered.OrderByDescending(e => e.HardSolved).ToList(),
-                    "Contest Rating" => filtered.OrderByDescending(e => e.ContestRating).ToList(),
-                    "Global Rank" => filtered.OrderBy(e => e.GlobalRanking).ToList(),
-                    _ => filtered.OrderByDescending(e => e.TotalSolved).ToList()
-                };
-            }
-
-            RenderLeaderboard(filtered);
-        }
-
->>>>>>> 3632b65 (Fixed leaderboard filter crash when switching batch selection)
         private void btnReset_Click(object sender, RoutedEventArgs e)
         {
             _isUpdatingFilters = true;
