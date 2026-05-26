@@ -14,9 +14,14 @@ namespace UET_CODERANK.UI
 {
     public sealed partial class LeaderboardPage : Page
     {
+<<<<<<< HEAD
         private List<LeaderboardEntry> _allEntries = new List<LeaderboardEntry>();
         private bool _isUpdatingFilters = false;
 
+=======
+        private List<LeaderboardEntry> allEntries = new List<LeaderboardEntry>();
+        private bool isUpdatingFilters = false;
+>>>>>>> 3632b65 (Fixed leaderboard filter crash when switching batch selection)
         public LeaderboardPage()
         {
             this.InitializeComponent();
@@ -207,6 +212,65 @@ namespace UET_CODERANK.UI
             grid.Children.Add(tb);
         }
 
+<<<<<<< HEAD
+=======
+        private void cmbBatch_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ApplyFilters();
+        }
+
+        private void cmbSection_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ApplyFilters();
+        }
+
+        private void cmbSortBy_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ApplyFilters();
+        }
+
+        private void ApplyFilters()
+        {
+            if (isUpdatingFilters) return;
+            var filtered = new List<LeaderboardEntry>(allEntries);
+
+            if (cmbBatch.SelectedItem is ComboBoxItem batch && batch.Tag != null)
+            {
+                int batchId = (int)batch.Tag;
+                filtered = filtered.Where(e => e.BatchId == batchId).ToList();
+
+                // Load sections for selected batch
+                isUpdatingFilters = true;
+                cmbSection.Items.Clear();
+                cmbSection.Items.Add(new ComboBoxItem { Content = "All Sections" });
+                var sections = SectionDL.GetSectionsByBatchId(batchId);
+                foreach (var s in sections)
+                    cmbSection.Items.Add(new ComboBoxItem { Content = s.Name, Tag = s.Id });
+                cmbSection.SelectedIndex = 0;
+                isUpdatingFilters = false;
+            }
+
+            if (cmbSection.SelectedItem is ComboBoxItem section && section.Tag != null)
+            {
+                int sectionId = (int)section.Tag;
+                filtered = filtered.Where(e => e.SectionId == sectionId).ToList();
+            }
+
+            if (cmbSortBy.SelectedItem is ComboBoxItem sort)
+            {
+                filtered = sort.Content.ToString() switch
+                {
+                    "Hard Solved" => filtered.OrderByDescending(e => e.HardSolved).ToList(),
+                    "Contest Rating" => filtered.OrderByDescending(e => e.ContestRating).ToList(),
+                    "Global Rank" => filtered.OrderBy(e => e.GlobalRanking).ToList(),
+                    _ => filtered.OrderByDescending(e => e.TotalSolved).ToList()
+                };
+            }
+
+            RenderLeaderboard(filtered);
+        }
+
+>>>>>>> 3632b65 (Fixed leaderboard filter crash when switching batch selection)
         private void btnReset_Click(object sender, RoutedEventArgs e)
         {
             _isUpdatingFilters = true;
