@@ -8,6 +8,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <!-- Batches Panel -->
@@ -66,11 +67,35 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="80"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="Section Name" Foreground="#888888" FontSize="12" FontWeight="SemiBold"/>
-                        <TextBlock Grid.Column="1" Text="Action" Foreground="#888888" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Text="Students" Foreground="#888888" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" Text="Action" Foreground="#888888" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Center"/>
                     </Grid>
                     <StackPanel x:Name="sectionRows"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+
+        <!-- Students Panel -->
+        <StackPanel Grid.Column="2" Spacing="16">
+            <StackPanel Orientation="Horizontal" Spacing="12">
+                <TextBlock Text="Students" Foreground="White" FontSize="22" FontWeight="Bold" VerticalAlignment="Center"/>
+                <TextBlock x:Name="txtSelectedSection" Foreground="#888888" FontSize="14" VerticalAlignment="Center"/>
+            </StackPanel>
+
+            <Border Background="#25282c" CornerRadius="12" Padding="0">
+                <StackPanel>
+                    <Grid Padding="16,12" Background="#1e2124">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="80"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Student" Foreground="#888888" FontSize="12" FontWeight="SemiBold"/>
+                        <TextBlock Grid.Column="1" Text="Action" Foreground="#888888" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                    </Grid>
+                    <StackPanel x:Name="studentRows"/>
                 </StackPanel>
             </Border>
         </StackPanel>

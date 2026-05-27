@@ -1,7 +1,8 @@
-﻿using UET_CODERANK.DL;
-using MySql.Data.MySqlClient;
-using UET_CODERANK.Model;
+﻿using MySql.Data.MySqlClient;
 using System;
+using System.Collections.Generic;
+using UET_CODERANK.DL;
+using UET_CODERANK.Model;
 namespace UET_CODERANK.DL
 {
     public class StudentDL
@@ -338,5 +339,62 @@ namespace UET_CODERANK.DL
                 };
             return Convert.ToInt32(DatabaseHelper.ExecuteScalar(query, p)) > 0;
         }
+
+        public static List<Student> GetStudentsBySectionId(int sectionId)
+        {
+            string querry = "SELECT * FROM student WHERE section_id = @section_id AND is_approved = 1";
+            MySqlParameter[] parameters = new MySqlParameter[]
+            {
+        new MySqlParameter("@section_id", sectionId)
+            };
+            try
+            {
+                var dt = DatabaseHelper.ExecuteQuery(querry, parameters);
+                var list = new List<Student>();
+                foreach (System.Data.DataRow row in dt.Rows)
+                {
+                    list.Add(new Student(
+                        row["reg_no"]?.ToString() ?? "",
+                        row["name"]?.ToString() ?? "",
+                        row["email"]?.ToString() ?? "",
+                        row["password"]?.ToString() ?? "",
+                        row["leetcode_username"]?.ToString() ?? "",
+                        row["profile_pic_path"]?.ToString() ?? "",
+                        row["profile_name"]?.ToString() ?? ""
+                    )
+                    {
+                        Id = row["id"] != DBNull.Value ? Convert.ToInt32(row["id"]) : 0,
+                        IsApproved = row["is_approved"] != DBNull.Value ? Convert.ToBoolean(row["is_approved"]) : false,
+                        CreatedAt = row["created_at"] != DBNull.Value ? Convert.ToDateTime(row["created_at"]) : DateTime.Now,
+                        SectionId = row["section_id"] != DBNull.Value ? Convert.ToInt32(row["section_id"]) : 0
+                    });
+                }
+                return list;
+            }
+            catch (Exception ex)
+            {
+                ErrorLog.Log(ex, "StudentDL.GetStudentsBySectionId");
+                throw;
+            }
+        }
+
+        public static void RemoveStudentFromSection(int studentId)
+        {
+            string querry = "UPDATE student SET section_id = NULL, is_approved = 0 WHERE id = @id";
+            MySqlParameter[] parameters = new MySqlParameter[]
+            {
+                new MySqlParameter("@id", studentId)
+            };
+            try
+            {
+                DatabaseHelper.ExecuteNonQuery(querry, parameters);
+            }
+            catch (Exception ex)
+            {
+                ErrorLog.Log(ex, "StudentDL.RemoveStudentFromSection");
+                throw;
+            }
+        }
+
     }
 }
