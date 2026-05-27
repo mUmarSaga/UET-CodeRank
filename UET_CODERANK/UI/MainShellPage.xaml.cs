@@ -155,5 +155,11 @@ namespace UET_CODERANK.UI
             activeButton(btnSettings);
             contentFrame.Navigate(typeof(LeetCodeSettingsPage));
         }
+
+        private void btnNotifications_Click(object sender, RoutedEventArgs e)
+        {
+            activeButton(sender);
+            contentFrame.Navigate(typeof(NotificationsPage));
+        }
     }
 }

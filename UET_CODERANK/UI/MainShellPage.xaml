@@ -107,6 +107,20 @@
                         </StackPanel>
                     </Button>
 
+                    <Button x:Name="btnNotifications"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Left"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Padding="17,10,14,14"
+                            CornerRadius="10"
+                            Click="btnNotifications_Click">
+                        <StackPanel Orientation="Horizontal" Spacing="16">
+                            <FontIcon Glyph="&#xEA8F;" Foreground="White" FontSize="24" VerticalAlignment="Center"/>
+                            <TextBlock Text="Notifications" Foreground="White" FontSize="16" FontWeight="Medium" VerticalAlignment="Bottom"/>
+                        </StackPanel>
+                    </Button>
+
 
 
                 </StackPanel>
