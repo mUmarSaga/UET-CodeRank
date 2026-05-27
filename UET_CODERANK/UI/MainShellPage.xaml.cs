@@ -161,7 +161,6 @@ namespace UET_CODERANK.UI
         {
             activeButton(sender);
             contentFrame.Navigate(typeof(NotificationsPage));
-            notifBadge.Visibility = Visibility.Collapsed;
         }
 
         public void RefreshNotificationBadge()

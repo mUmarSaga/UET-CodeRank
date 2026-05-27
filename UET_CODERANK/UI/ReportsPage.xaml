@@ -1,14 +1,45 @@
-<?xml version="1.0" encoding="utf-8"?>
 <Page
     x:Class="UET_CODERANK.UI.ReportsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:UET_CODERANK.UI"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    Background="{StaticResource MainBackground}">
 
-    <Grid>
+    <ScrollViewer Padding="40">
+        <StackPanel Spacing="24">
 
-    </Grid>
+            <StackPanel Spacing="4">
+                <TextBlock Text="Generate Reports" Foreground="White" FontSize="28" FontWeight="Bold"/>
+                <TextBlock Text="Export student performance data as a PDF document." Foreground="#888888" FontSize="13"/>
+            </StackPanel>
+
+            <!-- Overall Report -->
+            <Border Background="#25282c" CornerRadius="12" Padding="24">
+                <StackPanel Spacing="16">
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="Overall Department Report" Foreground="White" FontSize="16" FontWeight="SemiBold"/>
+                        <TextBlock Text="Includes all approved students ranked by score with full LeetCode stats." Foreground="#888888" FontSize="12"/>
+                    </StackPanel>
+                    <Button x:Name="btnGenerateOverall" Content="Generate Overall Report"
+                            Padding="20,10" CornerRadius="8" Click="btnGenerateOverall_Click"/>
+                    <TextBlock x:Name="txtOverallStatus" FontSize="12" TextWrapping="Wrap"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Batch Report -->
+            <Border Background="#25282c" CornerRadius="12" Padding="24">
+                <StackPanel Spacing="16">
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="Batch-wise Report" Foreground="White" FontSize="16" FontWeight="SemiBold"/>
+                        <TextBlock Text="Generate a report for a specific batch." Foreground="#888888" FontSize="12"/>
+                    </StackPanel>
+                    <ComboBox x:Name="cmbBatch" HorizontalAlignment="Stretch"
+                              PlaceholderText="Select a batch"/>
+                    <Button x:Name="btnGenerateBatch" Content="Generate Batch Report"
+                            Padding="20,10" CornerRadius="8" Click="btnGenerateBatch_Click"/>
+                    <TextBlock x:Name="txtBatchStatus" FontSize="12" TextWrapping="Wrap"/>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
 </Page>

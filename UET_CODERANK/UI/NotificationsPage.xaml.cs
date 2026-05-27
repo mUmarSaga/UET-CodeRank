@@ -37,11 +37,14 @@ namespace UET_CODERANK.UI
                     Padding = new Thickness(24, 20, 0, 20),
                     FontSize = 13
                 });
-                return;
+            }
+            else
+            {
+                foreach (var notification in notifications)
+                    notificationRows.Children.Add(CreateRow(notification));
             }
 
-            foreach (var notification in notifications)
-                notificationRows.Children.Add(CreateRow(notification));
+            RefreshShellBadge();
         }
 
         private Border CreateRow(Notification notification)
@@ -128,14 +131,12 @@ namespace UET_CODERANK.UI
             int id = (int)((Button)sender).Tag;
             NotificationDL.MarkAsRead(id);
             LoadNotifications();
-            RefreshShellBadge();
         }
 
         private void btnMarkAllRead_Click(object sender, RoutedEventArgs e)
         {
             NotificationDL.MarkAllAsRead(CurrentSession.Student.Id);
             LoadNotifications();
-            RefreshShellBadge();
         }
 
         private void RefreshShellBadge()
