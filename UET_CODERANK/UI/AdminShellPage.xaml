@@ -85,6 +85,18 @@
                         </StackPanel>
                     </Button>
 
+                    <Button x:Name="btnNotify"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Left"
+                            Background="Transparent" BorderThickness="0"
+                            Padding="12,10" CornerRadius="8"
+                            Click="btnNotify_Click">
+                        <StackPanel Orientation="Horizontal" Spacing="12">
+                            <FontIcon Glyph="&#xEA8F;" Foreground="White" FontSize="16"/>
+                            <TextBlock Text="Send Notification" Foreground="White" FontSize="14"/>
+                        </StackPanel>
+                    </Button>
+
                     <Button x:Name="btnReports"
                             HorizontalAlignment="Stretch"
                             HorizontalContentAlignment="Left"

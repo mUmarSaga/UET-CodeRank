@@ -30,6 +30,7 @@
     <None Remove="UI\NotificationsPage.xaml" />
     <None Remove="UI\ProfilePage.xaml" />
     <None Remove="UI\ReportsPage.xaml" />
+    <None Remove="UI\SendNotificationPage.xaml" />
     <None Remove="UI\StudenrRegisterPage.xaml" />
     <None Remove="UI\SyncStatsPage.xaml" />
     <None Remove="UI\UpdateProfilePage.xaml" />
@@ -64,6 +65,11 @@
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="2.0.1" />
     <PackageReference Include="MySql.Data" Version="9.7.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="UI\SendNotificationPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="UI\NotificationsPage.xaml">

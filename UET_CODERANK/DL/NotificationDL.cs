@@ -93,5 +93,25 @@ namespace UET_CODERANK.DL
                 return 0;
             }
         }
+
+
+        public static void SendNotification(int studentId, string message)
+        {
+            string query = "INSERT INTO notification(student_id, message, is_read, created_at) VALUES(@student_id, @message, 0, @created_at)";
+            MySqlParameter[] parameters = new MySqlParameter[]
+            {
+                new MySqlParameter("@student_id", studentId),
+                new MySqlParameter("@message", message),
+                new MySqlParameter("@created_at", DateTime.Now)
+            };
+            try
+            {
+                DatabaseHelper.ExecuteNonQuery(query, parameters);
+            }
+            catch (Exception ex)
+            {
+                ErrorLog.Log(ex, "NotificationDL.SendNotification");
+            }
+        }
     }
 }

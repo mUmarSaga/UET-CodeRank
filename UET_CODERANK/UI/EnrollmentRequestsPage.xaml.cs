@@ -155,14 +155,26 @@ namespace UET_CODERANK.UI
         {
             var req = (EnrollementRequest)((Button)sender).Tag;
             bool success = EnrollmentDL.ApproveRequest(req.Id, req.StudentId, req.SectionId);
-            if (success) LoadRequests();
+            if (success)
+            {
+                var section = SectionDL.GetSectionById(req.SectionId);
+                string sectionName = section?.Name ?? "your section";
+                NotificationDL.SendNotification(req.StudentId, $"Your enrollment request for Section {sectionName} has been approved. Welcome!");
+                LoadRequests();
+            }
         }
 
         private void RejectBtn_Click(object sender, RoutedEventArgs e)
         {
             var req = (EnrollementRequest)((Button)sender).Tag;
             bool success = EnrollmentDL.RejectRequest(req.Id);
-            if (success) LoadRequests();
+            if (success)
+            {
+                var section = SectionDL.GetSectionById(req.SectionId);
+                string sectionName = section?.Name ?? "your section";
+                NotificationDL.SendNotification(req.StudentId, $"Your enrollment request for Section {sectionName} has been rejected.");
+                LoadRequests();
+            }
         }
 
         private void btnFilter_Click(object sender, RoutedEventArgs e)

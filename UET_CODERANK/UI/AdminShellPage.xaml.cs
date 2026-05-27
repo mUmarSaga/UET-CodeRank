@@ -112,5 +112,11 @@ namespace UET_CODERANK.UI
                     break;
             }
         }
+
+        private void btnNotify_Click(object sender, RoutedEventArgs e)
+        {
+            SetActive(btnNotify);
+            adminContentFrame.Navigate(typeof(SendNotificationPage));
+        }
     }
 }

@@ -194,6 +194,7 @@ namespace UET_CODERANK.UI
             try
             {
                 BadgeDL.AwardBadge(student.Id, badge.id);
+                NotificationDL.SendNotification(student.Id, $"🏅 You've been awarded the '{badge.name}' badge! {badge.description}");
                 SetStatus(txtAwardStatus, $"Badge '{badge.name}' awarded to {student.Name}.", true);
                 cmbStudents_SelectionChanged(null, null);
             }
