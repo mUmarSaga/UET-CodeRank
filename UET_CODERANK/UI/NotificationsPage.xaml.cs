@@ -128,12 +128,21 @@ namespace UET_CODERANK.UI
             int id = (int)((Button)sender).Tag;
             NotificationDL.MarkAsRead(id);
             LoadNotifications();
+            RefreshShellBadge();
         }
 
         private void btnMarkAllRead_Click(object sender, RoutedEventArgs e)
         {
             NotificationDL.MarkAllAsRead(CurrentSession.Student.Id);
             LoadNotifications();
+            RefreshShellBadge();
+        }
+
+        private void RefreshShellBadge()
+        {
+            var frame = this.Parent as Frame;
+            var shell = frame?.Parent as MainShellPage;
+            shell?.RefreshNotificationBadge();
         }
     }
 }

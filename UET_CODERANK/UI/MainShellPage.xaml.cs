@@ -67,6 +67,7 @@ namespace UET_CODERANK.UI
             }
             txtLeetcode.Text = CurrentSession.Student.LeetcodeUsername;
             activeButton(btnHome);
+            RefreshNotificationBadge();
         }
         private void RefreshProfile()
         {
@@ -160,6 +161,21 @@ namespace UET_CODERANK.UI
         {
             activeButton(sender);
             contentFrame.Navigate(typeof(NotificationsPage));
+            notifBadge.Visibility = Visibility.Collapsed;
+        }
+
+        public void RefreshNotificationBadge()
+        {
+            int count = DL.NotificationDL.GetUnreadCount(CurrentSession.Student.Id);
+            if (count > 0)
+            {
+                txtNotifCount.Text = count > 99 ? "99+" : count.ToString();
+                notifBadge.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                notifBadge.Visibility = Visibility.Collapsed;
+            }
         }
     }
 }
