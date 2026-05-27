@@ -1,14 +1,74 @@
-<?xml version="1.0" encoding="utf-8"?>
 <Page
     x:Class="UET_CODERANK.UI.AwardBadgesPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:UET_CODERANK.UI"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    Background="{StaticResource MainBackground}">
 
-    <Grid>
+    <Grid Padding="40" ColumnSpacing="24">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Left: Manage Badges -->
+        <StackPanel Grid.Column="0" Spacing="16">
+            <TextBlock Text="Manage Badges" Foreground="White" FontSize="22" FontWeight="Bold"/>
+
+            <Border Background="#25282c" CornerRadius="12" Padding="20">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="Create New Badge" Foreground="White" FontSize="14" FontWeight="SemiBold"/>
+                    <TextBox x:Name="txtBadgeName" PlaceholderText="Badge name" Background="#1e2124" Foreground="White"/>
+                    <TextBox x:Name="txtBadgeDesc" PlaceholderText="Description" Background="#1e2124" Foreground="White"/>
+                    <TextBox x:Name="txtBadgeCriteria" PlaceholderText="Criteria e.g. Solved 100 problems" Background="#1e2124" Foreground="White"/>
+                    <Button Content="Create Badge" HorizontalAlignment="Stretch"
+                            Padding="0,10" CornerRadius="8" Click="btnCreateBadge_Click"/>
+                    <TextBlock x:Name="txtBadgeStatus" FontSize="12" TextWrapping="Wrap"/>
+                </StackPanel>
+            </Border>
+
+            <Border Background="#25282c" CornerRadius="12" Padding="0">
+                <StackPanel>
+                    <Grid Padding="16,12" Background="#1e2124">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="80"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Badge" Foreground="#888888" FontSize="12" FontWeight="SemiBold"/>
+                        <TextBlock Grid.Column="1" Text="Action" Foreground="#888888" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                    </Grid>
+                    <StackPanel x:Name="badgeRows"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+
+        <!-- Right: Award to Student -->
+        <StackPanel Grid.Column="1" Spacing="16">
+            <TextBlock Text="Award Badge to Student" Foreground="White" FontSize="22" FontWeight="Bold"/>
+
+            <Border Background="#25282c" CornerRadius="12" Padding="20">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="Select Student" Foreground="#888888" FontSize="12"/>
+                    <ComboBox x:Name="cmbStudents" HorizontalAlignment="Stretch"
+                              PlaceholderText="Choose a student"
+                              SelectionChanged="cmbStudents_SelectionChanged"/>
+
+                    <TextBlock Text="Select Badge" Foreground="#888888" FontSize="12"/>
+                    <ComboBox x:Name="cmbBadges" HorizontalAlignment="Stretch"
+                              PlaceholderText="Choose a badge"/>
+
+                    <Button Content="Award Badge" HorizontalAlignment="Stretch"
+                            Padding="0,10" CornerRadius="8" Click="btnAwardBadge_Click"/>
+                    <TextBlock x:Name="txtAwardStatus" FontSize="12" TextWrapping="Wrap"/>
+                </StackPanel>
+            </Border>
+
+            <Border Background="#25282c" CornerRadius="12" Padding="20">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="Student's Current Badges" Foreground="White" FontSize="14" FontWeight="SemiBold"/>
+                    <StackPanel x:Name="studentBadgeRows"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
 
     </Grid>
 </Page>

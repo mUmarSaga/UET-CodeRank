@@ -1,22 +1,10 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
-using Microsoft.UI.Xaml.Navigation;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using UET_CODERANK.BL;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
+using UET_CODERANK.DL;
 
 namespace UET_CODERANK.UI
 {
@@ -56,8 +44,67 @@ namespace UET_CODERANK.UI
                 txtScore.Text = (stat.Hard_solved * 5 + stat.Medium_solved * 3 + stat.Easy_solved * 1).ToString();
                 txtLastSync.Text = stat.Last_updated.ToString("dd MMM yyyy, hh:mm tt");
             }
+
+            LoadBadges();
         }
 
-      
+        private void LoadBadges()
+        {
+            badgesPanel.Children.Clear();
+            var badges = BadgeDL.GetBadgesByStudentId(CurrentSession.Student.Id);
+
+            if (badges.Count == 0)
+            {
+                badgesPanel.Children.Add(new TextBlock
+                {
+                    Text = "No badges earned yet. Keep solving!",
+                    Foreground = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 136, 136, 136)),
+                    FontSize = 13
+                });
+                return;
+            }
+
+            var wrap = new ItemsWrapGrid { Orientation = Orientation.Horizontal };
+            foreach (var badge in badges)
+            {
+                var card = new Border
+                {
+                    Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 30, 33, 36)),
+                    CornerRadius = new CornerRadius(10),
+                    Padding = new Thickness(16, 12, 16, 12),
+                    Margin = new Thickness(0, 0, 12, 12),
+                    MinWidth = 160
+                };
+                var stack = new StackPanel { Spacing = 4 };
+                stack.Children.Add(new TextBlock
+                {
+                    Text = $"⭐ {badge.name}",
+                    Foreground = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 255, 192, 30)),
+                    FontSize = 14,
+                    FontWeight = Microsoft.UI.Text.FontWeights.SemiBold
+                });
+                stack.Children.Add(new TextBlock
+                {
+                    Text = badge.description,
+                    Foreground = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 136, 136, 136)),
+                    FontSize = 11,
+                    TextWrapping = TextWrapping.Wrap
+                });
+                stack.Children.Add(new TextBlock
+                {
+                    Text = badge.criteria,
+                    Foreground = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 100, 100, 100)),
+                    FontSize = 10,
+                    TextWrapping = TextWrapping.Wrap
+                });
+                card.Child = stack;
+                badgesPanel.Children.Add(card);
+            }
+        }
+
+        private void btnUpdateProfile_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(UpdateProfilePage));
+        }
     }
 }

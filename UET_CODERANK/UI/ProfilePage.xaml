@@ -107,7 +107,21 @@
                 </Grid>
             </Border>
 
-            
+
+            <TextBlock Text="My Badges" Foreground="White" FontSize="20" FontWeight="SemiBold"/>
+
+            <Border Background="#25282c" CornerRadius="12" Padding="24">
+                <StackPanel x:Name="badgesPanel" Spacing="12">
+                    <TextBlock Text="Loading badges..." Foreground="#888888" FontSize="13"/>
+                </StackPanel>
+            </Border>
+
+            <Button x:Name="btnUpdateProfile"
+                    Content="Edit Profile"
+                    HorizontalAlignment="Left"
+                    Padding="20,10"
+                    CornerRadius="8"
+                    Click="btnUpdateProfile_Click"/>
 
         </StackPanel>
     </ScrollViewer>
