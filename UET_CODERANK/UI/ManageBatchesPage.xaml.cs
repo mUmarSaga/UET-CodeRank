@@ -368,20 +368,50 @@ namespace UET_CODERANK.UI
             }
         }
 
-        private void RemoveStudent_Click(object sender, RoutedEventArgs e)
+        private async void RemoveStudent_Click(object sender, RoutedEventArgs e)
         {
             var student = (Student)((Button)sender).Tag;
+
+            var confirmDialog = new ContentDialog
+            {
+                Title = "Remove Student",
+                Content = $"Are you sure you want to remove {student.Name} ({student.RegNo}) from their section?\n\nThis will revoke their enrollment and they will need to re-apply.",
+                PrimaryButtonText = "Remove",
+                CloseButtonText = "Cancel",
+                XamlRoot = this.XamlRoot
+            };
+
+            var result = await confirmDialog.ShowAsync();
+            if (result != ContentDialogResult.Primary) return;
+
             try
             {
                 StudentDL.RemoveStudentFromSection(student.Id);
-                NotificationDL.SendNotification(student.Id, $"You have been removed from your section by an admin.");
+                NotificationDL.SendNotification(student.Id, "You have been removed from your section by an admin.");
+
+                var successDialog = new ContentDialog
+                {
+                    Title = "Student Removed",
+                    Content = $"✅ Successfully removed:\n\nName: {student.Name}\nReg No: {student.RegNo}\nLeetCode: {student.LeetcodeUsername ?? "N/A"}\nEmail: {student.Email}",
+                    CloseButtonText = "OK",
+                    XamlRoot = this.XamlRoot
+                };
+                await successDialog.ShowAsync();
+
                 LoadStudents(selectedSectionId);
                 LoadSections(selectedBatchId);
                 LoadBatches();
             }
             catch
             {
-                SetStatus(txtSectionStatus, "Failed to remove student.", false);
+                var failDialog = new ContentDialog
+                {
+                    Title = "Failed",
+                    Content = $"❌ Could not remove {student.Name} ({student.RegNo}).\n\nPlease try again.",
+                    CloseButtonText = "OK",
+                    XamlRoot = this.XamlRoot
+                };
+                await failDialog.ShowAsync();
             }
         }
 
