@@ -95,19 +95,50 @@ public sealed partial class HomePage : Page
             txtContests.Text = contest.ContestAttended.ToString();
         }
 
-        // Weekly progress chart
-        //var snapshots = WeeklySnapshotDL.GetByStudentId(CurrentSession.Student.Id);
+        var snapshots = WeeklySnapshotDL.GetByStudentId(CurrentSession.Student.Id);
+        System.Diagnostics.Debug.WriteLine($"Snapshots count: {snapshots.Count}");
 
-        //if (snapshots != null && snapshots.Count > 0)
-        //{
-        //    weeklyChart.Series = new ISeries[]
-        //    {
-        //        new ColumnSeries<int>
-        //        {
-        //            Values = snapshots.Select(s => s.TotalSolved).ToArray(),
-        //            Fill = new SolidColorPaint(SKColor.Parse("#107C10"))
-        //        }
-        //    };
-        //}
+        if (snapshots != null && snapshots.Count > 1)
+        {
+            // Calculate weekly GAIN not cumulative
+            var gains = new List<int>();
+            var labels = new List<string>();
+
+            for (int i = 1; i < snapshots.Count; i++)
+            {
+                int gain = snapshots[i].TotalSolved - snapshots[i - 1].TotalSolved;
+                gains.Add(Math.Max(0, gain)); // no negatives
+                labels.Add(snapshots[i].WeekStart.ToString("MMM dd"));
+            }
+
+            weeklyChart.Series = new ISeries[]
+            {
+        new ColumnSeries<int>
+        {
+            Values = gains.ToArray(),
+            Fill = new SolidColorPaint(SKColor.Parse("#107C10")),
+            Name = "Problems Solved"
+        }
+            };
+
+            weeklyChart.XAxes = new[]
+            {
+        new Axis
+        {
+            Labels = labels.ToArray(),
+            LabelsPaint = new SolidColorPaint(SKColor.Parse("#888888")),
+            TextSize = 11
+        }
+                };
+
+            weeklyChart.YAxes = new[]
+            {
+        new Axis
+        {
+            LabelsPaint = new SolidColorPaint(SKColor.Parse("#888888")),
+            TextSize = 11
+        }
+            };
+        }
     }
 }
