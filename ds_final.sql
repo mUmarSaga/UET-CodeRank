@@ -327,6 +327,26 @@ LOCK TABLES `notification` WRITE;
 UNLOCK TABLES;
 
 --
+-- Temporary view structure for view `pending_requests_view`
+--
+
+DROP TABLE IF EXISTS `pending_requests_view`;
+/*!50001 DROP VIEW IF EXISTS `pending_requests_view`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `pending_requests_view` AS SELECT 
+ 1 AS `request_id`,
+ 1 AS `student_name`,
+ 1 AS `reg_no`,
+ 1 AS `email`,
+ 1 AS `leetcode_username`,
+ 1 AS `section_name`,
+ 1 AS `batch_name`,
+ 1 AS `status`,
+ 1 AS `requested_at`*/;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Table structure for table `section`
 --
 
@@ -422,6 +442,70 @@ LOCK TABLES `student_badges` WRITE;
 UNLOCK TABLES;
 
 --
+-- Temporary view structure for view `student_section_view`
+--
+
+DROP TABLE IF EXISTS `student_section_view`;
+/*!50001 DROP VIEW IF EXISTS `student_section_view`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `student_section_view` AS SELECT 
+ 1 AS `student_id`,
+ 1 AS `name`,
+ 1 AS `reg_no`,
+ 1 AS `email`,
+ 1 AS `leetcode_username`,
+ 1 AS `is_approved`,
+ 1 AS `section_id`,
+ 1 AS `section_name`,
+ 1 AS `batch_id`,
+ 1 AS `batch_name`,
+ 1 AS `department_name`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `student_stats_view`
+--
+
+DROP TABLE IF EXISTS `student_stats_view`;
+/*!50001 DROP VIEW IF EXISTS `student_stats_view`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `student_stats_view` AS SELECT 
+ 1 AS `student_id`,
+ 1 AS `name`,
+ 1 AS `reg_no`,
+ 1 AS `leetcode_username`,
+ 1 AS `total_solved`,
+ 1 AS `easy_solved`,
+ 1 AS `medium_solved`,
+ 1 AS `hard_solved`,
+ 1 AS `global_ranking`,
+ 1 AS `contest_rating`,
+ 1 AS `contest_attended`,
+ 1 AS `score`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `top_performers_view`
+--
+
+DROP TABLE IF EXISTS `top_performers_view`;
+/*!50001 DROP VIEW IF EXISTS `top_performers_view`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `top_performers_view` AS SELECT 
+ 1 AS `student_id`,
+ 1 AS `name`,
+ 1 AS `reg_no`,
+ 1 AS `section_name`,
+ 1 AS `batch_name`,
+ 1 AS `total_solved`,
+ 1 AS `hard_solved`,
+ 1 AS `score`*/;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Table structure for table `university`
 --
 
@@ -495,6 +579,78 @@ UNLOCK TABLES;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `pending_requests_view`
+--
+
+/*!50001 DROP VIEW IF EXISTS `pending_requests_view`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `pending_requests_view` AS select `er`.`id` AS `request_id`,`s`.`name` AS `student_name`,`s`.`reg_no` AS `reg_no`,`s`.`email` AS `email`,`s`.`leetcode_username` AS `leetcode_username`,`sec`.`name` AS `section_name`,`b`.`name` AS `batch_name`,`er`.`status` AS `status`,`er`.`requested_at` AS `requested_at` from (((`enrollment_request` `er` join `student` `s` on((`er`.`student_id` = `s`.`id`))) join `section` `sec` on((`er`.`section_id` = `sec`.`id`))) join `batch` `b` on((`sec`.`batch_id` = `b`.`id`))) where (`er`.`status` = 'PENDING') */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `student_section_view`
+--
+
+/*!50001 DROP VIEW IF EXISTS `student_section_view`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `student_section_view` AS select `s`.`id` AS `student_id`,`s`.`name` AS `name`,`s`.`reg_no` AS `reg_no`,`s`.`email` AS `email`,`s`.`leetcode_username` AS `leetcode_username`,`s`.`is_approved` AS `is_approved`,`sec`.`id` AS `section_id`,`sec`.`name` AS `section_name`,`b`.`id` AS `batch_id`,`b`.`name` AS `batch_name`,`d`.`name` AS `department_name` from (((`student` `s` left join `section` `sec` on((`s`.`section_id` = `sec`.`id`))) left join `batch` `b` on((`sec`.`batch_id` = `b`.`id`))) left join `department` `d` on((`b`.`department_id` = `d`.`id`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `student_stats_view`
+--
+
+/*!50001 DROP VIEW IF EXISTS `student_stats_view`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `student_stats_view` AS select `s`.`id` AS `student_id`,`s`.`name` AS `name`,`s`.`reg_no` AS `reg_no`,`s`.`leetcode_username` AS `leetcode_username`,coalesce(`ls`.`total_solved`,0) AS `total_solved`,coalesce(`ls`.`easy_solved`,0) AS `easy_solved`,coalesce(`ls`.`medium_solved`,0) AS `medium_solved`,coalesce(`ls`.`hard_solved`,0) AS `hard_solved`,coalesce(`ls`.`global_ranking`,0) AS `global_ranking`,coalesce(`cs`.`contest_rating`,0) AS `contest_rating`,coalesce(`cs`.`contest_attended`,0) AS `contest_attended`,(((coalesce(`ls`.`easy_solved`,0) * 1) + (coalesce(`ls`.`medium_solved`,0) * 3)) + (coalesce(`ls`.`hard_solved`,0) * 5)) AS `score` from ((`student` `s` left join `leetcode_stats` `ls` on((`s`.`id` = `ls`.`student_id`))) left join `contest_stats` `cs` on((`s`.`id` = `cs`.`student_id`))) where (`s`.`is_approved` = 1) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `top_performers_view`
+--
+
+/*!50001 DROP VIEW IF EXISTS `top_performers_view`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `top_performers_view` AS select `s`.`id` AS `student_id`,`s`.`name` AS `name`,`s`.`reg_no` AS `reg_no`,`sec`.`name` AS `section_name`,`b`.`name` AS `batch_name`,coalesce(`ls`.`total_solved`,0) AS `total_solved`,coalesce(`ls`.`hard_solved`,0) AS `hard_solved`,(((coalesce(`ls`.`easy_solved`,0) * 1) + (coalesce(`ls`.`medium_solved`,0) * 3)) + (coalesce(`ls`.`hard_solved`,0) * 5)) AS `score` from (((`student` `s` left join `leetcode_stats` `ls` on((`s`.`id` = `ls`.`student_id`))) left join `section` `sec` on((`s`.`section_id` = `sec`.`id`))) left join `batch` `b` on((`sec`.`batch_id` = `b`.`id`))) where (`s`.`is_approved` = 1) order by `score` desc limit 10 */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -505,4 +661,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-05-28 13:25:50
+-- Dump completed on 2026-05-28 14:11:09
