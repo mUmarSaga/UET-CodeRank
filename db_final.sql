@@ -212,6 +212,27 @@ LOCK TABLES `enrollment_request` WRITE;
 INSERT INTO `enrollment_request` VALUES (1,2,1,'APPROVED','2026-05-26 01:00:51','2026-05-26 01:02:12'),(2,3,5,'APPROVED','2026-05-26 01:03:03','2026-05-26 01:26:50'),(3,4,1,'APPROVED','2026-05-26 01:23:50','2026-05-26 01:26:48'),(6,5,1,'REJECTED','2026-05-26 01:44:51','2026-05-26 01:45:07'),(7,5,1,'APPROVED','2026-05-26 01:45:38','2026-05-26 01:45:55'),(8,7,7,'APPROVED','2026-05-26 02:00:16','2026-05-26 02:00:35');
 /*!40000 ALTER TABLE `enrollment_request` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `trg_after_enrollment_approved` AFTER UPDATE ON `enrollment_request` FOR EACH ROW BEGIN
+    IF NEW.status = 'APPROVED' AND OLD.status = 'PENDING' THEN
+        UPDATE student
+        SET section_id = NEW.section_id
+        WHERE id = NEW.student_id;
+    END IF;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `error_log`
@@ -411,6 +432,34 @@ LOCK TABLES `student` WRITE;
 INSERT INTO `student` VALUES (1,'2025-CS-00','Test','test@gmail.com','$2a$11$a//HgsgL2OMTW5N3Y9jhp.zw/30cRQzxUhblvfZyJaNpYkdcmUPkW','mUmarSaga','https://assets.leetcode.com/users/avatars/avatar_1688985344.png','whimsiren',1,'2026-05-21 19:55:18',1),(2,'2025-CS-01','Mirru','Miruu@gmail.com','$2a$11$BpbJDyZlLEvY3kbOdl1n0eHgk4J4c/DWlMAmHgBwoZW/WAKx5JKHu','fjzzq2002','https://assets.leetcode.com/users/fjzzq2002/avatar_1735951462.png','Miruu',1,'2026-05-26 00:37:24',1),(3,'2025-CS-02','Neal Wu','NealWu@gmail.com','$2a$11$QXhFsML6hoOjdkaX67FLv.H1R6hF/RiAUW.V6wpvidW3qfnUdHBLy','neal_wu','https://assets.leetcode.com/users/neal_wu/avatar_1737814509.png','Neal Wu',1,'2026-05-26 00:43:36',5),(4,'2025-CS-03','Yawn_Sean','Yawn_Sean@gmail.com','$2a$11$jOHap7wLLDWATrY8jAhNDuRaF/g0fbjyBaEm0Kvny7LglSjgAfQO.',NULL,NULL,NULL,1,'2026-05-26 00:44:08',1),(5,'2025-CS-04','lol','lol@gmail.com','$2a$11$72J19pMJowYDGWoCHBdIsusAM1vOT1gcwfYw4jZmgFD.dooP2V2c6','yawn_sean','https://assets.leetcode.com/users/1900015431/avatar_1633874346.png','Yawn_Sean',1,'2026-05-26 00:45:14',1),(6,'2025-CS-05','heltion','heltion@gmail.com','$2a$11$.WUGp.CX2cF/xlZQYRiu9e4AIdp/LLzArw3dWZQlWdGT51ADgufnq','heltion','https://assets.leetcode.com/users/default_avatar.jpg','Heltion',0,'2026-05-26 00:49:38',NULL),(7,'2025-CS-08','Joshua Chen','JoshuaChen@gmail.com','$2a$11$3E3jMcJHS9z3eO/YcyjOxO.9snMcpqH8mnW1dKG75ztvA8zcm7E/u','numb3r5','https://assets.leetcode.com/users/default_avatar.jpg','Joshua Chen',1,'2026-05-26 00:51:13',7);
 /*!40000 ALTER TABLE `student` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `trg_after_student_approved` AFTER UPDATE ON `student` FOR EACH ROW BEGIN
+    IF NEW.is_approved = 1 AND OLD.is_approved = 0 THEN
+        -- Create leetcode_stats row if not exists
+        IF NOT EXISTS (SELECT 1 FROM leetcode_stats WHERE student_id = NEW.id) THEN
+            INSERT INTO leetcode_stats(student_id, total_solved, easy_solved, medium_solved, hard_solved, last_updated)
+            VALUES(NEW.id, 0, 0, 0, 0, NOW());
+        END IF;
+        -- Create contest_stats row if not exists
+        IF NOT EXISTS (SELECT 1 FROM contest_stats WHERE student_id = NEW.id) THEN
+            INSERT INTO contest_stats(student_id, contest_rating, contest_attended, last_updated)
+            VALUES(NEW.id, 0, 0, NOW());
+        END IF;
+    END IF;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `student_badges`
@@ -563,6 +612,166 @@ INSERT INTO `weekly_snapshot` VALUES (1,1,'2026-03-31',280,130,110,40,'2026-05-2
 UNLOCK TABLES;
 
 --
+-- Dumping events for database 'db_final'
+--
+
+--
+-- Dumping routines for database 'db_final'
+--
+/*!50003 DROP PROCEDURE IF EXISTS `stp_AddStudent` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `stp_AddStudent`(
+IN REG_NO VARCHAR(20),
+IN std_name VARCHAR(255),
+IN Email VARCHAR(400),
+IN Password_ VARCHAR(255),
+IN Leetcode VARCHAR(255),
+IN Pp varchar(255),
+IN Pn VARCHAR(75),
+in Approved tinyint,
+IN created datetime,
+IN section INT
+)
+BEGIN
+INSERT INTO student(reg_no,name,email,password,leetcode_username,profile_pic_path,profile_name,is_approved,created_at,section_id) 
+Values(REG_NO,std_name,Email,Password_,Leetcode,Pp,Pn,Approved,created,section);
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `stp_GetLeaderbaordBySection` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `stp_GetLeaderbaordBySection`(
+IN SectionID INT
+)
+BEGIN
+SELECT * FROM leaderboard_view WHERE section_id = SectionID;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `stp_GetLeaderboard` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `stp_GetLeaderboard`(
+
+)
+BEGIN
+SELECT * FROM leaderboard_view;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `stp_GetLeaderboardByBatch` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `stp_GetLeaderboardByBatch`(
+IN BatchID INT
+)
+BEGIN
+SELECT * FROM leaderboard_view WHERE batch_id  = BatchID;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `stp_GetSnapshotByStdId` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `stp_GetSnapshotByStdId`(
+IN ID INT
+)
+BEGIN
+SELECT * FROM weekly_snapshot WHERE student_id = ID;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `stp_UpsertLeetcodeStats` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `stp_UpsertLeetcodeStats`(
+    IN p_student_id     INT,
+    IN p_total_solved   INT,
+    IN p_easy_solved    INT,
+    IN p_medium_solved  INT,
+    IN p_hard_solved    INT,
+    IN p_global_ranking INT,
+    IN p_last_updated   DATETIME
+)
+BEGIN
+    INSERT INTO leetcode_stats 
+        (student_id, total_solved, easy_solved, medium_solved, hard_solved, global_ranking, last_updated)
+    VALUES 
+        (p_student_id, p_total_solved, p_easy_solved, p_medium_solved, p_hard_solved, p_global_ranking, p_last_updated)
+    ON DUPLICATE KEY UPDATE
+        total_solved   = p_total_solved,
+        easy_solved    = p_easy_solved,
+        medium_solved  = p_medium_solved,
+        hard_solved    = p_hard_solved,
+        global_ranking = p_global_ranking,
+        last_updated   = p_last_updated;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
 -- Final view structure for view `leaderboard_view`
 --
 
@@ -661,4 +870,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-05-28 14:11:09
+-- Dump completed on 2026-06-11 18:58:44
