@@ -31,6 +31,7 @@ namespace UET_CODERANK.UI
         public BlankPage1()
         {
             InitializeComponent();
+            
           
         }
 

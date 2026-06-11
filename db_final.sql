@@ -31,7 +31,7 @@ CREATE TABLE `admin` (
   `created_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username_UNIQUE` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +40,7 @@ CREATE TABLE `admin` (
 
 LOCK TABLES `admin` WRITE;
 /*!40000 ALTER TABLE `admin` DISABLE KEYS */;
-INSERT INTO `admin` VALUES (2,'Umar','$2a$11$EWD6969XztUipdDHcVRTbeGXC9IzkypW9nae2CyerS1QR5okNurFS','2026-05-25 19:29:58');
+INSERT INTO `admin` VALUES (2,'Umar','$2a$11$EWD6969XztUipdDHcVRTbeGXC9IzkypW9nae2CyerS1QR5okNurFS','2026-05-25 19:29:58'),(3,'Admin','$2a$11$0gtl0oSm6ezzT2.lR3sXseua.gXffbZA47/AYfAtvKL8HWu2GcNzS','2026-06-11 19:22:44');
 /*!40000 ALTER TABLE `admin` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -870,4 +870,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-06-11 18:58:44
+-- Dump completed on 2026-06-11 19:30:12
